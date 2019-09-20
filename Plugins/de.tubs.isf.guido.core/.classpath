@@ -4,10 +4,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libs/gson-2.8.1.jar"/>
 	<classpathentry kind="lib" path="libs/javaparser-core-3.6.3.jar"/>
-	<classpathentry kind="lib" path="libs/KeY.jar"/>
-	<classpathentry kind="lib" path="libs/antlr.jar"/>
-	<classpathentry kind="lib" path="libsrecoderKey.jar"/>
+	<classpathentry kind="lib" path="libs/KeY/libs/antlr.jar"/>
+	<classpathentry kind="lib" path="libs/KeY/libs/recoderKey.jar"/>
 	<classpathentry kind="lib" path="libs/SCPSolver.jar"/>
 	<classpathentry kind="lib" path="libs/GLPKSolverPack.jar"/>
+	<classpathentry kind="lib" path="libs/KeY/KeY.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
