@@ -27,8 +27,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.xml.sax.SAXException;
 
-import de.tu.bs.guido.key.network.client.Client;
-import de.tu.bs.guido.key.network.server.Server;
+import de.tu.bs.guido.network.client.Client;
+import de.tu.bs.guido.network.server.Server;
 import de.uka.ilkd.key.core.Main;
 import de.uka.ilkd.key.java.reference.ThisConstructorReference;
 import de.uka.ilkd.key.proof.init.ProofInputException;
@@ -42,7 +42,7 @@ public class FileWindow extends Dialog {
 
 	String input1;
 	String input2;
-	String defaultPath = new String ("./generated");
+	String defaultPath = new String("./generated");
 	private Shell shell_1;
 	private Text text;
 
@@ -71,7 +71,7 @@ public class FileWindow extends Dialog {
 
 	public String open() {
 		// Create the dialog window
-		
+
 		shell_1 = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER | SWT.PRIMARY_MODAL);
 		shell_1.setMinimumSize(new Point(300, 300));
 		shell_1.setText(getText());
@@ -273,9 +273,7 @@ public class FileWindow extends Dialog {
 		try {
 
 			Server.main(path_array);
-		} catch (ProofInputException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -283,9 +281,6 @@ public class FileWindow extends Dialog {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ProblemLoaderException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -309,7 +304,8 @@ public class FileWindow extends Dialog {
 	protected boolean isResizable() {
 		return true;
 	}
- protected void runGuidance() {
-	automaticProof.Main.main(null);
- }
+
+	protected void runGuidance() {
+		automaticProof.Main.main(null);
+	}
 }
