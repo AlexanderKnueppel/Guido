@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import de.tu.bs.guido.key.simulator.Result;
-import de.tu.bs.masterthesis.key.simulator.options.SettingsObject;
+import de.tu.bs.guido.key.simulator.options.SettingsObject;
 import de.uka.ilkd.key.proof.init.ProofInputException;
 import de.uka.ilkd.key.proof.io.ProblemLoaderException;
 

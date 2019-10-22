@@ -38,6 +38,10 @@ public class XMLReader {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 
+		if(!xml.exists()) {
+			xml.createNewFile();
+		}
+		System.out.println(xml.getAbsolutePath());
 		Document doc = db.parse(xml);
 		Element root = doc.getDocumentElement();
 		String rootCode = root.getAttribute(CODE_CONST);

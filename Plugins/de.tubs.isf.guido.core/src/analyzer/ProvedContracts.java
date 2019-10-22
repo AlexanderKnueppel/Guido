@@ -35,7 +35,13 @@ public class ProvedContracts {
 	// reads zwischenergebnisse.txt and write it to class variables
 	public void readInput(File f) {
 		results = new ArrayList<Result>();
-
+		f.getParentFile().mkdirs();
+		try {
+			f.createNewFile();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
 		try (BufferedReader br = new BufferedReader(new FileReader(f))) {
 			String line;
 			Gson gson = new GsonBuilder().create();

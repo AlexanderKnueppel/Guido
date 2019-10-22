@@ -11,40 +11,40 @@ import java.util.List;
 
 import de.tu.bs.guido.key.simulator.control.ExampleBasedKeyControl;
 import de.tu.bs.guido.key.simulator.control.KeyControl;
-import de.tu.bs.masterthesis.key.simulator.options.Optionable;
-import de.tu.bs.masterthesis.key.simulator.options.SettingsObject;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.ArithmeticTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.AutoInductionOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.BlockTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.ClassAxiomRulesOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.DependencyContractsOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.ExpandLocalQueriesOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.KeyStrategyOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.LoopTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.MethodTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.OneStepSimplificationOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.ProofSplittingOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.QuantifierTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.QueryTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.StopAtOptions;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.AssertionsTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.BigIntTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.InitialisationTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.IntRulesTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.IntegerSimplificationRulesTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.JavaCardTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.MergeGenerateIsWeakeningGoalTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.ModelFieldsTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.PermissionsTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.ProgramRulesTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.ReachTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.RuntimeExceptionsTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.SequencesTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.StringsTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.WdChecksTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.WdOperatorTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.MergePointStatementsOptions;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.MoreSeqRulesTaclet;
+import de.tu.bs.guido.key.simulator.options.Optionable;
+import de.tu.bs.guido.key.simulator.options.SettingsObject;
+import de.tu.bs.guido.key.simulator.options.strategy.ArithmeticTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.AutoInductionOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.BlockTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.ClassAxiomRulesOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.DependencyContractsOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.ExpandLocalQueriesOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.KeyStrategyOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.LoopTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.MergePointStatementsOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.MethodTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.OneStepSimplificationOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.ProofSplittingOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.QuantifierTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.QueryTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.StopAtOptions;
+import de.tu.bs.guido.key.simulator.options.taclets.AssertionsTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.BigIntTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.InitialisationTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.IntRulesTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.IntegerSimplificationRulesTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.JavaCardTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.MergeGenerateIsWeakeningGoalTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.ModelFieldsTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.MoreSeqRulesTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.PermissionsTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.ProgramRulesTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.ReachTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.RuntimeExceptionsTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.SequencesTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.StringsTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.WdChecksTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.WdOperatorTaclet;
 import de.uka.ilkd.key.proof.init.ProofInputException;
 import de.uka.ilkd.key.proof.io.ProblemLoaderException;
 
@@ -95,7 +95,13 @@ public class MainClass {
 			NoSuchFieldException, SecurityException, IllegalArgumentException,
 			IllegalAccessException, ProofInputException {
 		
-		
+		try {
+			sourcePath.mkdirs();
+			sourcePath.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		File folder = new File("./../VerificationData/VerificationData_ThreeWiseSampling/Samplings");
 
 		//calc(folder);

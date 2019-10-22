@@ -8,20 +8,20 @@ import java.util.Map;
 import org.junit.Test;
 
 import de.tu.bs.guido.key.simulator.control.AbstractKeyControl;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.ArithmeticTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.AutoInductionOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.BlockTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.ClassAxiomRulesOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.DependencyContractsOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.ExpandLocalQueriesOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.LoopTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.MethodTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.OneStepSimplificationOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.ProofSplittingOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.QuantifierTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.QueryTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.StopAtOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.StrategyOptionable;
+import de.tu.bs.guido.key.simulator.options.strategy.ArithmeticTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.AutoInductionOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.BlockTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.ClassAxiomRulesOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.DependencyContractsOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.ExpandLocalQueriesOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.LoopTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.MethodTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.OneStepSimplificationOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.ProofSplittingOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.QuantifierTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.QueryTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.StopAtOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.StrategyOptionable;
 
 public class OptionTest {
 

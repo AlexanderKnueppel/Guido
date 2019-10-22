@@ -18,26 +18,26 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import de.tu.bs.masterthesis.key.simulator.options.Optionable;
-import de.tu.bs.masterthesis.key.simulator.options.OptionableContainer;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.AutoInductionOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.BlockTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.KeyStrategyOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.LoopTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.MethodTreatmentOptions;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.AssertionsTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.InitialisationTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.IntRulesTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.IntegerSimplificationRulesTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.JavaCardTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.KeyTacletOptions;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.MergeGenerateIsWeakeningGoalTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.ModelFieldsTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.PermissionsTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.ProgramRulesTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.RuntimeExceptionsTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.WdChecksTaclet;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.WdOperatorTaclet;
+import de.tu.bs.guido.key.simulator.options.Optionable;
+import de.tu.bs.guido.key.simulator.options.OptionableContainer;
+import de.tu.bs.guido.key.simulator.options.strategy.AutoInductionOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.BlockTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.KeyStrategyOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.LoopTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.strategy.MethodTreatmentOptions;
+import de.tu.bs.guido.key.simulator.options.taclets.AssertionsTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.InitialisationTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.IntRulesTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.IntegerSimplificationRulesTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.JavaCardTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.KeyTacletOptions;
+import de.tu.bs.guido.key.simulator.options.taclets.MergeGenerateIsWeakeningGoalTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.ModelFieldsTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.PermissionsTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.ProgramRulesTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.RuntimeExceptionsTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.WdChecksTaclet;
+import de.tu.bs.guido.key.simulator.options.taclets.WdOperatorTaclet;
 
 public class SPLOpltionGenerator {
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.tu.bs.guido.key.simulator.Result;
-import de.tu.bs.masterthesis.key.simulator.options.SettingsObject;
+import de.tu.bs.guido.key.simulator.options.SettingsObject;
 import de.uka.ilkd.key.core.KeYMediator;
 import de.uka.ilkd.key.gui.MainWindow;
 import de.uka.ilkd.key.java.JavaInfo;

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -33,15 +35,15 @@ public class Main {
 		File rules = null;
 		Prover prover = null;
 		long time = 1*60*1000;
-		
-		forGeneratingRules = new File("./test/results.txt"); //data base
-		hypotheses = new File("./test/hypotheses.txt"); //accepted hypotheses
-		rules = new File("./test/rules.txt"); //current score
+		//todo generate directories
+		forGeneratingRules = new File("test/results.txt"); //data base
+		hypotheses = new File("test/hypotheses.txt"); //accepted hypotheses
+		rules = new File("test/rules.txt"); //current score
 		//time = 3*60*1000; //1 minute
 		
 		prover = new Prover(forGeneratingRules, hypotheses, rules, time);
 		
-		File toProve = new File("./test/splconqueror2.xml");
+		File toProve = new File("test/splconqueror2.xml");
 		
 		if(SPL) {
 			System.out.println("Proof with SPLConqueror!");
@@ -61,14 +63,24 @@ public class Main {
 				
 				if(RQ4) {
 					if(Random)
-						writeTo ="./test/randomEffortRQ4";
+						writeTo ="test/randomEffortRQ4.txt";
 					else
-						writeTo = "./test/guidoEffortRQ4";
+						writeTo = "test/guidoEffortRQ4.txt";
 				}
 				
 				System.out.println("Write to : " + writeTo);
+				File f = new File(writeTo);
+				f.getParentFile().mkdirs();
 				
-				FileWriter fileWriter = new FileWriter(writeTo);
+				if (!f.exists()) {
+				    f.createNewFile();
+				} 
+				System.out.println(f.getAbsolutePath());
+				System.out.println(toProve.getAbsolutePath());
+				FileWriter fileWriter = new FileWriter(f,true);
+				
+								
+				
 				PrintWriter printWriter = new PrintWriter(fileWriter);
 				printWriter.append("Name," + ("closed?") + "," + "Steps" + "," + "Time" + "\n");
 				List<GuidanceSystemResult> results = prover.proofAllContractInFile(toProve,printWriter);

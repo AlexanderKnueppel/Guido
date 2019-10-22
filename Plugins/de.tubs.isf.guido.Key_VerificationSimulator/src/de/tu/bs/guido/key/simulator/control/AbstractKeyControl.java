@@ -13,7 +13,7 @@ import org.key_project.util.collection.ImmutableArray;
 import org.key_project.util.collection.ImmutableSet;
 
 import de.tu.bs.guido.key.simulator.Result;
-import de.tu.bs.masterthesis.key.simulator.options.SettingsObject;
+import de.tu.bs.guido.key.simulator.options.SettingsObject;
 import de.uka.ilkd.key.java.abstraction.KeYJavaType;
 import de.uka.ilkd.key.logic.Choice;
 import de.uka.ilkd.key.logic.op.IObserverFunction;

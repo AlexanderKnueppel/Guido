@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.List;
 
 import de.tu.bs.guido.key.simulator.SampleHelper;
-import de.tu.bs.masterthesis.key.simulator.options.OptionableContainer;
-import de.tu.bs.masterthesis.key.simulator.options.SettingsObject;
-import de.tu.bs.masterthesis.key.simulator.options.strategy.KeyStrategyOptions;
-import de.tu.bs.masterthesis.key.simulator.options.taclets.KeyTacletOptions;
+import de.tu.bs.guido.key.simulator.options.OptionableContainer;
+import de.tu.bs.guido.key.simulator.options.SettingsObject;
+import de.tu.bs.guido.key.simulator.options.strategy.KeyStrategyOptions;
+import de.tu.bs.guido.key.simulator.options.taclets.KeyTacletOptions;
 
 public class SamplePrinter {
 

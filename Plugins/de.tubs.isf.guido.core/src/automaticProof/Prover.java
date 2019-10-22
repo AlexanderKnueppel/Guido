@@ -390,6 +390,14 @@ public class Prover {
 		Map<String, Double> costsVE = new HashMap<String, Double>();
 
 		String toRead = Main.SPL ? "./test/rulesSPLC.txt" : "./test/rules.txt";
+		File ruleFile = new File(toRead);
+		ruleFile.getParentFile().mkdirs();
+		try {
+			ruleFile.createNewFile();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
 		Ruler ruler = Prover.readRules2(new File(toRead));
 		ruler.getRules().stream().forEach(x -> {
 			costsP.putAll(x.getOptions("P").entrySet().stream()
