@@ -1,11 +1,11 @@
-package automaticProof.proofFile;
+package de.tu.bs.guido.core.automaticProof.proofFile;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import keYHandler.options.SettingsObject;
+import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
 
 
 public class Job implements Serializable, Cloneable {

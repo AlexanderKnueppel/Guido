@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import de.tu.bs.guido.network.Job;
+import de.tu.bs.guido.verification.system.Job;
 
 public class PunishmentTracker {
 	private static final int MAXIMUM_MAX_STEPS = 1000000;

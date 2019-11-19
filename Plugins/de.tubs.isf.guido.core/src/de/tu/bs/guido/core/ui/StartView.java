@@ -1,7 +1,8 @@
-package ui;
+package de.tu.bs.guido.core.ui;
 
-import automaticProof.Prover;
 import java.io.File;
+
+import de.tu.bs.guido.core.automaticProof.Prover;
 
 
 public class StartView {
