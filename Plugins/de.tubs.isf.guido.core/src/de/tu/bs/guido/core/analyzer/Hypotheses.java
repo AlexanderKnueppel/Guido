@@ -1,4 +1,4 @@
-package analyzer;
+package de.tu.bs.guido.core.analyzer;
 
 import java.io.BufferedReader;
 import java.io.File;

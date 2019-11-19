@@ -1,4 +1,4 @@
-package keYHandler;
+package de.tu.bs.guido.core.keYHandler;
 //This file is part of KeY - Integrated Deductive Software Design
 //
 //Copyright (C) 2001-2011 Universitaet Karlsruhe (TH), Germany

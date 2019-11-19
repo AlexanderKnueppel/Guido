@@ -1,4 +1,4 @@
-package analyzer.contract;
+package de.tu.bs.guido.core.analyzer.contract;
 
 import java.io.File;
 import java.io.FileNotFoundException;

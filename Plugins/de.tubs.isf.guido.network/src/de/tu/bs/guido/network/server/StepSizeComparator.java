@@ -2,7 +2,7 @@ package de.tu.bs.guido.network.server;
 
 import java.util.Comparator;
 
-import de.tu.bs.guido.network.Job;
+import de.tu.bs.guido.verification.system.Job;
 
 public class StepSizeComparator implements Comparator<Job>{
 

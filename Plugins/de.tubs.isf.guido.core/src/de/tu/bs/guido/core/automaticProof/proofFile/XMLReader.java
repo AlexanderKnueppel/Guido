@@ -1,4 +1,4 @@
-package automaticProof.proofFile;
+package de.tu.bs.guido.core.automaticProof.proofFile;
 
 
 import java.io.File;
@@ -18,7 +18,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import automaticProof.Prover;
+import de.tu.bs.guido.core.automaticProof.Prover;
 import de.uka.ilkd.key.proof.init.ProofInputException;
 import de.uka.ilkd.key.proof.io.ProblemLoaderException;
 

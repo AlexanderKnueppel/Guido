@@ -1,18 +1,15 @@
-package automaticProof;
+package de.tu.bs.guido.core.automaticProof;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 
-import analyzer.Option;
-import analyzer.contract.ContractAnalyzer;
-import analyzer.contract.SourceCodeAnalyzer;
-import keYHandler.options.taclets.KeyTacletOptions;
+import de.tu.bs.guido.core.analyzer.Option;
+import de.tu.bs.guido.core.analyzer.contract.ContractAnalyzer;
+import de.tu.bs.guido.core.analyzer.contract.SourceCodeAnalyzer;
 
 public class Rule implements Serializable{
 	private static final long serialVersionUID = 4015855254309825043L;

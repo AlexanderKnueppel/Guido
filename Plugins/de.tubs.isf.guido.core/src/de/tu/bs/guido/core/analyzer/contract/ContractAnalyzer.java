@@ -1,4 +1,4 @@
-package analyzer.contract;
+package de.tu.bs.guido.core.analyzer.contract;
 
 import com.github.javaparser.ast.comments.Comment;
 

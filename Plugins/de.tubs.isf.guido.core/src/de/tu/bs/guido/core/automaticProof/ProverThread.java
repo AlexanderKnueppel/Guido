@@ -1,4 +1,4 @@
-package automaticProof;
+package de.tu.bs.guido.core.automaticProof;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,13 +14,13 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import automaticProof.proofFile.Job;
-import automaticProof.proofFile.XMLReader;
+import de.tu.bs.guido.core.automaticProof.proofFile.Job;
+import de.tu.bs.guido.core.automaticProof.proofFile.XMLReader;
+import de.tu.bs.guido.core.keYHandler.ProofControl;
+import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
 import de.uka.ilkd.key.proof.Proof;
 import de.uka.ilkd.key.proof.init.ProofInputException;
 import de.uka.ilkd.key.proof.io.ProblemLoaderException;
-import keYHandler.ProofControl;
-import keYHandler.options.SettingsObject;
 
 public class ProverThread {
 

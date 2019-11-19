@@ -1,13 +1,15 @@
-package analyzer;
+package de.tu.bs.guido.core.analyzer;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import keYHandler.options.strategy.KeyStrategyOptions;
-import keYHandler.options.strategy.StrategyOptionable;
-import keYHandler.options.taclets.KeyTacletOptions;
-import keYHandler.options.taclets.TacletOptionable;
+import de.tu.bs.guido.verification.systems.key.options.strategies.KeyStrategyOptions;
+import de.tu.bs.guido.verification.systems.key.options.strategies.StrategyOptionable;
+import de.tu.bs.guido.verification.systems.key.options.taclets.KeyTacletOptions;
+import de.tu.bs.guido.verification.systems.key.options.taclets.TacletOptionable;
+
+
 
 public class Analyzer {
 

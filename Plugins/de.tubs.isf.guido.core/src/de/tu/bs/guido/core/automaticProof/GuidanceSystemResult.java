@@ -1,4 +1,4 @@
-package automaticProof;
+package de.tu.bs.guido.core.automaticProof;
 
 import java.io.Serializable;
 import java.util.Map;

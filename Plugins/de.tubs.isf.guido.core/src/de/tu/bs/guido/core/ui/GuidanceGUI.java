@@ -1,4 +1,4 @@
-package ui;
+package de.tu.bs.guido.core.ui;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -17,11 +17,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-import automaticProof.GuidanceSystemResult;
-import automaticProof.Prover;
-import automaticProof.ProverThread;
+import de.tu.bs.guido.core.automaticProof.GuidanceSystemResult;
+import de.tu.bs.guido.core.automaticProof.Prover;
+import de.tu.bs.guido.core.automaticProof.ProverThread;
+import de.tu.bs.guido.core.keYHandler.KeYGUI;
 import de.uka.ilkd.key.speclang.Contract;
-import keYHandler.KeYGUI;
 
 public class GuidanceGUI {
 	

@@ -1,4 +1,4 @@
-package keYHandler;
+package de.tu.bs.guido.core.keYHandler;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -13,8 +13,8 @@ import java.util.Map;
 import org.key_project.util.collection.ImmutableArray;
 import org.key_project.util.collection.ImmutableSet;
 
-import analyzer.Result;
-import keYHandler.options.SettingsObject;
+import de.tu.bs.guido.core.analyzer.Result;
+import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
 import de.uka.ilkd.key.control.KeYEnvironment;
 import de.uka.ilkd.key.java.abstraction.KeYJavaType;
 import de.uka.ilkd.key.logic.Choice;

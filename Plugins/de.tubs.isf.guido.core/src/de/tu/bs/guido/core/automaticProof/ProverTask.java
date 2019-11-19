@@ -1,10 +1,10 @@
-package automaticProof;
+package de.tu.bs.guido.core.automaticProof;
 
 import java.io.File;
 import java.util.concurrent.Callable;
 
-import keYHandler.ProofControl;
-import keYHandler.options.SettingsObject;
+import de.tu.bs.guido.core.keYHandler.ProofControl;
+import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
 
 public class ProverTask implements Callable<ProofControl> {
 

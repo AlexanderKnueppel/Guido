@@ -1,4 +1,4 @@
-package keYHandler;
+package de.tu.bs.guido.core.keYHandler;
 
 import java.io.File;
 

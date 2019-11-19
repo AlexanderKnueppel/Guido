@@ -11,10 +11,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import de.tu.bs.guido.key.pooling.WorkingPool;
-import de.tu.bs.guido.key.simulator.Result;
-import de.tu.bs.guido.network.Job;
 import de.tu.bs.guido.network.ProofRunnable;
 import de.tu.bs.guido.network.ResultCommunication;
+import de.tu.bs.guido.verification.system.Job;
+import de.tu.bs.guido.verification.system.Result;
 
 public class ResultObserver implements Observer {
 

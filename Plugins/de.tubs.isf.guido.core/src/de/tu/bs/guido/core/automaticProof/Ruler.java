@@ -1,4 +1,4 @@
-package automaticProof;
+package de.tu.bs.guido.core.automaticProof;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,7 +12,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import analyzer.Parameter;
+import de.tu.bs.guido.core.analyzer.Parameter;
 
 public class Ruler implements Serializable{
 	private static final long serialVersionUID = 4015855254309825043L;
