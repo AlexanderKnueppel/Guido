@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="libs/GLPKSolverPack.jar"/>
+	<classpathentry kind="lib" path="libs/gson-2.8.1.jar"/>
+	<classpathentry kind="lib" path="libs/javaparser-core-3.6.3.jar"/>
+	<classpathentry kind="lib" path="libs/SCPSolver.jar"/>
+	<classpathentry kind="lib" path="libs/KeY/KeY.jar"/>
+	<classpathentry kind="lib" path="libs/KeY/libs/antlr.jar"/>
+	<classpathentry kind="lib" path="libs/KeY/libs/recoderKey.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
