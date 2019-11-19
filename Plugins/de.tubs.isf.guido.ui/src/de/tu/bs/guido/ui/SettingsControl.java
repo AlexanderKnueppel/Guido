@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SettingsControl {
-	private static String defaultPath = new String("./generated");
 	private static Map<String, String> settings = new HashMap<String, String>();
 
 	static public Map<String, String> getSettings() {
@@ -25,27 +24,23 @@ public class SettingsControl {
 		if (!f.exists()) {
 			try {
 				f.createNewFile();
-				BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-				bw.write(defaultPath);
-
-				bw.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			try {
-				FileInputStream fileIn = new FileInputStream(f);
-				ObjectInputStream in = new ObjectInputStream(fileIn);
-				read = (Map<String, String>) in.readObject();
-				in.close();
-
-				fileIn.close();
-			} catch (IOException | ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 		}
+		try {
+			FileInputStream fileIn = new FileInputStream(f);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			read = (Map<String, String>) in.readObject();
+			in.close();
+
+			fileIn.close();
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return read;
 
 	}
@@ -60,8 +55,7 @@ public class SettingsControl {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		else {
+		} else {
 			f.delete();
 			try {
 				f.createNewFile();
