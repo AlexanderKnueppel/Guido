@@ -10,8 +10,7 @@ import de.tu.bs.guido.network.client.FileClient;
 import de.tu.bs.guido.verification.system.Control;
 import de.tu.bs.guido.verification.system.Job;
 import de.tu.bs.guido.verification.system.Result;
-import de.tu.bs.guido.verification.systems.key.ExampleBasedKeyControl;
-import de.tu.bs.guido.verification.systems.key.KeyResult;
+import de.tu.bs.guido.verification.system.factory.AbstractFactory;
 
 public class ProofRunnable implements ResultRunnable, Serializable {
 
@@ -39,7 +38,7 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 			
 			System.out.println("Running: "+job);
 			//here Factory adding 
-			Control kc = new ExampleBasedKeyControl();
+			Control kc = AbstractFactory.getAbst().createControl();
 			FileClient fc = new FileClient(ip, fileServerPort);
 			String source = job.getSource();
 			String classpath = job.getClasspath();

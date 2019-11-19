@@ -26,12 +26,10 @@ import de.tu.bs.guido.key.pooling.distributed.DistributedWorkingPool;
 import de.tu.bs.guido.key.pooling.distributed.NewResultNotifier;
 import de.tu.bs.guido.network.ProofRunnable;
 import de.tu.bs.guido.network.file.server.FileServer;
-import de.tu.bs.guido.verification.system.BatchXMLHelper;
 import de.tu.bs.guido.verification.system.Job;
 import de.tu.bs.guido.verification.system.SampleHelper;
 import de.tu.bs.guido.verification.system.factory.AbstractFactory;
 import de.tu.bs.guido.verification.system.factory.KeyFactory;
-import de.tu.bs.guido.verification.systems.key.KeyJob;
 import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
 
 public class Server implements Observer {
@@ -60,7 +58,7 @@ public class Server implements Observer {
 			List<SettingsObject> sos = SampleHelper.readSPLSamples(samples);
 			jobs = new ArrayList<>(sos.size());
 			
-			sos.forEach(so -> jobs.add(new KeyJob("", -1, source, null, clazz, method, null, so)));
+			sos.forEach(so -> jobs.add(AbstractFactory.getAbst().createJob("", -1, source, null, clazz, method, null, so)));
 			throw new IllegalArgumentException("not yet updated...");
 		} else if (argsLength == 1) {
 			if (!args[0].equals("key")) {
@@ -69,7 +67,7 @@ public class Server implements Observer {
 			}
 			System.out.println("Going to read jobs...");
 			String testArgsInput = args[0]; // "./../../VerificationData/VerificationData_AutomatedVerification/exampleJob.xml";
-			jobs = new BatchXMLHelper().generateJobFromXML(new File(testArgsInput));
+			jobs = AbstractFactory.getAbst().createBatchXMLHelper().generateJobFromXML(new File(testArgsInput));
 			filterListForDuplicates(jobs);
 //			filterListForMe(jobs);
 			System.out.println("So many jobs read... " + jobs.size());
