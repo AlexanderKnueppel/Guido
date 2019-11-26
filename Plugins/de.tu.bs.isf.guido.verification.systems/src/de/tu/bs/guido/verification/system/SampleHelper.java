@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.tu.bs.guido.verification.systems.key.generators.FeatureIdeTranslator;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
 
 public abstract class SampleHelper {
 	

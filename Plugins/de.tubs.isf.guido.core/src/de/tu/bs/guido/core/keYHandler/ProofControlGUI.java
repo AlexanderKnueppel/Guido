@@ -14,7 +14,7 @@ import org.key_project.util.collection.ImmutableArray;
 import org.key_project.util.collection.ImmutableSet;
 
 import de.tu.bs.guido.core.analyzer.Result;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
+import de.tu.bs.guido.verification.system.SettingsObject;
 import de.uka.ilkd.key.core.KeYMediator;
 import de.uka.ilkd.key.gui.MainWindow;
 import de.uka.ilkd.key.java.JavaInfo;

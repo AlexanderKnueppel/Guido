@@ -3,8 +3,6 @@ package de.tu.bs.guido.verification.system;
 import java.io.File;
 import java.util.List;
 
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
-
 public interface Control {
 
 	List<Result> getResultForProof(File source, File classPath,

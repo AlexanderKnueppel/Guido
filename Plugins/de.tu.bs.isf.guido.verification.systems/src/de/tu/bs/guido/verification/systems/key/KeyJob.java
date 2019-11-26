@@ -1,7 +1,7 @@
 package de.tu.bs.guido.verification.systems.key;
 
 import de.tu.bs.guido.verification.system.Job;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
+import de.tu.bs.guido.verification.system.SettingsObject;
 
 public class KeyJob extends Job {
 

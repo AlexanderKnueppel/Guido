@@ -18,9 +18,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import de.tu.bs.guido.verification.system.factory.AbstractFactory;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
-
 public class BatchXMLHelper {
 
 	private static final String METHOD_CONST = "Method";

@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.concurrent.Callable;
 
 import de.tu.bs.guido.core.keYHandler.ProofControl;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
+import de.tu.bs.guido.verification.system.SettingsObject;
 
 public class ProverTask implements Callable<ProofControl> {
 

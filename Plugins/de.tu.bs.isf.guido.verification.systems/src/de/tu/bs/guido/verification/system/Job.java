@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
-
 
 
 public class Job implements Serializable, Cloneable {

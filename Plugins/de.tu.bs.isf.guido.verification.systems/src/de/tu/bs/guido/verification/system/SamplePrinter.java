@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.List;
 
 import de.tu.bs.guido.verification.systems.key.options.OptionableContainer;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
 import de.tu.bs.guido.verification.systems.key.options.strategies.KeyStrategyOptions;
 import de.tu.bs.guido.verification.systems.key.options.taclets.KeyTacletOptions;
 

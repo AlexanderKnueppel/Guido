@@ -13,8 +13,8 @@ import java.util.List;
 
 import de.tu.bs.guido.verification.system.Result;
 import de.tu.bs.guido.verification.system.SampleHelper;
+import de.tu.bs.guido.verification.system.SettingsObject;
 import de.tu.bs.guido.verification.systems.key.generators.FeatureIdeTranslator;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
 
 public class KeySampleHelper extends SampleHelper {
 	

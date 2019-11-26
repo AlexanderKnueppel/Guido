@@ -18,13 +18,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import de.tu.bs.guido.verification.system.AbstractFactory;
 import de.tu.bs.guido.verification.system.BatchXMLHelper;
 import de.tu.bs.guido.verification.system.GetJobs;
 import de.tu.bs.guido.verification.system.Job;
 import de.tu.bs.guido.verification.system.SampleHelper;
-import de.tu.bs.guido.verification.system.factory.AbstractFactory;
+import de.tu.bs.guido.verification.system.SettingsObject;
 import de.tu.bs.guido.verification.systems.key.KeyGetJobs;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
 
 public class KeyBatchXmlHelper extends BatchXMLHelper {
 

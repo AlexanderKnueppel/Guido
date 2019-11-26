@@ -1,12 +1,4 @@
-package de.tu.bs.guido.verification.system.factory;
-
-import de.tu.bs.guido.verification.system.BatchXMLHelper;
-import de.tu.bs.guido.verification.system.Control;
-import de.tu.bs.guido.verification.system.GetJobs;
-import de.tu.bs.guido.verification.system.Job;
-import de.tu.bs.guido.verification.system.Result;
-import de.tu.bs.guido.verification.system.SampleHelper;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
+package de.tu.bs.guido.verification.system;
 
 public abstract class AbstractFactory {
 	public static AbstractFactory abst;

@@ -11,8 +11,8 @@ import java.util.List;
 
 import de.tu.bs.guido.verification.system.Control;
 import de.tu.bs.guido.verification.system.Result;
+import de.tu.bs.guido.verification.system.SettingsObject;
 import de.tu.bs.guido.verification.systems.key.options.Optionable;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
 import de.tu.bs.guido.verification.systems.key.options.strategies.ArithmeticTreatmentOptions;
 import de.tu.bs.guido.verification.systems.key.options.strategies.AutoInductionOptions;
 import de.tu.bs.guido.verification.systems.key.options.strategies.BlockTreatmentOptions;

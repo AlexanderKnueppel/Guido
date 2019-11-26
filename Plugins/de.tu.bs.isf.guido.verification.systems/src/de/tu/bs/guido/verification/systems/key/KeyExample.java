@@ -10,7 +10,7 @@ import org.key_project.util.collection.ImmutableSet;
 
 import de.tu.bs.guido.verification.system.Example;
 import de.tu.bs.guido.verification.system.Result;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
+import de.tu.bs.guido.verification.system.SettingsObject;
 import de.uka.ilkd.key.control.KeYEnvironment;
 import de.uka.ilkd.key.java.abstraction.KeYJavaType;
 import de.uka.ilkd.key.logic.op.IObserverFunction;

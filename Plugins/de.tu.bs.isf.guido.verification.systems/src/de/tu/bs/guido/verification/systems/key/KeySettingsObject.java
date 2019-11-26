@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import de.tu.bs.guido.verification.system.SettingsObject;
 import de.tu.bs.guido.verification.systems.key.options.Optionable;
 import de.tu.bs.guido.verification.systems.key.options.OptionableContainer;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
 import de.tu.bs.guido.verification.systems.key.options.strategies.KeyStrategyOptions;
 import de.tu.bs.guido.verification.systems.key.options.strategies.StrategyOptionable;
 import de.tu.bs.guido.verification.systems.key.options.taclets.KeyTacletOptions;

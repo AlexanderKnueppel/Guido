@@ -7,10 +7,10 @@ import java.util.List;
 
 import de.tu.bs.guido.key.pooling.distributed.ResultRunnable;
 import de.tu.bs.guido.network.client.FileClient;
+import de.tu.bs.guido.verification.system.AbstractFactory;
 import de.tu.bs.guido.verification.system.Control;
 import de.tu.bs.guido.verification.system.Job;
 import de.tu.bs.guido.verification.system.Result;
-import de.tu.bs.guido.verification.system.factory.AbstractFactory;
 
 public class ProofRunnable implements ResultRunnable, Serializable {
 

@@ -35,7 +35,7 @@ import de.tu.bs.guido.core.automaticProof.proofFile.Job;
 import de.tu.bs.guido.core.automaticProof.proofFile.XMLReader;
 import de.tu.bs.guido.core.keYHandler.ProofControl;
 import de.tu.bs.guido.core.keYHandler.ProofControlGUI;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
+import de.tu.bs.guido.verification.system.SettingsObject;
 import de.uka.ilkd.key.control.KeYEnvironment;
 import de.uka.ilkd.key.java.abstraction.KeYJavaType;
 import de.uka.ilkd.key.logic.op.IObserverFunction;

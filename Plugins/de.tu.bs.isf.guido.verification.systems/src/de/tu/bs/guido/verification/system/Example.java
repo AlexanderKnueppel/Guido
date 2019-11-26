@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
-
 public abstract  class Example{
 
 	public abstract List<Result> getResultForProof(File source, File classPath,

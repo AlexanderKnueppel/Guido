@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 import de.tu.bs.guido.core.automaticProof.proofFile.Job;
 import de.tu.bs.guido.core.automaticProof.proofFile.XMLReader;
 import de.tu.bs.guido.core.keYHandler.ProofControl;
-import de.tu.bs.guido.verification.systems.key.options.SettingsObject;
+import de.tu.bs.guido.verification.system.SettingsObject;
 import de.uka.ilkd.key.proof.Proof;
 import de.uka.ilkd.key.proof.init.ProofInputException;
 import de.uka.ilkd.key.proof.io.ProblemLoaderException;
