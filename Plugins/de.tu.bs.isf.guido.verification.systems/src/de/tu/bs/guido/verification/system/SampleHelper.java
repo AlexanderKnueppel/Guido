@@ -32,7 +32,7 @@ public abstract class SampleHelper {
 						- "postfix".length());
 				line = line.replaceFirst("\".*\"", "");
 				String[] options = line.split(";");
-				SettingsObject so = new SettingsObject();
+				SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 				for (String option : options) {
 					option = option.trim();
 					String[] vals = option.split("::");
@@ -63,7 +63,7 @@ public abstract class SampleHelper {
 		for (File config : configFiles) {
 			try (BufferedReader br = new BufferedReader(new FileReader(config))) {
 				String line;
-				SettingsObject so = new SettingsObject();
+				SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 				while ((line = br.readLine()) != null) {
 					line = FeatureIdeTranslator.decode(line);
 					line = line.trim();

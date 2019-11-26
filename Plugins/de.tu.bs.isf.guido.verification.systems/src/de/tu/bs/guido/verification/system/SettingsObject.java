@@ -17,10 +17,10 @@ public class SettingsObject implements Cloneable, Serializable {
 
 	private static final long serialVersionUID = -5974976146446740045L;
 
-	private int maxSteps;
-	private int debugNumber;
-	private Map<String, String> settingsMap = new HashMap<>();
-	private Map<String, String> tacletMap = new HashMap<>();
+	protected int maxSteps;
+	protected int debugNumber;
+	protected Map<String, String> settingsMap = new HashMap<>();
+	protected Map<String, String> tacletMap = new HashMap<>();
 
 	public SettingsObject() {
 		for (KeyStrategyOptions option : KeyStrategyOptions.values()) {

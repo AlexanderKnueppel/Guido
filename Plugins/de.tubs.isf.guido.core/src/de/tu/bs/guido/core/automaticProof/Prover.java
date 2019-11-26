@@ -35,6 +35,7 @@ import de.tu.bs.guido.core.automaticProof.proofFile.Job;
 import de.tu.bs.guido.core.automaticProof.proofFile.XMLReader;
 import de.tu.bs.guido.core.keYHandler.ProofControl;
 import de.tu.bs.guido.core.keYHandler.ProofControlGUI;
+import de.tu.bs.guido.verification.system.AbstractFactory;
 import de.tu.bs.guido.verification.system.SettingsObject;
 import de.uka.ilkd.key.control.KeYEnvironment;
 import de.uka.ilkd.key.java.abstraction.KeYJavaType;
@@ -128,9 +129,9 @@ public class Prover {
 		System.out.println("Set proof environment");
 		ProofControl pc = new ProofControl(sourcePath, reduxPath, provingClass, provingMethod, parameter, contract);
 		long startTime = System.currentTimeMillis();
-		SettingsObject so = new SettingsObject();
+		SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 		System.out.println("Proof is not closed yet - Create SettingsObject - Default Settings");
-		so = new SettingsObject();
+		so = AbstractFactory.getAbst().createSettingsObject();
 		so.setMaxSteps(1000000);
 		System.out.println("Start Proof!");
 		pc.performProof(so);
@@ -157,7 +158,7 @@ public class Prover {
 		long elapsedTime = 0L;
 		int proofPerformed = 0;
 		int steps = 0;
-		SettingsObject so = new SettingsObject();
+		SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 		so.setMaxSteps(1000000);
 		System.out.println("Proof is not closed yet - Create SettingsObject");
 		//so = createDesiredSettingsObjectGuido(proofPerformed, sourceCodeAnalyzer, contractAnalyzer, so);
@@ -208,7 +209,7 @@ public class Prover {
 		long elapsedTime = 0L;
 		int proofPerformed = 0;
 		int steps = 0;
-		SettingsObject so = new SettingsObject();
+		SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 		so.setMaxSteps(1000000);
 		while (elapsedTime < this.time) { // 1*60*1000
 			if(pc.isClosed()) {
@@ -269,7 +270,7 @@ public class Prover {
 		long elapsedTime = 0L;
 		int proofPerformed = 0;
 		int steps = 0;
-		SettingsObject so = new SettingsObject();
+		SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 		so.setMaxSteps(1000000);
 		while (!pc.isClosed() && elapsedTime < this.time) { // 1*60*1000
 			System.out.println("Proof is not closed yet - Create SettingsObject");
@@ -352,7 +353,7 @@ public class Prover {
 	}
 
 	public SettingsObject createDesiredSettingsObject(GuidanceSystemResult res) {
-		SettingsObject so = new SettingsObject();
+		SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 		for (Entry<String, String> tac : res.getTaclets().entrySet()) {
 			so.setParameter(tac.getKey(), tac.getValue());
 		}
@@ -360,13 +361,13 @@ public class Prover {
 	}
 
 	public SettingsObject createSPLConquerorSettingsObject() {
-		SettingsObject so = new SettingsObject();
+		SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 		return so;
 	}
 
 	public SettingsObject createDesiredSettingsObject(int proofPerformed, SourceCodeAnalyzer sourceCode,
 			ContractAnalyzer contract, SettingsObject soOld) {
-		SettingsObject so = new SettingsObject();
+		SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 		// TODO create here the strategy....
 		for (Rule rule : ruler.getRules()) {
 			so.setParameter(rule.getParameter(), rule.getBestOption(proofPerformed, sourceCode, contract));
@@ -518,7 +519,7 @@ public class Prover {
 
 	public SettingsObject createDesiredSettingsObjectGuido(int proofPerformed, SourceCodeAnalyzer sourceCode,
 			ContractAnalyzer contract, SettingsObject soOld) {
-		SettingsObject so = new SettingsObject();
+		SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 
 		double gamma1, gamma2, k;
 		boolean next;

@@ -49,6 +49,7 @@ public class Server implements Observer {
 	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
 		ArrayList<Job> jobs;
 		int argsLength = args.length;
+		AbstractFactory.setAbst(new KeyFactory());
 		if (argsLength == 4) { // NOT USABLE SINCE EXCPETION IS THROWN! (no reason is mentioned for it)
 			String source = args[0];
 			String clazz = args[1];

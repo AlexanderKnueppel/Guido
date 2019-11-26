@@ -104,9 +104,9 @@ public class BatchXMLHelper {
 		int numberOfContracts;
 		if (noc == null) {
 			GetJobs gj = null;
-			
-				gj = AbstractFactory.getAbst().createGetJobs();
-		
+
+			gj = AbstractFactory.getAbst().createGetJobs();
+
 			numberOfContracts = gj.getNumbofJobs(source, classpath, className, methodName, parameters);
 		} else {
 			numberOfContracts = noc;
@@ -150,7 +150,6 @@ public class BatchXMLHelper {
 		private final String method;
 		private final String[] parameter;
 		private BatchXMLHelper bx;
-		
 
 		public SearchParameter(String codeunit, String clazz, String method, String[] parameter) {
 			super();

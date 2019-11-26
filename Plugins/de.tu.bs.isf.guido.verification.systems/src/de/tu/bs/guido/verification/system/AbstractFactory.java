@@ -25,6 +25,6 @@ public abstract class AbstractFactory {
 
 	public abstract Job createJob(String code, int expNumb, String source, String classpath, String clazz,
 			String method, String[] parameter, SettingsObject so);
-	
+	public abstract SettingsObject createSettingsObject();
 
 }

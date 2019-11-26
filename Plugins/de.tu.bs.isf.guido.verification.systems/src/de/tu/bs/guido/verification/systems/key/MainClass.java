@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import de.tu.bs.guido.verification.system.AbstractFactory;
 import de.tu.bs.guido.verification.system.Control;
 import de.tu.bs.guido.verification.system.Result;
 import de.tu.bs.guido.verification.system.SettingsObject;
@@ -133,7 +134,7 @@ public class MainClass {
 	}
 
 	public static SettingsObject createDesiredSettingsObject(Optionable[] opts, int maxSteps) {
-		SettingsObject so = new SettingsObject();
+		SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 		for (Optionable opt : opts) {
 			so.setParameter(opt);
 		}

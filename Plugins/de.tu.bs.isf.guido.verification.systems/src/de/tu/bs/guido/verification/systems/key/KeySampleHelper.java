@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.tu.bs.guido.verification.system.AbstractFactory;
 import de.tu.bs.guido.verification.system.Result;
 import de.tu.bs.guido.verification.system.SampleHelper;
 import de.tu.bs.guido.verification.system.SettingsObject;
@@ -40,7 +41,7 @@ public class KeySampleHelper extends SampleHelper {
 						- "postfix".length());
 				line = line.replaceFirst("\".*\"", "");
 				String[] options = line.split(";");
-				SettingsObject so = new SettingsObject();
+				SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 				so.setMaxSteps(100000);
 				System.out.print("[");
 				boolean first = true;
@@ -95,7 +96,7 @@ public class KeySampleHelper extends SampleHelper {
 						- "postfix".length());
 				line = line.replaceFirst("\".*\"", "");
 				String[] options = line.split(";");
-				SettingsObject so = new SettingsObject();
+				SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 				for (String option : options) {
 					option = option.trim();
 					String[] vals = option.split("::");
@@ -126,7 +127,7 @@ public class KeySampleHelper extends SampleHelper {
 		for (File config : configFiles) {
 			try (BufferedReader br = new BufferedReader(new FileReader(config))) {
 				String line;
-				SettingsObject so = new SettingsObject();
+				SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
 				while ((line = br.readLine()) != null) {
 					line = FeatureIdeTranslator.decode(line);
 					line = line.trim();
