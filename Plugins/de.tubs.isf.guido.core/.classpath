@@ -9,5 +9,11 @@
 	<classpathentry kind="lib" path="libs/SCPSolver.jar"/>
 	<classpathentry kind="lib" path="libs/GLPKSolverPack.jar"/>
 	<classpathentry kind="lib" path="libs/KeY/KeY.jar"/>
+	<classpathentry kind="lib" path="libs/de.ovgu.featureide.lib.fm-v3.6.1.jar"/>
+	<classpathentry kind="lib" path="libs/splar.jar"/>
+	<classpathentry kind="lib" path="libs/SPLCAT.jar"/>
+	<classpathentry kind="lib" path="libs/org.sat4j.core.jar"/>
+	<classpathentry kind="lib" path="libs/commons-math-2.2.jar"/>
+	<classpathentry kind="lib" path="libs/javanpst.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
