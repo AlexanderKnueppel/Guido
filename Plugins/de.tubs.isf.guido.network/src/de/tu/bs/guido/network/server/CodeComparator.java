@@ -2,8 +2,8 @@ package de.tu.bs.guido.network.server;
 
 import java.util.Comparator;
 
-import de.tu.bs.guido.network.Job;
-import keYHandler.options.OptionableContainer;
+import de.tu.bs.guido.verification.system.Job;
+import de.tu.bs.guido.verification.systems.key.options.OptionableContainer;
 
 public class CodeComparator implements Comparator<Job>{
 

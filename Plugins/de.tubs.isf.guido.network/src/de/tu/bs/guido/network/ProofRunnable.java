@@ -6,10 +6,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import de.tu.bs.guido.key.pooling.distributed.ResultRunnable;
-import de.tu.bs.guido.key.simulator.Result;
-import de.tu.bs.guido.key.simulator.control.ExampleBasedKeyControl;
-import de.tu.bs.guido.key.simulator.control.KeyControl;
 import de.tu.bs.guido.network.client.FileClient;
+import de.tu.bs.guido.verification.system.AbstractFactory;
+import de.tu.bs.guido.verification.system.Control;
+import de.tu.bs.guido.verification.system.Job;
+import de.tu.bs.guido.verification.system.Result;
 
 public class ProofRunnable implements ResultRunnable, Serializable {
 
@@ -36,14 +37,15 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 			localTemp.mkdirs();
 			
 			System.out.println("Running: "+job);
-			KeyControl kc = new ExampleBasedKeyControl();
+			//here Factory adding 
+			Control kc = AbstractFactory.getAbst().createControl();
 			FileClient fc = new FileClient(ip, fileServerPort);
 			String source = job.getSource();
 			String classpath = job.getClasspath();
 			File sourceFile = getFileForName(fc, source, localTemp);
 			File classpathFile = getFileForName(fc, classpath, localTemp);
 			
-			List<Result> intermediate;
+			List<? extends Result> intermediate;
 			intermediate = kc.getResultForProof(sourceFile, classpathFile, job.getClazz(),
 					job.getMethod(), job.getParameter(), job.getContractNumber(), job.getSo());
 			for (Result result : intermediate) {

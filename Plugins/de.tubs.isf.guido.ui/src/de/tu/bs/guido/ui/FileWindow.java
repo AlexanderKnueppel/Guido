@@ -1,11 +1,6 @@
 package de.tu.bs.guido.ui;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
@@ -13,6 +8,8 @@ import javax.swing.JFileChooser;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -29,11 +26,6 @@ import org.xml.sax.SAXException;
 
 import de.tu.bs.guido.network.client.Client;
 import de.tu.bs.guido.network.server.Server;
-import de.uka.ilkd.key.core.Main;
-import de.uka.ilkd.key.java.reference.ThisConstructorReference;
-import de.uka.ilkd.key.proof.init.ProofInputException;
-import de.uka.ilkd.key.proof.io.ProblemLoaderException;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import swing2swt.layout.FlowLayout;
@@ -45,6 +37,7 @@ public class FileWindow extends Dialog {
 	String defaultPath = new String("./generated");
 	private Shell shell_1;
 	private Text text;
+	private GridData gd_lblStartTheclient;
 
 	/**
 	 * InputDialog constructor
@@ -80,16 +73,7 @@ public class FileWindow extends Dialog {
 		shell_1.pack();
 		shell_1.addListener(SWT.Close, new Listener() {
 			public void handleEvent(Event event) {
-				File f = new File("settings.txt");
-				try {
-					BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-					bw.write("./default");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				// add gui
-
+				SettingsControl.setSettings(ProjectSettings.getSettings());
 			}
 		});
 		// Create the cancel button and add a handler
@@ -126,11 +110,12 @@ public class FileWindow extends Dialog {
 		shell.setLayout(gl_shell_1);
 
 		// Show the message
-		Label label = new Label(shell, SWT.NONE);
-		label.setText("Starte einen Client!");
-		GridData data = new GridData();
-		data.horizontalSpan = 3;
-		label.setLayoutData(data);
+		Label lblStartTheclient = new Label(shell, SWT.NONE);
+		lblStartTheclient.setText("Start the Client!");
+		GridData data;
+		gd_lblStartTheclient = new GridData();
+		gd_lblStartTheclient.horizontalSpan = 3;
+		lblStartTheclient.setLayoutData(gd_lblStartTheclient);
 
 		Composite composite_1 = new Composite(shell_1, SWT.NONE);
 		composite_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -158,13 +143,25 @@ public class FileWindow extends Dialog {
 
 		Label labelServer = new Label(shell, SWT.NONE);
 
-		labelServer.setText("Starte einen Server!");
+		labelServer.setText("Start the Server!");
 		data = new GridData();
 		data.horizontalSpan = 3;
 		labelServer.setLayoutData(data);
 
 		// Display the input box
 		final Text textServer = new Text(shell, SWT.BORDER);
+		textServer.setText(ProjectSettings.pathJob);
+		textServer.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+				System.out.println("war");
+				ProjectSettings.pathJob = textServer.getText();
+				
+
+			}
+		});
+
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		data.horizontalSpan = 2;
 		textServer.setLayoutData(data);
@@ -177,7 +174,7 @@ public class FileWindow extends Dialog {
 		buttonServerStart.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 
-				runServer(textServer.getText());
+				runServer(textServer.getText().split(","));
 			}
 		});
 		Button buttonServerImport = new Button(composite, SWT.PUSH);
@@ -189,7 +186,7 @@ public class FileWindow extends Dialog {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					textServer.setText(file.getPath());
-					File x = new File(textServer.getText());
+					
 
 				} else {
 
@@ -202,7 +199,7 @@ public class FileWindow extends Dialog {
 		new Label(shell_1, SWT.NONE);
 
 		Label lblStarteDasGuidance = new Label(shell_1, SWT.NONE);
-		lblStarteDasGuidance.setText("Starte das Guidance Sytem");
+		lblStarteDasGuidance.setText("Start the Guidance Sytem");
 		new Label(shell_1, SWT.NONE);
 
 		Composite composite_2 = new Composite(shell_1, SWT.NONE);
@@ -217,38 +214,40 @@ public class FileWindow extends Dialog {
 				runGuidance();
 			}
 		});
+		new Label(shell_1, SWT.NONE);
+		new Label(shell_1, SWT.NONE);
 		Label lblSpeicherortDerGenerierten = new Label(shell_1, SWT.NONE);
 		lblSpeicherortDerGenerierten.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		lblSpeicherortDerGenerierten.setText("Desired Location of the generated Files");
-		new Label(shell_1, SWT.NONE);
+				new Label(shell_1, SWT.NONE);
+		
+				text = new Text(shell_1, SWT.BORDER);
+				text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+				Button btnChangeLocation = new Button(shell_1, SWT.NONE);
+				btnChangeLocation.setText("Change Location");
+				btnChangeLocation.addSelectionListener(new SelectionAdapter() {
+					public void widgetSelected(SelectionEvent event) {
+						File workingDirectory = null;
+						if (defaultPath.equals("./")) {
+							workingDirectory = new File(System.getProperty("user.dir"));
+						} else {
+							workingDirectory = new File(defaultPath);
+						}
+						JFileChooser fc = new JFileChooser(workingDirectory);
+						int returnVal = fc.showOpenDialog(null);
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							File file = fc.getSelectedFile();
+							textServer.setText(file.getPath());
+							File x = new File(textServer.getText());
+							defaultPath = file.getAbsolutePath();
 
-		text = new Text(shell_1, SWT.BORDER);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+						} else {
 
-		Button btnChangeLocation = new Button(shell_1, SWT.NONE);
-		btnChangeLocation.setText("Change Location");
-		btnChangeLocation.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
-				File workingDirectory = null;
-				if (defaultPath.equals("./")) {
-					workingDirectory = new File(System.getProperty("user.dir"));
-				} else {
-					workingDirectory = new File(defaultPath);
-				}
-				JFileChooser fc = new JFileChooser(workingDirectory);
-				int returnVal = fc.showOpenDialog(null);
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
-					textServer.setText(file.getPath());
-					File x = new File(textServer.getText());
-					defaultPath = file.getAbsolutePath();
+						}
 
-				} else {
-
-				}
-
-			}
-		});
+					}
+				});
 		// Set the OK button as the default, so
 		// user can type input and press Enter
 		// to dismiss
@@ -265,14 +264,12 @@ public class FileWindow extends Dialog {
 		shell.setDefaultButton(ok);
 	}
 
-	protected void runServer(String path) {
-
-		String[] path_array = new String[1];
-		path_array[0] = path;
-		System.out.println(path);
+	protected void runServer(String[] path) {
+		
+		
 		try {
 
-			Server.main(path_array);
+			Server.main(path);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -306,6 +303,6 @@ public class FileWindow extends Dialog {
 	}
 
 	protected void runGuidance() {
-		automaticProof.Main.main(null);
+		de.tu.bs.guido.core.automaticProof.Main.main(null);
 	}
 }
