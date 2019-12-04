@@ -4,15 +4,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.tubs.isf.guido.core.analysis.IAnalyzer.LanguageConstruct;
-
 public abstract class ASourceCodeAnalyzer implements IAnalyzer {
 	protected File sourceFile = null;
 	protected List<LanguageConstruct> currentConstructs;
 	protected int loc = -1;
 
-	protected enum SourceCodeConstruct implements LanguageConstruct {
-		LOOPS_TRUE("loops_true"), LOOPS_FALSE("loops_false"), BRANCHING_TRUE("branching_true"),
+	public enum SourceCodeConstruct implements LanguageConstruct {
+		LOOPS_TRUE("loops_true"), LOOPS_FALSE("loops_false"), HAS_LOOP_INVARIANTS_TRUE("loop_invariants_true"),
+		HAS_LOOP_INVARIANTS_FALSE("loop_invariants_false"), BRANCHING_TRUE("branching_true"),
 		BRANCHING_FALSE("branching_false"), ARGUMENTS_TRUE("arguments_true"), ARGUMENTS_FALSE("arguments_false"),
 		METHOD_CALLS_TRUE("methodCalls_true"), METHOD_CALLS_FALSE("methodCalls_false"),
 		METHOD_CALLS_SPEC_TRUE("methodCallsContract_true"), METHOD_CALLS_SPEC_FALSE("methodCallsContract_false"),
@@ -52,14 +51,22 @@ public abstract class ASourceCodeAnalyzer implements IAnalyzer {
 		}
 	}
 
+	public ASourceCodeAnalyzer() {
+		sourceFile = null;
+	}
+
 	public ASourceCodeAnalyzer(File f) {
+		sourceFile = f;
+	}
+
+	public void setFile(File f) {
 		sourceFile = f;
 	}
 
 	public boolean hasLanguageConstruct(LanguageConstruct lc) {
 		return currentConstructs.contains(lc);
 	}
-	
+
 	public int getLinesOfCode() {
 		return loc;
 	}

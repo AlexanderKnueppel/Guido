@@ -4,10 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.tubs.isf.guido.core.analysis.IAnalyzer.LanguageConstruct;
-
 public abstract class AContractAnalyzer implements IAnalyzer {
-	
+
 	protected File sourceFile = null;
 	protected List<LanguageConstruct> currentConstructs;
 	protected int linesOfContract = -1;
@@ -17,11 +15,10 @@ public abstract class AContractAnalyzer implements IAnalyzer {
 		QUANTIFIERS_TRUE("quantifiers_true"), QUANTIFIERS_FALSE("quantifiers_false"),
 		GEQ_LOS("geq_linesOfSpec", new Integer(4)), LT_LOS("lt_linesOfSpec", new Integer(3)),
 		IMPLICATION_TRUE("implication_true"), IMPLICATION_FALSE("implication_false"),
-		ASSIGNABLE_TRUE("assignable_true"), ASSIGNABLE_FALSE("assignable_false"),
-		BEHAVIOR_NORMAL("behavior_normal"), BEHAVIOR_EXECPTIONAL("behavior_exceptional"),
-		PRECONDITION_TRUE("precondition_true"), PRECONDITION_FALSE("precondition_false"),
-		POSTCONDITION_TRUE("postcondition_true"), POSTCONDITION_FALSE("postcondition_false")
-		;
+		ASSIGNABLE_TRUE("assignable_true"), ASSIGNABLE_FALSE("assignable_false"), BEHAVIOR_NORMAL("behavior_normal"),
+		BEHAVIOR_EXECPTIONAL("behavior_exceptional"), PRECONDITION_TRUE("precondition_true"),
+		PRECONDITION_FALSE("precondition_false"), POSTCONDITION_TRUE("postcondition_true"),
+		POSTCONDITION_FALSE("postcondition_false"), IS_LOOP_INVARIANT("is_loop_invariant");
 
 		private String representation = "";
 		private List<Object> values = null;
@@ -56,13 +53,23 @@ public abstract class AContractAnalyzer implements IAnalyzer {
 		}
 	}
 
+	public AContractAnalyzer() {
+		this.contract = "";
+	}
+
 	public AContractAnalyzer(String contract) {
+		this.contract = contract;
+	}
+
+	public void setContract(String contract) {
 		this.contract = contract;
 	}
 
 	public int getLinesOfCode() {
 		return linesOfContract;
 	}
+
+	public abstract boolean valid();
 
 	@Override
 	public boolean hasLanguageConstruct(LanguageConstruct lc) {
