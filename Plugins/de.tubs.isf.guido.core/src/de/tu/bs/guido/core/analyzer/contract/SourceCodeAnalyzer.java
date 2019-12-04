@@ -12,8 +12,8 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.stmt.ForEachStmt;
 import com.github.javaparser.ast.stmt.ForStmt;
-import com.github.javaparser.ast.stmt.ForeachStmt;
 import com.github.javaparser.ast.stmt.IfStmt;
 import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.stmt.SwitchStmt;
@@ -183,7 +183,7 @@ public class SourceCodeAnalyzer {
 
 	public void setLoops() {
 		this.loops = method.findFirst(ForStmt.class).isPresent() 
-				|| method.findFirst(ForeachStmt.class).isPresent() 
+				|| method.findFirst(ForEachStmt.class).isPresent() 
 				|| method.findFirst(WhileStmt.class).isPresent() ? true : false;
 	}
 
