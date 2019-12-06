@@ -1,11 +1,14 @@
 package de.tubs.isf.guido.core.experiments;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.stream.Collectors;
 
 public class SingleExperiment extends AExperiment {
 
 	protected enum BaseLabel implements Label {
-		EXPERIMENT_NUMBER("ExpNum", ""), EXPERIMENT_CLOSED("Closed - ", "A"), EXPERIMENT_EFFORT("Effort - ", "A");
+		EXPERIMENT_NUMBER("ExpNum", ""), EXPERIMENT_IDENTIFIER("Identifier", ""), EXPERIMENT_CLOSED("Closed - ", "A"),
+		EXPERIMENT_EFFORT("Effort - ", "A");
 
 		private String label = "";
 		private String option = "";
@@ -35,8 +38,11 @@ public class SingleExperiment extends AExperiment {
 	@Override
 	protected void addColumns() {
 		addColumn(new DataColumn<Integer>(BaseLabel.EXPERIMENT_NUMBER));
+		addColumn(new DataColumn<Integer>(BaseLabel.EXPERIMENT_IDENTIFIER));
 		addColumn(new DataColumn<Boolean>(BaseLabel.EXPERIMENT_CLOSED, (dp) -> {
 			return (boolean) dp.getValue() == true ? "X" : "";
+		}, (str) -> {
+			return str.trim().equals("X") ? true : false;
 		}));
 		addColumn(new DataColumn<Integer>(BaseLabel.EXPERIMENT_EFFORT));
 	}
@@ -49,9 +55,9 @@ public class SingleExperiment extends AExperiment {
 	public static void main(String[] args) {
 		SingleExperiment be = new SingleExperiment("Exp1");
 
-		be.addRow(1, true, 20);
-		be.addRow(2, false, 20);
-		be.addRow(3, true, 123);
+		be.addRow(1, "", true, 20);
+		be.addRow(2, "", false, 20);
+		be.addRow(3, "", true, 123);
 
 		be.setOption("On");
 
@@ -59,5 +65,28 @@ public class SingleExperiment extends AExperiment {
 		be.getRows().stream().forEach(row -> {
 			System.out.println(row.stream().map(r -> r.toString()).collect(Collectors.joining(" | ")));
 		});
+		
+		try {
+			be.writeToFile(new File("testData/ExpSingle.txt"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			AExperiment ae = AExperiment.readFromFile(new File("testData/ExpSingle.txt"));
+
+			if (ae instanceof SingleExperiment) {
+				System.out.println("It works!");
+			}
+
+			System.out.println(ae.getHeader().stream().collect(Collectors.joining("|")));
+			ae.getRows().stream().forEach(row -> {
+				System.out.println(row.stream().map(r -> r.toString()).collect(Collectors.joining("|")));
+			});
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
