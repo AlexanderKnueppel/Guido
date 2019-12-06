@@ -8,9 +8,9 @@ public class EvaluatedHypothesis extends Hypothesis {
 	private static final long serialVersionUID = 1L;
 	private final BigDecimal pValue;
 
-	public EvaluatedHypothesis(String parameter, String optionA, String optionB, String requirement, String dependency,
+	public EvaluatedHypothesis(String identifier, String parameter, String optionA, String optionB, String requirement, String dependency,
 			List<String> properties, String pValue) {
-		super(parameter, optionA, optionB, requirement, dependency, properties);
+		super(identifier, parameter, optionA, optionB, requirement, dependency, properties);
 		this.pValue = new BigDecimal(pValue);
 	}
 
