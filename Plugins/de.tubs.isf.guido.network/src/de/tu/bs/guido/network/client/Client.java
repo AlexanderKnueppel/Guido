@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import de.tu.bs.guido.network.server.Server;
-import de.tu.bs.guido.verification.system.AbstractFactory;
+import de.tu.bs.guido.verification.system.ASystemFactory;
 import de.tu.bs.guido.verification.systems.key.KeyFactory;
 
 public class Client {
 
 	public static void main(String[] args) throws UnknownHostException,
 			ClassNotFoundException, IOException {
-		AbstractFactory.setAbst(new KeyFactory());
+		ASystemFactory.setAbst(new KeyFactory());
 		String ip = "127.0.0.1";
 		if (args.length > 0) {
 			ip = args[0];

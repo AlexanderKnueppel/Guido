@@ -26,11 +26,12 @@ import de.tu.bs.guido.key.pooling.distributed.DistributedWorkingPool;
 import de.tu.bs.guido.key.pooling.distributed.NewResultNotifier;
 import de.tu.bs.guido.network.ProofRunnable;
 import de.tu.bs.guido.network.file.server.FileServer;
-import de.tu.bs.guido.verification.system.AbstractFactory;
-import de.tu.bs.guido.verification.system.Job;
+import de.tu.bs.guido.verification.system.ASystemFactory;
+import de.tu.bs.guido.verification.system.IJob;
 import de.tu.bs.guido.verification.system.SampleHelper;
 import de.tu.bs.guido.verification.system.SettingsObject;
 import de.tu.bs.guido.verification.systems.key.KeyFactory;
+import de.tu.bs.guido.verification.systems.key.KeyJavaJob;
 
 public class Server implements Observer {
 
@@ -47,39 +48,39 @@ public class Server implements Observer {
 	private static final File PUNISHMENT_FILE = new File("punishments.txt");
 
 	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-		ArrayList<Job> jobs;
+		ArrayList<IJob> jobs;
 		int argsLength = args.length;
-		AbstractFactory.setAbst(new KeyFactory());
+		ASystemFactory.setAbst(new KeyFactory());
 		if (argsLength == 4) { // NOT USABLE SINCE EXCPETION IS THROWN! (no reason is mentioned for it)
 			String source = args[0];
 			String clazz = args[1];
 			String method = args[2];
 			File samples = new File(args[3]);
-
-			List<SettingsObject> sos = SampleHelper.readSPLSamples(samples);
+			
+			List<SettingsObject> sos = ASystemFactory.getAbst().createSampleHelper().readSPLSamples(samples);
 			jobs = new ArrayList<>(sos.size());
 			
-			sos.forEach(so -> jobs.add(AbstractFactory.getAbst().createJob("", -1, source, null, clazz, method, null, so)));
+			sos.forEach(so -> jobs.add(new KeyJavaJob("", -1, source, null, clazz, method, null, so)));
 			throw new IllegalArgumentException("not yet updated...");
 		} else if (argsLength == 1) {
-			if (!args[0].equals("key")) {
+			if (!args[0].equals("key")) { 
 				mode = Mode.Key;
-				AbstractFactory.setAbst(new KeyFactory());
+				ASystemFactory.setAbst(new KeyFactory());
 			}
 			System.out.println("Going to read jobs...");
 			String testArgsInput = args[0]; // "./../../VerificationData/VerificationData_AutomatedVerification/exampleJob.xml";
-			jobs = AbstractFactory.getAbst().createBatchXMLHelper().generateJobFromXML(new File(testArgsInput));
+			jobs = ASystemFactory.getAbst().createBatchXMLHelper().generateJobFromXML(new File(testArgsInput));
 			filterListForDuplicates(jobs);
 //			filterListForMe(jobs);
 			System.out.println("So many jobs read... " + jobs.size());
 		} else if (argsLength == 2) {
 			if (!args[1].equals("key")) {
 				mode = Mode.Key;
-				AbstractFactory.setAbst(new KeyFactory());
+				ASystemFactory.setAbst(new KeyFactory());
 			}
 			System.out.println("Going to read jobs...");
 			String testArgsInput = args[0]; // "./../../VerificationData/VerificationData_AutomatedVerification/exampleJob.xml";
-			jobs = AbstractFactory.getAbst().createBatchXMLHelper().generateJobFromXML(new File(testArgsInput));
+			jobs = ASystemFactory.getAbst().createBatchXMLHelper().generateJobFromXML(new File(testArgsInput));
 			filterListForDuplicates(jobs);
 //			filterListForMe(jobs);
 			System.out.println("So many jobs read... " + jobs.size());
@@ -90,8 +91,8 @@ public class Server implements Observer {
 		if (PUNISHMENT_FILE.exists()) {
 			pt.updatePunishments(jobs);
 			if (DONE_FILE.exists()) {
-				List<Job> doneJobs = readDoneJobs(DONE_FILE);
-				for (Job job : doneJobs) {
+				List<IJob> doneJobs = readDoneJobs(DONE_FILE);
+				for (IJob job : doneJobs) {
 					job.reinitialize();
 				}
 				jobs.removeAll(doneJobs);
@@ -109,14 +110,14 @@ public class Server implements Observer {
 			OPEN_FILE.delete();
 			try (BufferedWriter bw = new BufferedWriter(new FileWriter(OPEN_FILE))) {
 				Gson gson = new Gson();
-				for (Job j : jobs) {
+				for (IJob j : jobs) {
 					bw.write(gson.toJson(j));
 					bw.newLine();
 				}
 			}
 			System.out.println("Open file writen");
 			Set<String> whiteLists = new HashSet<>();
-			for (Job j : jobs) {
+			for (IJob j : jobs) {
 				whiteLists.add(j.getSource());
 				whiteLists.add(j.getClasspath());
 			}
@@ -128,11 +129,11 @@ public class Server implements Observer {
 		}
 	}
 
-	private static void filterListForDuplicates(List<Job> jobs) {
+	private static void filterListForDuplicates(List<IJob> jobs) {
 		for (int i = 0; i < jobs.size(); i++) {
-			Job a = jobs.get(i);
+			IJob a = jobs.get(i);
 			for (int j = i + 1; j < jobs.size(); j++) {
-				Job b = jobs.get(j);
+				IJob b = jobs.get(j);
 				if (a.equals(b)) {
 					jobs.remove(j);
 					j--;
@@ -146,9 +147,9 @@ public class Server implements Observer {
 		}
 	}
 	@Deprecated
-	private static void filterListForMe(List<Job> joblist) {
-		for (Iterator<Job> iterator = joblist.iterator(); iterator.hasNext();) {
-			Job job = iterator.next();
+	private static void filterListForMe(List<IJob> joblist) {
+		for (Iterator<IJob> iterator = joblist.iterator(); iterator.hasNext();) {
+			IJob job = iterator.next();
 			if (job.getCode().equals("Basic"))
 				iterator.remove();
 			else if (!job.getMethod().equals("max"))
@@ -158,14 +159,14 @@ public class Server implements Observer {
 		}
 	}
 
-	private static List<Job> readDoneJobs(File f) throws FileNotFoundException, IOException {
-		List<Job> doneJobs = new ArrayList<>();
+	private static List<IJob> readDoneJobs(File f) throws FileNotFoundException, IOException {
+		List<IJob> doneJobs = new ArrayList<>();
 	
 		try (BufferedReader br = new BufferedReader(new FileReader(f))) {
 			String line;
 			Gson gson = new Gson();
 			while ((line = br.readLine()) != null) {
-				Job j = gson.fromJson(line, Job.class);
+				IJob j = gson.fromJson(line, IJob.class);
 				doneJobs.add(j);
 			}
 		}
@@ -186,8 +187,8 @@ public class Server implements Observer {
 		nrn.addObserver(zo);
 	}
 
-	public void start(List<Job> jobs) throws IOException {
-		for (Job job : jobs) {
+	public void start(List<IJob> jobs) throws IOException {
+		for (IJob job : jobs) {
 			pool.addJob(new ProofRunnable(job, FILE_SERVER_PORT));
 		}
 		pool.addObserver(this);

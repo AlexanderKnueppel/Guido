@@ -7,9 +7,9 @@ import java.util.List;
 
 import de.tu.bs.guido.key.pooling.distributed.ResultRunnable;
 import de.tu.bs.guido.network.client.FileClient;
-import de.tu.bs.guido.verification.system.AbstractFactory;
+import de.tu.bs.guido.verification.system.ASystemFactory;
 import de.tu.bs.guido.verification.system.Control;
-import de.tu.bs.guido.verification.system.Job;
+import de.tu.bs.guido.verification.system.IJob;
 import de.tu.bs.guido.verification.system.Result;
 
 public class ProofRunnable implements ResultRunnable, Serializable {
@@ -20,11 +20,11 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 	private static final long serialVersionUID = 6790934214721419957L;
 	
 	private final int fileServerPort;
-	private final Job job;
+	private final IJob job;
 	private Object result;
 	private transient String ip;
 
-	public ProofRunnable(Job job, int fileServerPort) {
+	public ProofRunnable(IJob job, int fileServerPort) {
 		super();
 		this.job = job;
 		this.fileServerPort = fileServerPort;
@@ -38,7 +38,7 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 			
 			System.out.println("Running: "+job);
 			//here Factory adding 
-			Control kc = AbstractFactory.getAbst().createControl();
+			Control kc = ASystemFactory.getAbst().createControl();
 			FileClient fc = new FileClient(ip, fileServerPort);
 			String source = job.getSource();
 			String classpath = job.getClasspath();

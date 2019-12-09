@@ -13,7 +13,7 @@ import com.google.gson.GsonBuilder;
 import de.tu.bs.guido.key.pooling.WorkingPool;
 import de.tu.bs.guido.network.ProofRunnable;
 import de.tu.bs.guido.network.ResultCommunication;
-import de.tu.bs.guido.verification.system.Job;
+import de.tu.bs.guido.verification.system.IJob;
 import de.tu.bs.guido.verification.system.Result;
 
 public class ResultObserver implements Observer {
@@ -42,7 +42,7 @@ public class ResultObserver implements Observer {
 	public void update(Observable o, Object arg) {
 		ResultCommunication resCom = (ResultCommunication) arg;
 		if (punish(resCom)) {
-			Job j = resCom.getJob();
+			IJob j = resCom.getJob();
 			try {
 				j = pt.punish(j);
 			} catch (IOException e) {

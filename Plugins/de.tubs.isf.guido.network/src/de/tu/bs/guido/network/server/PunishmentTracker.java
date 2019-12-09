@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import de.tu.bs.guido.verification.system.Job;
+import de.tu.bs.guido.verification.system.IJob;
 
 public class PunishmentTracker {
 	private static final int MAXIMUM_MAX_STEPS = 1000000;
@@ -25,25 +25,25 @@ public class PunishmentTracker {
 		this.punishments = punishments;
 	}
 
-	private List<Job> readPunishments() throws FileNotFoundException,
+	private List<IJob> readPunishments() throws FileNotFoundException,
 			IOException {
-		List<Job> punishments = new ArrayList<Job>();
+		List<IJob> punishments = new ArrayList<IJob>();
 		try (BufferedReader br = new BufferedReader(new FileReader(
 				this.punishments))) {
 			String line;
 			Gson gson = new Gson();
 			while ((line = br.readLine()) != null) {
-				Job j = gson.fromJson(line, Job.class);
+				IJob j = gson.fromJson(line, IJob.class);
 				punishments.add(j);
 			}
 		}
 		return punishments;
 	}
 
-	public void updatePunishments(List<Job> jobs) throws FileNotFoundException, IOException {
-		List<Job> otherList = readPunishments();
+	public void updatePunishments(List<IJob> jobs) throws FileNotFoundException, IOException {
+		List<IJob> otherList = readPunishments();
 		for (int i = 0; i < otherList.size(); i+=2){
-			Job oldOne = otherList.get(i);
+			IJob oldOne = otherList.get(i);
 			if(jobs.contains(oldOne)){
 				jobs.remove(oldOne);
 				jobs.add(otherList.get(i+1));
@@ -51,11 +51,11 @@ public class PunishmentTracker {
 		}
 	}
 
-	public Job punish(Job j) throws IOException {
+	public IJob punish(IJob j) throws IOException {
 		synchronized (punishments) {
 			try (BufferedWriter bw = new BufferedWriter(new FileWriter(punishments,
 					true))) {
-				Job newJob = null;
+				IJob newJob = null;
 				try {
 					newJob = j.clone();
 				} catch (CloneNotSupportedException e) {
