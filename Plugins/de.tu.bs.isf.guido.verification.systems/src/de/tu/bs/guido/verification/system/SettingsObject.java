@@ -13,35 +13,19 @@ import de.tu.bs.guido.verification.systems.key.options.strategies.StrategyOption
 import de.tu.bs.guido.verification.systems.key.options.taclets.KeyTacletOptions;
 import de.tu.bs.guido.verification.systems.key.options.taclets.TacletOptionable;
 
-public class SettingsObject implements Cloneable, Serializable {
+public abstract class SettingsObject implements Cloneable, Serializable {
 
 	private static final long serialVersionUID = -5974976146446740045L;
 
-	protected int maxSteps;
 	protected int debugNumber;
+	protected int maxSteps;
 	protected Map<String, String> settingsMap = new HashMap<>();
-	protected Map<String, String> tacletMap = new HashMap<>();
 
 	public SettingsObject() {
-		for (KeyStrategyOptions option : KeyStrategyOptions.values()) {
-			setOption(option.getDefault());
-		}
-		for (KeyTacletOptions taclet : KeyTacletOptions.values()) {
-			setTaclet(taclet.getDefault());
-		}
+		
 	}
 	
-	public void reinitialize(){
-			for (KeyStrategyOptions option : KeyStrategyOptions.values()) {
-				if(!settingsMap.containsKey(option.getValue()))
-					setOption(option.getDefault());
-			}
-			for (KeyTacletOptions taclet : KeyTacletOptions.values()) {
-				if(!tacletMap.containsKey(taclet.getValue()))
-					setTaclet(taclet.getDefault());
-			}
-		}
-
+	public abstract void reinitialize();
 	public int getMaxSteps() {
 		return maxSteps;
 	}
@@ -50,157 +34,37 @@ public class SettingsObject implements Cloneable, Serializable {
 		this.maxSteps = maxSteps;
 	}
 
-	public Map<String, String> getSettingsMap() {
-		return Collections.unmodifiableMap(settingsMap);
-	}
 
-	public Map<String, String> getTacletMap() {
-		return Collections.unmodifiableMap(tacletMap);
-	}
+	public abstract Map<String, String> getSettingsMap();
+
+	public abstract Map<String, String> getTacletMap();
 	
-	public Optionable getOption(OptionableContainer o){
-		String key = o.getValue();
-		if (o instanceof KeyStrategyOptions){
-			String value = settingsMap.get(o.getValue());
-			return KeyStrategyOptions.getOption(key, value);
-		} else if (o instanceof KeyTacletOptions){
-			String value = tacletMap.get(o.getValue());
-			return KeyTacletOptions.getOption(key, value);
-		}
-		throw new IllegalArgumentException();
-	}
+	public abstract Optionable getOption(OptionableContainer o);
 
-	public void setParameter(Optionable o) {
-		if (o instanceof StrategyOptionable) {
-			setOption((StrategyOptionable) o);
-		} else if (o instanceof TacletOptionable) {
-			setTaclet((TacletOptionable) o);
-		} else {
-			throw new IllegalArgumentException(
-					o
-							+ " is unknown, so it can not be determined to be option or taclet");
-		}
-	}
+	public abstract void setParameter(Optionable o);
 
-	public void setParameter(String option, String value) {
-		if (KeyStrategyOptions.isOption(option)) {
-			setOption(option, value);
-		} else if (KeyTacletOptions.isTaclet(option)) {
-			setTaclet(option, value);
-		} else {
-			throw new IllegalArgumentException(
-					option
-							+ " is unknown, so it can not be determined to be option or taclet");
-		}
-	}
+	public abstract void setParameter(String option, String value);
 
-	public void setOption(StrategyOptionable v) {
-		setOption(v.getType(), v.getValue());
-	}
+	public abstract void setOption(StrategyOptionable v);
 
-	public void setOption(KeyStrategyOptions option, String value) {
-		setOption(option.getValue(), value);
-	}
 
-	public void setOption(String option, String value) {
-		settingsMap.put(option, value);
-	}
+	public abstract void setOption(String option, String value);
 
-	public void setTaclet(TacletOptionable v) {
-		setTaclet(v.getType(), v.getValue());
-	}
 
-	public void setTaclet(KeyTacletOptions option, String value) {
-		setTaclet(option.getValue(), value);
-	}
+	public abstract int getDebugNumber();
 
-	public void setTaclet(String option, String value) {
-		tacletMap.put(option, value);
-	}
+	public abstract void setDebugNumber(int debugNumber);
 
-	public int getDebugNumber() {
-		return debugNumber;
-	}
-
-	public void setDebugNumber(int debugNumber) {
-		this.debugNumber = debugNumber;
-	}
-
-	private static int mapHashValue(Map<String, String> map) {
-		if (map == null) {
-			return 0;
-		} else {
-			int sum = 0;
-			for (Entry<String, String> entry : map.entrySet()) {
-				sum += entry.getKey().hashCode();
-				sum += entry.getValue().hashCode();
-			}
-			return sum;
-		}
-	}
-
-	private static boolean mapEquals(Map<String, String> thisMap,
-			Map<String, String> thatMap) {
-		if(thisMap.size() != thatMap.size()){
-			return false;
-		}
-		
-		for (Entry<String, String> entry : thisMap.entrySet()) {
-			String thatMapValue = thatMap.get(entry.getKey());
-			if(!thatMapValue.equals(entry.getValue())){
-				return false;
-			}
-		}
-		
-		return true;
-	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + maxSteps;
-		result = prime * result + mapHashValue(settingsMap);
-		result = prime * result + mapHashValue(tacletMap);
-		return result;
-	}
+	public abstract int hashCode();
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SettingsObject other = (SettingsObject) obj;
-		if (maxSteps != other.maxSteps)
-			return false;
-		if (settingsMap == null) {
-			if (other.settingsMap != null)
-				return false;
-		} else if (!mapEquals(settingsMap,other.settingsMap))
-			return false;
-		if (tacletMap == null) {
-			if (other.tacletMap != null)
-				return false;
-		} else if (!mapEquals(tacletMap,other.tacletMap))
-			return false;
-		return true;
-	}
+	public abstract boolean equals(Object obj);
 
 	@Override
-	public String toString() {
-		return "SettingsObject [maxSteps=" + maxSteps + ", settingsMap="
-				+ settingsMap + ", tacletMap=" + tacletMap + "]";
-	}
+	public abstract String toString();
 	
 
-	public SettingsObject clone() throws CloneNotSupportedException{
-		SettingsObject so = new SettingsObject();
-		so.maxSteps = maxSteps;
-		so.settingsMap = new HashMap<>(settingsMap);
-		so.tacletMap = new HashMap<>(tacletMap);
-		return so;
-	}
+	public abstract SettingsObject clone() throws CloneNotSupportedException;
 }

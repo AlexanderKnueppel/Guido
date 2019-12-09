@@ -1,16 +1,15 @@
 package de.tu.bs.guido.verification.systems.key;
 
-import de.tu.bs.guido.verification.system.AbstractFactory;
+import de.tu.bs.guido.verification.system.ASystemFactory;
 import de.tu.bs.guido.verification.system.BatchXMLHelper;
 import de.tu.bs.guido.verification.system.Control;
 import de.tu.bs.guido.verification.system.GetJobs;
-import de.tu.bs.guido.verification.system.Job;
 import de.tu.bs.guido.verification.system.Result;
 import de.tu.bs.guido.verification.system.SampleHelper;
 import de.tu.bs.guido.verification.system.SettingsObject;
-import de.tu.bs.guido.verification.systems.key.options.KeySettingsObject;
 
-public class KeyFactory extends AbstractFactory {
+
+public class KeyFactory extends ASystemFactory {
 
 	public Control createControl() {
 
@@ -38,12 +37,7 @@ public class KeyFactory extends AbstractFactory {
 		return new KeySampleHelper();
 	}
 
-	@Override
-	public Job createJob(String code, int expNumb, String source, String classpath, String clazz, String method,
-			String[] parameter, SettingsObject so) {
-		// TODO Auto-generated method stub
-		return new KeyJob(code, expNumb, source, classpath, clazz, method, parameter, so);
-	}
+
 
 	@Override
 	public BatchXMLHelper createBatchXMLHelper() {

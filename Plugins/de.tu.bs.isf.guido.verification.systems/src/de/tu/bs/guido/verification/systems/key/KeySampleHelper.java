@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import de.tu.bs.guido.verification.system.AbstractFactory;
+import de.tu.bs.guido.verification.system.ASystemFactory;
 import de.tu.bs.guido.verification.system.Result;
 import de.tu.bs.guido.verification.system.SampleHelper;
 import de.tu.bs.guido.verification.system.SettingsObject;
@@ -41,7 +41,7 @@ public class KeySampleHelper extends SampleHelper {
 						- "postfix".length());
 				line = line.replaceFirst("\".*\"", "");
 				String[] options = line.split(";");
-				SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
+				SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
 				so.setMaxSteps(100000);
 				System.out.print("[");
 				boolean first = true;
@@ -85,7 +85,7 @@ public class KeySampleHelper extends SampleHelper {
 
 	}
 
-	public static List<SettingsObject> readSPLSamples(File samples)
+	public List<SettingsObject> readSPLSamples(File samples)
 			throws IOException {
 		List<SettingsObject> result = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new FileReader(samples))) {
@@ -96,7 +96,7 @@ public class KeySampleHelper extends SampleHelper {
 						- "postfix".length());
 				line = line.replaceFirst("\".*\"", "");
 				String[] options = line.split(";");
-				SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
+				SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
 				for (String option : options) {
 					option = option.trim();
 					String[] vals = option.split("::");
@@ -111,7 +111,7 @@ public class KeySampleHelper extends SampleHelper {
 		return result;
 	}
 
-	public static List<SettingsObject> readFeatureIDESamples(File sampleFolder)
+	public List<SettingsObject> readFeatureIDESamples(File sampleFolder)
 			throws IOException {
 		List<SettingsObject> result = new ArrayList<>();
 		List<File> configFiles = new ArrayList<>();
@@ -127,7 +127,7 @@ public class KeySampleHelper extends SampleHelper {
 		for (File config : configFiles) {
 			try (BufferedReader br = new BufferedReader(new FileReader(config))) {
 				String line;
-				SettingsObject so = AbstractFactory.getAbst().createSettingsObject();
+				SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
 				while ((line = br.readLine()) != null) {
 					line = FeatureIdeTranslator.decode(line);
 					line = line.trim();
@@ -146,23 +146,25 @@ public class KeySampleHelper extends SampleHelper {
 		return result;
 	}
 
-//	public List<? extends Result> outPutProofResults(List<? extends Result> res) {
-//		res.forEach(result -> {
-//			System.out.println(result.getName());
-//			System.out.println(result.getProof());
-//			System.out.println(result.isClosed() ? result.getSteps()
-//					: "notClosed!");
-//			System.out.println();
-//			System.out.println("Options:");
-//			result.getOptions().forEach(
-//					(key, value) -> System.out.println(key + ": " + value));
-//			System.out.println();
-//			System.out.println("Taclets:");
-//			result.getTaclets().forEach(
-//					(key, value) -> System.out.println(key + ": " + value));
-//			System.out.println("____________________________________________");
-//		});
-//		return res;
-//	}
+
+	
+	public List<Result> outPutProofResults(List<Result> res) {
+		res.forEach(result -> {
+			System.out.println(result.getName());
+			System.out.println(result.getProof());
+			System.out.println(result.isClosed() ? result.getSteps()
+					: "notClosed!");
+			System.out.println();
+			System.out.println("Options:");
+			result.getOptions().forEach(
+					(key, value) -> System.out.println(key + ": " + value));
+			System.out.println();
+			System.out.println("Taclets:");
+			result.getTaclets().forEach(
+					(key, value) -> System.out.println(key + ": " + value));
+			System.out.println("____________________________________________");
+		});
+		return res;
+	}
 
 }

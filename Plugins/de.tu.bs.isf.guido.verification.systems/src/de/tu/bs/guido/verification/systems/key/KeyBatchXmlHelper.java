@@ -18,10 +18,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import de.tu.bs.guido.verification.system.AbstractFactory;
+import de.tu.bs.guido.verification.system.ASystemFactory;
 import de.tu.bs.guido.verification.system.BatchXMLHelper;
 import de.tu.bs.guido.verification.system.GetJobs;
-import de.tu.bs.guido.verification.system.Job;
+import de.tu.bs.guido.verification.system.IJob;
 import de.tu.bs.guido.verification.system.SampleHelper;
 import de.tu.bs.guido.verification.system.SettingsObject;
 import de.tu.bs.guido.verification.systems.key.KeyGetJobs;
@@ -37,8 +37,8 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 	private Map<String, List<SettingsObject>> parsedSamples = new HashMap<>();
 	private Map<SearchParameter, Integer> alreadyLoadedProofs = new HashMap<>();
 
-	public ArrayList<Job> generateJobFromXML(File xml) throws SAXException, IOException, ParserConfigurationException {
-		final ArrayList<Job> result = new ArrayList<>();
+	public ArrayList<IJob> generateJobFromXML(File xml) throws SAXException, IOException, ParserConfigurationException {
+		final ArrayList<IJob> result = new ArrayList<>();
 
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
@@ -100,20 +100,20 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 		return result;
 	}
 
-	private String[] getParameters(String parametersText) {
+	public String[] getParameters(String parametersText) {
 		return parametersText.isEmpty() ? new String[0] : parametersText.split(",");
 	}
 
-	private List<Job> getJobsForMethod(String code, String source, String classpath, String className,
+	public List<IJob> getJobsForMethod(String code, String source, String classpath, String className,
 			String methodName, String[] parameters, String sampleFile, String sampleType) throws IOException {
-		List<Job> result = new ArrayList<>();
+		List<IJob> result = new ArrayList<>();
 		SearchParameter ksp = new SearchParameter(source, className, methodName, parameters);
 		Integer noc = alreadyLoadedProofs.get(ksp);
 		int numberOfContracts;
 		if (noc == null) {
 			GetJobs gj = null;
 
-			gj = AbstractFactory.getAbst().createGetJobs();
+			gj = ASystemFactory.getAbst().createGetJobs();
 
 			numberOfContracts = gj.getNumbofJobs(source, classpath, className, methodName, parameters);
 		} else {
@@ -121,30 +121,30 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 		}
 		getSampleForFile(sampleFile, sampleType).forEach(setting -> {
 			for (int num = 0; num < numberOfContracts; num++)
-				result.add(new Job(code, setting.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath), className,
+				result.add(new KeyJavaJob(code, setting.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath), className,
 						methodName, parameters, setting, num));
 		});
 		return result;
 	}
 
-	private String cleanEmpty(String s) {
+	public String cleanEmpty(String s) {
 		return s == null ? null : s.isEmpty() ? null : s;
 	}
 
-	private String chooseSampleFile(String rootSampleFile, String codeSampleFile, String classSampleFile,
+	public String chooseSampleFile(String rootSampleFile, String codeSampleFile, String classSampleFile,
 			String methodSampleFile) {
 		return cleanEmpty(methodSampleFile) != null ? methodSampleFile
 				: cleanEmpty(classSampleFile) != null ? classSampleFile
 						: cleanEmpty(codeSampleFile) != null ? codeSampleFile : rootSampleFile;
 	}
 
-	private List<SettingsObject> getSampleForFile(String sampleFile, String type) throws IOException {
+	public List<SettingsObject> getSampleForFile(String sampleFile, String type) throws IOException {
 		List<SettingsObject> result = parsedSamples.get(sampleFile);
 		if (result == null) {
 			if (type == SPL_SAMPLE_FILE) {
-				result = Collections.unmodifiableList(SampleHelper.readSPLSamples(new File(sampleFile)));
+				result = Collections.unmodifiableList(new KeySampleHelper().readSPLSamples(new File(sampleFile)));
 			} else {
-				result = Collections.unmodifiableList(SampleHelper.readFeatureIDESamples(new File(sampleFile)));
+				result = Collections.unmodifiableList(new KeySampleHelper().readFeatureIDESamples(new File(sampleFile)));
 			}
 			parsedSamples.put(sampleFile, result);
 		}

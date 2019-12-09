@@ -17,6 +17,7 @@ public class Result implements Serializable {
 	private final Map<String, String> taclets;
 	private String code;
 	private Map<String, Integer> experiments;
+ 
 	
 	public Result(String proof, String name, boolean closed, int steps, long timeInMillis2,
 			Map<String, String> options, Map<String, String> taclets) {

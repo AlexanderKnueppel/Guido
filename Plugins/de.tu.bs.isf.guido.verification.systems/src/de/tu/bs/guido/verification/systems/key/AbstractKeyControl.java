@@ -203,7 +203,7 @@ public abstract class AbstractKeyControl implements Control {
 	 * @param m
 	 * @param so
 	 */
-	protected void applySettings(Proof p, SettingsObject so) {
+	protected void applySettings(Proof p, KeySettingsObject so) {
 		StrategySettingsDefinition ssd = JavaProfile.DEFAULT.getSettingsDefinition();
 		ProofSettings ps = p.getSettings();
 		StrategySettings ss = ps.getStrategySettings();

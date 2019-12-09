@@ -1,14 +1,14 @@
 package de.tu.bs.guido.verification.system;
 
-public abstract class AbstractFactory {
-	public static AbstractFactory abst;
+public abstract class ASystemFactory {
+	public static ASystemFactory abst;
 
-	public static AbstractFactory getAbst() {
+	public static ASystemFactory getAbst() {
 		return abst;
 	}
 
-	public static void setAbst(AbstractFactory abst) {
-		AbstractFactory.abst = abst;
+	public static void setAbst(ASystemFactory abst) {
+		ASystemFactory.abst = abst;
 	}
 
 	public abstract Control createControl();
@@ -23,8 +23,6 @@ public abstract class AbstractFactory {
 
 	public abstract BatchXMLHelper createBatchXMLHelper();
 
-	public abstract Job createJob(String code, int expNumb, String source, String classpath, String clazz,
-			String method, String[] parameter, SettingsObject so);
 	public abstract SettingsObject createSettingsObject();
 
 }

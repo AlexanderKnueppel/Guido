@@ -19,6 +19,8 @@ public class ExampleBasedKeyControl extends AbstractKeyControl {
 	@Override
 	public List<Result> getResultForProof(File source, File classPath, String className, String methodName,
 			String[] parameters, int contractNumber, SettingsObject so) {
+		KeySettingsObject so1 = (KeySettingsObject) so;
+		
 		List<Result> res = new ArrayList<Result>();
 		if (!ProofSettings.isChoiceSettingInitialised()) {
 			KeYEnvironment<?> env = null;
@@ -30,7 +32,7 @@ public class ExampleBasedKeyControl extends AbstractKeyControl {
 			}
 			env.dispose();
 		}
-		applyDefaultTaclets(so);
+		applyDefaultTaclets(so1);
 		KeYEnvironment<?> env = null;
 		try {
 			env = KeYEnvironment.load(source, null, classPath, null);
@@ -44,10 +46,10 @@ public class ExampleBasedKeyControl extends AbstractKeyControl {
 					env.getSpecificationRepository(), type);
 			if (contractNumber == -1) {
 				for (Contract contract : proofContracts) {
-					res.add(getResult(env, contract, so));
+					res.add(getResult(env, contract, so1));
 				}
 			} else {
-				res.add(getResult(env, proofContracts.get(contractNumber), so));
+				res.add(getResult(env, proofContracts.get(contractNumber), so1));
 			}
 		} finally {
 			env.dispose();
@@ -55,7 +57,7 @@ public class ExampleBasedKeyControl extends AbstractKeyControl {
 		return res;
 	}
 
-	private KeyResult getResult(KeYEnvironment<?> env, Contract contract, SettingsObject so) {
+	private KeyResult getResult(KeYEnvironment<?> env, Contract contract, KeySettingsObject so) {
 		Proof proof = null;
 		try {
 			proof = env.createProof(contract.createProofObl(env.getInitConfig(), contract));

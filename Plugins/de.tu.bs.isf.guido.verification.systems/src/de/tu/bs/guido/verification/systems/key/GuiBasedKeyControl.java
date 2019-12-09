@@ -43,7 +43,7 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 			SettingsObject so) {
 		try {
 			return executeProofsForMethod(source, classPath, className, methodName, parameters,
-					contractNumber, so);
+					contractNumber, (KeySettingsObject) so);
 		} catch (ProofInputException | ProblemLoaderException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,7 +65,7 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 	 * @param m
 	 * @param so
 	 */
-	private void applySettings(KeYMediator m, SettingsObject so) {
+	private void applySettings(KeYMediator m, KeySettingsObject so) {
 		waitForKeyGui();
 		Proof p = m.getSelectedProof();
 		applySettings(p, so);
@@ -80,7 +80,7 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 
 	private void loadProofAndApplySettings(MainWindow main, File source,
 			File classPath, String className, String methodName, String[] parameters, 
-			SettingsObject so) throws ProofInputException,
+			KeySettingsObject so) throws ProofInputException,
 			ProblemLoaderException {
 		System.out.println("Loading proof to apply taclets");
 		AbstractProblemLoader apl = main.getUserInterface().load(null, source,
@@ -129,7 +129,7 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 	 */
 	private List<Result> executeProofsForMethod(File source, File classPath,
 			String className, String methodName, String[] parameters, int contractNumber,
-			SettingsObject so) throws ProblemLoaderException,
+			KeySettingsObject so) throws ProblemLoaderException,
 			ProofInputException {
 		MainWindow main = MainWindow.getInstance();
 		List<Result> results = new ArrayList<>();
@@ -169,7 +169,7 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 	}
 
 	private Result getResult(MainWindow main, InitConfig ic, Contract contract,
-			SettingsObject so) throws ProofInputException {
+			KeySettingsObject so) throws ProofInputException {
 		ProofOblInput poi = contract.createProofObl(ic);
 		KeYMediator mediator = main.getMediator();
 		AbstractMediatorUserInterfaceControl ui = mediator.getUI();
