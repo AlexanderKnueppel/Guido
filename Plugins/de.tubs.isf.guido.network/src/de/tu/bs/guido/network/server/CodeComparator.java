@@ -2,8 +2,8 @@ package de.tu.bs.guido.network.server;
 
 import java.util.Comparator;
 
-import de.tu.bs.guido.verification.system.IJob;
-import de.tu.bs.guido.verification.systems.key.options.OptionableContainer;
+import de.tubs.isf.core.verifier.IJob;
+import de.tubs.isf.core.verifier.OptionableContainer;
 
 public class CodeComparator implements Comparator<IJob>{
 

@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import de.tu.bs.guido.network.server.Server;
-import de.tu.bs.guido.verification.system.ASystemFactory;
-import de.tu.bs.guido.verification.systems.key.KeyFactory;
+import de.tubs.isf.core.verifier.ASystemFactory;
+import de.tubs.isf.guido.verification.systems.key.KeyFactory;
 
 public class Client {
 

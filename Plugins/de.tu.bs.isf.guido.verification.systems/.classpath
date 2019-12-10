@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="libs/KeY/libs/antlr.jar"/>
 	<classpathentry kind="lib" path="libs/KeY/libs/recoderKey.jar"/>
 	<classpathentry kind="lib" path="libs/KeY/KeY.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.core"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

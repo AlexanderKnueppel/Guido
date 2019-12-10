@@ -3,8 +3,8 @@ package de.tu.bs.guido.network;
 import java.io.Serializable;
 import java.util.List;
 
-import de.tu.bs.guido.verification.system.IJob;
-import de.tu.bs.guido.verification.system.Result;
+import de.tubs.isf.core.verifier.IJob;
+import de.tubs.isf.core.verifier.Result;
 
 
 

@@ -26,12 +26,12 @@ import de.tu.bs.guido.key.pooling.distributed.DistributedWorkingPool;
 import de.tu.bs.guido.key.pooling.distributed.NewResultNotifier;
 import de.tu.bs.guido.network.ProofRunnable;
 import de.tu.bs.guido.network.file.server.FileServer;
-import de.tu.bs.guido.verification.system.ASystemFactory;
-import de.tu.bs.guido.verification.system.IJob;
-import de.tu.bs.guido.verification.system.SampleHelper;
-import de.tu.bs.guido.verification.system.SettingsObject;
-import de.tu.bs.guido.verification.systems.key.KeyFactory;
-import de.tu.bs.guido.verification.systems.key.KeyJavaJob;
+import de.tubs.isf.core.verifier.ASystemFactory;
+import de.tubs.isf.core.verifier.IJob;
+import de.tubs.isf.core.verifier.SampleHelper;
+import de.tubs.isf.core.verifier.SettingsObject;
+import de.tubs.isf.guido.verification.systems.key.KeyFactory;
+import de.tubs.isf.guido.verification.systems.key.KeyJavaJob;
 
 public class Server implements Observer {
 

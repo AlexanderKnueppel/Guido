@@ -7,10 +7,10 @@ import java.util.List;
 
 import de.tu.bs.guido.key.pooling.distributed.ResultRunnable;
 import de.tu.bs.guido.network.client.FileClient;
-import de.tu.bs.guido.verification.system.ASystemFactory;
-import de.tu.bs.guido.verification.system.Control;
-import de.tu.bs.guido.verification.system.IJob;
-import de.tu.bs.guido.verification.system.Result;
+import de.tubs.isf.core.verifier.ASystemFactory;
+import de.tubs.isf.core.verifier.Control;
+import de.tubs.isf.core.verifier.IJob;
+import de.tubs.isf.core.verifier.Result;
 
 public class ProofRunnable implements ResultRunnable, Serializable {
 
