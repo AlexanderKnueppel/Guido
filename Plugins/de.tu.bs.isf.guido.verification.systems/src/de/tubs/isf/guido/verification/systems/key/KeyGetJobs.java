@@ -2,7 +2,7 @@ package de.tubs.isf.guido.verification.systems.key;
 
 import java.io.File;
 
-import de.tubs.isf.core.verifier.GetJobs;
+import de.tubs.isf.guido.core.verifier.GetJobs;
 
 public class KeyGetJobs implements GetJobs {
 

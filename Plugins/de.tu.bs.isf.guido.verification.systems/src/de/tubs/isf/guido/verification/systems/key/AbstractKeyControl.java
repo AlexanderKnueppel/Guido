@@ -12,9 +12,9 @@ import java.util.Map;
 import org.key_project.util.collection.ImmutableArray;
 import org.key_project.util.collection.ImmutableSet;
 
-import de.tubs.isf.core.verifier.Control;
-import de.tubs.isf.core.verifier.Result;
-import de.tubs.isf.core.verifier.SettingsObject;
+import de.tubs.isf.guido.core.verifier.Control;
+import de.tubs.isf.guido.core.verifier.Result;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.java.abstraction.KeYJavaType;
 import de.uka.ilkd.key.logic.Choice;
 import de.uka.ilkd.key.logic.op.IObserverFunction;

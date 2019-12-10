@@ -2,8 +2,8 @@ package de.tubs.isf.guido.core.proof.controller;
 
 import java.util.List;
 
-import de.tubs.isf.core.verifier.SettingsObject;
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 
 public interface IProofControl {
 	public void performProof(SettingsObject so);

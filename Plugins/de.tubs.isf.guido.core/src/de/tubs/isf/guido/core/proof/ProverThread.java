@@ -7,8 +7,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import de.tubs.isf.core.verifier.SettingsObject;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 
 public class ProverThread {
 	public static IProofControl startProof(IProofControl pc, SettingsObject so, long time) {

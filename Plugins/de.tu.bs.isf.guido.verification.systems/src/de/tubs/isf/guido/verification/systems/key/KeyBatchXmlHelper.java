@@ -18,12 +18,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import de.tubs.isf.core.verifier.ASystemFactory;
-import de.tubs.isf.core.verifier.BatchXMLHelper;
-import de.tubs.isf.core.verifier.GetJobs;
-import de.tubs.isf.core.verifier.IJob;
-import de.tubs.isf.core.verifier.SampleHelper;
-import de.tubs.isf.core.verifier.SettingsObject;
+import de.tubs.isf.guido.core.verifier.ASystemFactory;
+import de.tubs.isf.guido.core.verifier.BatchXMLHelper;
+import de.tubs.isf.guido.core.verifier.GetJobs;
+import de.tubs.isf.guido.core.verifier.IJob;
+import de.tubs.isf.guido.core.verifier.SampleHelper;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.key.KeyGetJobs;
 
 public class KeyBatchXmlHelper extends BatchXMLHelper {

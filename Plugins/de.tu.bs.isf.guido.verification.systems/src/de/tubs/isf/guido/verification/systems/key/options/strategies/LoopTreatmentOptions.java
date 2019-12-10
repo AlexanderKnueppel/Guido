@@ -1,6 +1,6 @@
 package de.tubs.isf.guido.verification.systems.key.options.strategies;
 
-import de.tubs.isf.core.verifier.OptionableContainer;
+import de.tubs.isf.guido.core.verifier.OptionableContainer;
 
 public enum LoopTreatmentOptions implements StrategyOptionable{
 	INVARIANT("Invariant"), EXPAND("Expand"), NONE("None"), LOOP_SCOPE_INVARIANT("Loop Scope Invariant");

@@ -26,10 +26,10 @@ import de.tu.bs.guido.key.pooling.distributed.DistributedWorkingPool;
 import de.tu.bs.guido.key.pooling.distributed.NewResultNotifier;
 import de.tu.bs.guido.network.ProofRunnable;
 import de.tu.bs.guido.network.file.server.FileServer;
-import de.tubs.isf.core.verifier.ASystemFactory;
-import de.tubs.isf.core.verifier.IJob;
-import de.tubs.isf.core.verifier.SampleHelper;
-import de.tubs.isf.core.verifier.SettingsObject;
+import de.tubs.isf.guido.core.verifier.ASystemFactory;
+import de.tubs.isf.guido.core.verifier.IJob;
+import de.tubs.isf.guido.core.verifier.SampleHelper;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.key.KeyFactory;
 import de.tubs.isf.guido.verification.systems.key.KeyJavaJob;
 

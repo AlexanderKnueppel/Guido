@@ -1,13 +1,13 @@
 package de.tubs.isf.guido.verification.systems.key;
 
-import de.tubs.isf.core.verifier.ASystemFactory;
-import de.tubs.isf.core.verifier.BatchXMLHelper;
-import de.tubs.isf.core.verifier.Control;
-import de.tubs.isf.core.verifier.GetJobs;
-import de.tubs.isf.core.verifier.OptionableContainer;
-import de.tubs.isf.core.verifier.Result;
-import de.tubs.isf.core.verifier.SampleHelper;
-import de.tubs.isf.core.verifier.SettingsObject;
+import de.tubs.isf.guido.core.verifier.ASystemFactory;
+import de.tubs.isf.guido.core.verifier.BatchXMLHelper;
+import de.tubs.isf.guido.core.verifier.Control;
+import de.tubs.isf.guido.core.verifier.GetJobs;
+import de.tubs.isf.guido.core.verifier.OptionableContainer;
+import de.tubs.isf.guido.core.verifier.Result;
+import de.tubs.isf.guido.core.verifier.SampleHelper;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 
 
 public class KeyFactory extends ASystemFactory {

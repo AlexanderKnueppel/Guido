@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.tubs.isf.core.verifier.Result;
-import de.tubs.isf.core.verifier.SettingsObject;
+import de.tubs.isf.guido.core.verifier.Result;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.core.KeYMediator;
 import de.uka.ilkd.key.gui.MainWindow;
 import de.uka.ilkd.key.java.JavaInfo;

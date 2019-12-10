@@ -3,7 +3,7 @@ package de.tubs.isf.guido.verification.systems.key.options.strategies;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.tubs.isf.core.verifier.OptionableContainer;
+import de.tubs.isf.guido.core.verifier.OptionableContainer;
 
 public enum KeyStrategyOptions implements OptionableContainer {
 	STOP_AT("Stop at", StopAtOptions.values(), StopAtOptions.DEFAULT), ONE_STEP_SIMPLIFICATION(

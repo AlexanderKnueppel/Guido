@@ -3,8 +3,8 @@ package de.tubs.isf.guido.core.automaticProof;
 import java.io.File;
 import java.util.concurrent.Callable;
 
-import de.tubs.isf.core.verifier.SettingsObject;
 import de.tubs.isf.guido.core.keYHandler.ProofControl;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 
 public class ProverTask implements Callable<ProofControl> {
 

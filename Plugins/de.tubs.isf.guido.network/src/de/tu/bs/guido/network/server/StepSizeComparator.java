@@ -2,7 +2,7 @@ package de.tu.bs.guido.network.server;
 
 import java.util.Comparator;
 
-import de.tubs.isf.core.verifier.IJob;
+import de.tubs.isf.guido.core.verifier.IJob;
 
 public class StepSizeComparator implements Comparator<IJob>{
 

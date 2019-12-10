@@ -1,6 +1,6 @@
 package de.tubs.isf.guido.verification.systems.key.options.strategies;
 
-import de.tubs.isf.core.verifier.OptionableContainer;
+import de.tubs.isf.guido.core.verifier.OptionableContainer;
 
 public enum QuantifierTreatmentOptions implements StrategyOptionable{
 	NONE("None"), NO_SPLITS("No Splits"), NO_SPLITS_WITH_PROGS("No Splits with Progs"), FREE("Free");

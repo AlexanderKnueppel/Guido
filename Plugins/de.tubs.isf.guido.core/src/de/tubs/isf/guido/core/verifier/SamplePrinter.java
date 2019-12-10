@@ -1,4 +1,4 @@
-package de.tubs.isf.core.verifier;
+package de.tubs.isf.guido.core.verifier;
 
 import java.io.BufferedWriter;
 import java.io.File;

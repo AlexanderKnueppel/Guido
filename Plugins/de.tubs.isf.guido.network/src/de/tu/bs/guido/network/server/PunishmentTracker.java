@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import de.tubs.isf.core.verifier.IJob;
+import de.tubs.isf.guido.core.verifier.IJob;
 
 public class PunishmentTracker {
 	private static final int MAXIMUM_MAX_STEPS = 1000000;

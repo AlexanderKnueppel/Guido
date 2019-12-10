@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
-import de.tubs.isf.core.verifier.Result;
+import de.tubs.isf.guido.core.verifier.Result;
 
 public class KeyResult extends Result implements Serializable  {
 

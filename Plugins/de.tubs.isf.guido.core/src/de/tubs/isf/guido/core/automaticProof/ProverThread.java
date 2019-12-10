@@ -14,10 +14,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import de.tubs.isf.core.verifier.SettingsObject;
 import de.tubs.isf.guido.core.automaticProof.proofFile.Job;
 import de.tubs.isf.guido.core.automaticProof.proofFile.XMLReader;
 import de.tubs.isf.guido.core.keYHandler.ProofControl;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.proof.Proof;
 import de.uka.ilkd.key.proof.init.ProofInputException;
 import de.uka.ilkd.key.proof.io.ProblemLoaderException;

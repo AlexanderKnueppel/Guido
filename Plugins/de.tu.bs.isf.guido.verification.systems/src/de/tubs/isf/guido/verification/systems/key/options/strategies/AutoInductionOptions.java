@@ -1,7 +1,7 @@
 package de.tubs.isf.guido.verification.systems.key.options.strategies;
 
-import de.tubs.isf.core.verifier.Optionable;
-import de.tubs.isf.core.verifier.OptionableContainer;
+import de.tubs.isf.guido.core.verifier.Optionable;
+import de.tubs.isf.guido.core.verifier.OptionableContainer;
 
 public enum AutoInductionOptions implements StrategyOptionable{
 	ON("On"), RESTRICTED("Restricted"), OFF("Off");

@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.tubs.isf.core.verifier.Optionable;
-import de.tubs.isf.core.verifier.OptionableContainer;
-import de.tubs.isf.core.verifier.SettingsObject;
+import de.tubs.isf.guido.core.verifier.Optionable;
+import de.tubs.isf.guido.core.verifier.OptionableContainer;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.key.options.strategies.KeyStrategyOptions;
 import de.tubs.isf.guido.verification.systems.key.options.strategies.StrategyOptionable;
 import de.tubs.isf.guido.verification.systems.key.options.taclets.KeyTacletOptions;

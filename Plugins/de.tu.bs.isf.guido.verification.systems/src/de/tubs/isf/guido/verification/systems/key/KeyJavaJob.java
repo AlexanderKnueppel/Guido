@@ -2,9 +2,9 @@ package de.tubs.isf.guido.verification.systems.key;
 
 import java.util.Map;
 
-import de.tubs.isf.core.verifier.IJavaJob;
-import de.tubs.isf.core.verifier.IJob;
-import de.tubs.isf.core.verifier.SettingsObject;
+import de.tubs.isf.guido.core.verifier.IJavaJob;
+import de.tubs.isf.guido.core.verifier.IJob;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 
 public class KeyJavaJob implements IJavaJob {
 

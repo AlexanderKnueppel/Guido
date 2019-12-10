@@ -9,11 +9,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import de.tubs.isf.core.verifier.ASystemFactory;
-import de.tubs.isf.core.verifier.Control;
-import de.tubs.isf.core.verifier.Optionable;
-import de.tubs.isf.core.verifier.Result;
-import de.tubs.isf.core.verifier.SettingsObject;
+import de.tubs.isf.guido.core.verifier.ASystemFactory;
+import de.tubs.isf.guido.core.verifier.Control;
+import de.tubs.isf.guido.core.verifier.Optionable;
+import de.tubs.isf.guido.core.verifier.Result;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.key.options.strategies.ArithmeticTreatmentOptions;
 import de.tubs.isf.guido.verification.systems.key.options.strategies.AutoInductionOptions;
 import de.tubs.isf.guido.verification.systems.key.options.strategies.BlockTreatmentOptions;

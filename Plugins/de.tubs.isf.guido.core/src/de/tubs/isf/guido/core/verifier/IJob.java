@@ -1,4 +1,4 @@
-package de.tubs.isf.core.verifier;
+package de.tubs.isf.guido.core.verifier;
 
 import java.io.Serializable;
 import java.util.Arrays;

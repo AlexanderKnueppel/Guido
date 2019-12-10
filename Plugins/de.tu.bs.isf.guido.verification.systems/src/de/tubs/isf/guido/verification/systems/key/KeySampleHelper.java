@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import de.tubs.isf.core.verifier.ASystemFactory;
-import de.tubs.isf.core.verifier.Result;
-import de.tubs.isf.core.verifier.SampleHelper;
-import de.tubs.isf.core.verifier.SettingsObject;
+import de.tubs.isf.guido.core.verifier.ASystemFactory;
+import de.tubs.isf.guido.core.verifier.Result;
+import de.tubs.isf.guido.core.verifier.SampleHelper;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.key.generators.FeatureIdeTranslator;
 
 public class KeySampleHelper extends SampleHelper {

@@ -26,8 +26,6 @@ import com.github.javaparser.ast.comments.Comment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import de.tubs.isf.core.verifier.ASystemFactory;
-import de.tubs.isf.core.verifier.SettingsObject;
 import de.tubs.isf.guido.core.analyzer.Analyzer;
 import de.tubs.isf.guido.core.analyzer.Parameter;
 import de.tubs.isf.guido.core.analyzer.Result;
@@ -37,6 +35,8 @@ import de.tubs.isf.guido.core.automaticProof.proofFile.Job;
 import de.tubs.isf.guido.core.automaticProof.proofFile.XMLReader;
 import de.tubs.isf.guido.core.keYHandler.ProofControl;
 import de.tubs.isf.guido.core.keYHandler.ProofControlGUI;
+import de.tubs.isf.guido.core.verifier.ASystemFactory;
+import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.control.KeYEnvironment;
 import de.uka.ilkd.key.java.abstraction.KeYJavaType;
 import de.uka.ilkd.key.logic.op.IObserverFunction;

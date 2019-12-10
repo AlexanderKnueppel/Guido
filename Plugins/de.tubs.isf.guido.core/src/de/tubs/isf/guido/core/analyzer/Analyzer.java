@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.tubs.isf.core.verifier.Optionable;
-import de.tubs.isf.core.verifier.OptionableContainer;
+import de.tubs.isf.guido.core.verifier.Optionable;
+import de.tubs.isf.guido.core.verifier.OptionableContainer;
 
 
 

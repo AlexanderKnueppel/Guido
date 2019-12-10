@@ -13,8 +13,8 @@ import com.google.gson.GsonBuilder;
 import de.tu.bs.guido.key.pooling.WorkingPool;
 import de.tu.bs.guido.network.ProofRunnable;
 import de.tu.bs.guido.network.ResultCommunication;
-import de.tubs.isf.core.verifier.IJob;
-import de.tubs.isf.core.verifier.Result;
+import de.tubs.isf.guido.core.verifier.IJob;
+import de.tubs.isf.guido.core.verifier.Result;
 
 public class ResultObserver implements Observer {
 
