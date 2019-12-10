@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-import de.tu.bs.guido.key.pooling.distributed.ResultRunnable;
 import de.tu.bs.guido.network.client.FileClient;
 import de.tubs.isf.guido.core.verifier.ASystemFactory;
 import de.tubs.isf.guido.core.verifier.Control;
 import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.Result;
+import de.tubs.isf.guido.key.pooling.distributed.ResultRunnable;
 
 public class ProofRunnable implements ResultRunnable, Serializable {
 

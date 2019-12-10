@@ -17,7 +17,7 @@ public class Client {
 		if (args.length > 1) {
 			ip = args[1];
 		}
-		de.tu.bs.guido.key.pooling.distributed.Client c = new de.tu.bs.guido.key.pooling.distributed.Client(
+		de.tubs.isf.guido.key.pooling.distributed.Client c = new de.tubs.isf.guido.key.pooling.distributed.Client(
 				ip, Server.PORT);
 
 		if (c.isRestart()) {
