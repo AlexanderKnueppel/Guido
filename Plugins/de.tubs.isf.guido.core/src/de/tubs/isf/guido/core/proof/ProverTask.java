@@ -2,7 +2,7 @@ package de.tubs.isf.guido.core.proof;
 
 import java.util.concurrent.Callable;
 
-import de.tu.bs.guido.verification.system.SettingsObject;
+import de.tubs.isf.core.verifier.SettingsObject;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
 
 public class ProverTask implements Callable<IProofControl> {

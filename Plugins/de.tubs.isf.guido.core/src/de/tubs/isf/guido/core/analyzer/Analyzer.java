@@ -30,24 +30,24 @@ public class Analyzer {
 	}
 	
 	private void createParameterObject(){
-		for(OptionableContainer parameterObject: OptionableContainer.values()){
-			Parameter param = new Parameter(parameterObject.getValue());
-			for(Optionable option: parameterObject.getOptions()){
-				param.setOption(option.getValue());
-				param.setProvabilityHyp(param.getOptions().get(option.getValue()).getOption(), 0.0);
-				param.setVerificationEffortHyp(param.getOptions().get(option.getValue()).getOption(), 0.0);
-			}
-			parameter.put(parameterObject.getValue(), param);
-		}
-		for(OptionableContainer parameterObject: OptionableContainer.values()){
-			Parameter param = new Parameter(parameterObject.getValue());
-			for(Optionable option: parameterObject.getOptions()){
-				param.setOption(option.getValue());
-				param.setProvabilityHyp(param.getOptions().get(option.getValue()).getOption(), 0.0);
-				param.setVerificationEffortHyp(param.getOptions().get(option.getValue()).getOption(), 0.0);
-			}
-			parameter.put(parameterObject.getValue(), param);
-		}
+//		for(OptionableContainer parameterObject: OptionableContainer.values()){
+//			Parameter param = new Parameter(parameterObject.getValue());
+//			for(Optionable option: parameterObject.getOptions()){
+//				param.setOption(option.getValue());
+//				param.setProvabilityHyp(param.getOptions().get(option.getValue()).getOption(), 0.0);
+//				param.setVerificationEffortHyp(param.getOptions().get(option.getValue()).getOption(), 0.0);
+//			}
+//			parameter.put(parameterObject.getValue(), param);
+//		}
+//		for(OptionableContainer parameterObject: OptionableContainer.values()){
+//			Parameter param = new Parameter(parameterObject.getValue());
+//			for(Optionable option: parameterObject.getOptions()){
+//				param.setOption(option.getValue());
+//				param.setProvabilityHyp(param.getOptions().get(option.getValue()).getOption(), 0.0);
+//				param.setVerificationEffortHyp(param.getOptions().get(option.getValue()).getOption(), 0.0);
+//			}
+//			parameter.put(parameterObject.getValue(), param);
+//		}
 	}
 	
 	public Map<String, Parameter> getParameter(){

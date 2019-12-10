@@ -7,7 +7,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import de.tu.bs.guido.verification.system.SettingsObject;
+import de.tubs.isf.core.verifier.SettingsObject;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
 
 public class ProverThread {
