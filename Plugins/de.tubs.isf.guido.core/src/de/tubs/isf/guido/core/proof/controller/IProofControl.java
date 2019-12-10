@@ -6,6 +6,7 @@ import de.tu.bs.guido.verification.system.SettingsObject;
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 
 public interface IProofControl {
-	public List<IDataBasisElement> getResultForProof(SettingsObject so);
+	public void performProof(SettingsObject so);
 	public boolean isClosed();
+	public List<IDataBasisElement> getCurrentResults();
 }
