@@ -1,5 +1,7 @@
 package de.tubs.isf.guido.core.verifier;
 
+import de.tubs.isf.guido.core.proof.controller.IProofControl;
+
 public abstract class ASystemFactory {
 	public static ASystemFactory abst;
 
@@ -11,7 +13,7 @@ public abstract class ASystemFactory {
 		ASystemFactory.abst = abst;
 	}
 
-	public abstract Control createControl();
+	public abstract IProofControl createControl();
 
 	public abstract GetJobs createGetJobs();
 
@@ -26,5 +28,7 @@ public abstract class ASystemFactory {
 	public abstract SettingsObject createSettingsObject();
 
 
-	public abstract OptionableContainer createContainer();
+	public abstract OptionableContainer[] createContainer();
+
+	public abstract OptionableContainer createContainer(String name) ;
 }

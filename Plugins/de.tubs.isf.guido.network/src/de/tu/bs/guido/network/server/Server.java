@@ -8,9 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -26,7 +24,6 @@ import de.tu.bs.guido.network.ProofRunnable;
 import de.tu.bs.guido.network.file.server.FileServer;
 import de.tubs.isf.guido.core.verifier.ASystemFactory;
 import de.tubs.isf.guido.core.verifier.IJob;
-import de.tubs.isf.guido.core.verifier.SampleHelper;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.key.pooling.WorkingPool;
 import de.tubs.isf.guido.key.pooling.distributed.DistributedWorkingPool;
@@ -88,8 +85,12 @@ public class Server implements Observer {
 		} else {
 			throw new IllegalArgumentException("Please pass for parameters: classpath, class, method and samples");
 		}
+		
 		PunishmentTracker pt = new PunishmentTracker(PUNISHMENT_FILE);
+		System.out.println("notdied1");
+		PUNISHMENT_FILE.createNewFile();
 		if (PUNISHMENT_FILE.exists()) {
+			System.out.println("notdied2");
 			pt.updatePunishments(jobs);
 			if (DONE_FILE.exists()) {
 				List<IJob> doneJobs = readDoneJobs(DONE_FILE);
@@ -100,13 +101,13 @@ public class Server implements Observer {
 				System.out.println("Already done some jobs... " + jobs.size() + " left");
 			}
 			System.out.println("Sorting jobs by step size...");
-			Collections.shuffle(jobs);
+			//Collections.shuffle(jobs);
 			/*
 			 * Collections.sort(jobs, new CodeComparator(KeyStrategyOptions.STOP_AT,
 			 * KeyStrategyOptions.ONE_STEP_SIMPLIFICATION,
 			 * KeyStrategyOptions.PROOF_SPLITTING, KeyStrategyOptions.LOOP_TREATMENT));
 			 */
-			Collections.sort(jobs, new StepSizeComparator());
+			//Collections.sort(jobs, new StepSizeComparator());
 			System.out.println("Going to write open file");
 			OPEN_FILE.delete();
 			try (BufferedWriter bw = new BufferedWriter(new FileWriter(OPEN_FILE))) {
@@ -138,8 +139,8 @@ public class Server implements Observer {
 				if (a.equals(b)) {
 					jobs.remove(j);
 					j--;
-					a.setCode(a.getCode() + ", " + b.getCode());
-					a.getExperiments().putAll(b.getExperiments());
+					//a.setCode(a.getCode() + ", " + b.getCode());
+				//	a.getExperiments().putAll(b.getExperiments());
 				}
 			}
 		}
@@ -147,18 +148,18 @@ public class Server implements Observer {
 			((ArrayList<?>) jobs).trimToSize();
 		}
 	}
-	@Deprecated
-	private static void filterListForMe(List<IJob> joblist) {
-		for (Iterator<IJob> iterator = joblist.iterator(); iterator.hasNext();) {
-			IJob job = iterator.next();
-			if (job.getCode().equals("Basic"))
-				iterator.remove();
-			else if (!job.getMethod().equals("max"))
-				iterator.remove();
-			else if (job.getContractNumber() != 0)
-				iterator.remove();
-		}
-	}
+//	@Deprecated
+//	private static void filterListForMe(List<IJob> joblist) {
+//		for (Iterator<IJob> iterator = joblist.iterator(); iterator.hasNext();) {
+//			IJob job = iterator.next();
+//			if (job.getCode().equals("Basic"))
+//				iterator.remove();
+//			else if (!job.getMethod().equals("max"))
+//				iterator.remove();
+//			else if (job.getContractNumber() != 0)
+//				iterator.remove();
+//		}
+//	}
 
 	private static List<IJob> readDoneJobs(File f) throws FileNotFoundException, IOException {
 		List<IJob> doneJobs = new ArrayList<>();

@@ -227,7 +227,7 @@ public abstract class AbstractKeyControl implements Control {
 		ChoiceSettings cs = ProofSettings.DEFAULT_SETTINGS.getChoiceSettings();
 		HashMap<String, String> tacletMap = cs.getDefaultChoices();
 		HashMap<String, String> newSettings = new HashMap<String, String>(tacletMap);
-		so.getTacletMap().forEach((key, value) -> newSettings.put(key, value));
+		so.getSettingsMap().forEach((key, value) -> newSettings.put(key, value));
 		cs.setDefaultChoices(newSettings);
 		return newSettings;
 	}

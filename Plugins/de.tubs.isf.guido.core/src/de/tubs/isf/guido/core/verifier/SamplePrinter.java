@@ -1,11 +1,5 @@
 package de.tubs.isf.guido.core.verifier;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
-
 public abstract class SamplePrinter {
 
 	

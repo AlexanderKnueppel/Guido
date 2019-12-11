@@ -139,7 +139,7 @@ public class Prover {
 		int steps = pc.getCurrentResults().get(0).getSteps();
 		Result r = pc.getCurrentResults().get(0);
 		return new GuidanceSystemResult(r.getName(), r.isClosed(), r.getSteps(), r.getTimeInMillis(), 1, elapsedTime,
-				steps, so.getSettingsMap(), so.getTacletMap());
+				steps, so.getSettingsMap());
 
 	}
 
@@ -185,10 +185,10 @@ public class Prover {
 		if (pc.getCurrentResults() != null && pc.getCurrentResults().size() > 0) {
 			Result r = pc.getCurrentResults().get(0);
 			return new GuidanceSystemResult(r.getName(), r.isClosed(), r.getSteps(), r.getTimeInMillis(),
-					proofPerformed, elapsedTime, steps, so.getSettingsMap(), so.getTacletMap());
+					proofPerformed, elapsedTime, steps, so.getSettingsMap());
 		} else {
 			return new GuidanceSystemResult(provingClass + ":" + provingMethod + ":" + contract, false, 0, time,
-					proofPerformed, elapsedTime, steps, so.getSettingsMap(), so.getTacletMap());
+					proofPerformed, elapsedTime, steps, so.getSettingsMap());
 		}
 
 	}
@@ -247,10 +247,10 @@ public class Prover {
 		if (bestresult != null) {
 			Result r = bestresult;
 			return new GuidanceSystemResult(r.getName(), r.isClosed(), r.getSteps(), r.getTimeInMillis(),
-					proofPerformed, elapsedTime, steps, so.getSettingsMap(), so.getTacletMap());
+					proofPerformed, elapsedTime, steps, so.getSettingsMap());
 		} else {
 			return new GuidanceSystemResult(provingClass + ":" + provingMethod + ":" + contract, false, 0, time,
-					proofPerformed, elapsedTime, steps, so.getSettingsMap(), so.getTacletMap());
+					proofPerformed, elapsedTime, steps, so.getSettingsMap());
 		}
 
 	}
@@ -295,10 +295,10 @@ public class Prover {
 		if (pc.getCurrentResults() != null && pc.getCurrentResults().size() > 0) {
 			Result r = pc.getCurrentResults().get(0);
 			return new GuidanceSystemResult(r.getName(), r.isClosed(), r.getSteps(), r.getTimeInMillis(),
-					proofPerformed, elapsedTime, steps, so.getSettingsMap(), so.getTacletMap());
+					proofPerformed, elapsedTime, steps, so.getSettingsMap());
 		} else {
 			return new GuidanceSystemResult(provingClass + ":" + provingMethod + ":" + contract, false, 0, time,
-					proofPerformed, elapsedTime, steps, so.getSettingsMap(), so.getTacletMap());
+					proofPerformed, elapsedTime, steps, so.getSettingsMap());
 		}
 
 	}
@@ -354,7 +354,7 @@ public class Prover {
 
 	public SettingsObject createDesiredSettingsObject(GuidanceSystemResult res) {
 		SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
-		for (Entry<String, String> tac : res.getTaclets().entrySet()) {
+		for (Entry<String, String> tac : res.getOptions().entrySet()) {
 			so.setParameter(tac.getKey(), tac.getValue());
 		}
 		return so;

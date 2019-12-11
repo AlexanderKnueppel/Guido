@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 import de.tubs.isf.guido.core.databasis.DataBasis;
 import de.tubs.isf.guido.core.databasis.DefaultDataBasisElement;
-import de.tubs.isf.guido.core.statistics.Hypotheses;
 import de.tubs.isf.guido.core.statistics.Hypothesis;
 
 public class ExperimentGenerator {

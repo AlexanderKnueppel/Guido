@@ -203,4 +203,16 @@ public class KeySettingsObject extends SettingsObject {
 		so.tacletMap = new HashMap<>(tacletMap);
 		return so;
 	}
+
+	@Override
+	public OptionableContainer[] getAllPossibleSettings() {
+		int aLen = KeyStrategyOptions.values().length;
+        int bLen = KeyTacletOptions.values().length;
+        OptionableContainer[] result = new OptionableContainer[aLen + bLen];
+        System.arraycopy(KeyStrategyOptions.values(), 0, result, 0, aLen);
+        System.arraycopy(KeyTacletOptions.values(), 0, result, aLen, bLen);
+        return result;
+
+		
+	}
 }

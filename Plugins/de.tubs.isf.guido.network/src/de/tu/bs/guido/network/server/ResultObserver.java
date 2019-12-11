@@ -12,8 +12,8 @@ import com.google.gson.GsonBuilder;
 
 import de.tu.bs.guido.network.ProofRunnable;
 import de.tu.bs.guido.network.ResultCommunication;
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.verifier.IJob;
-import de.tubs.isf.guido.core.verifier.Result;
 import de.tubs.isf.guido.key.pooling.WorkingPool;
 
 public class ResultObserver implements Observer {
@@ -53,7 +53,7 @@ public class ResultObserver implements Observer {
 		} else {
 			synchronized (ergebnisse) {
 				try {
-					for (Result res : resCom.getResults()) {
+					for (IDataBasisElement res : resCom.getResults()) {
 						ergebnisse.write(gson.toJson(res));
 						ergebnisse.newLine();
 					}
@@ -70,8 +70,8 @@ public class ResultObserver implements Observer {
 
 	private boolean punish(ResultCommunication resultCom) {
 		final int maxSteps = resultCom.getJob().getSo().getMaxSteps();
-		for (Result res : resultCom.getResults()) 
-			if(!res.isClosed() && res.getSteps() >= maxSteps)
+		for (IDataBasisElement res : resultCom.getResults()) 
+			if(!res.isProvable() && res.getEffort() >= maxSteps)
 				return true;
 		return false;
 	}

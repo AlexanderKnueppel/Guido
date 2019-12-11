@@ -24,7 +24,6 @@ import de.tubs.isf.guido.core.verifier.GetJobs;
 import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.SampleHelper;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
-import de.tubs.isf.guido.verification.systems.key.KeyGetJobs;
 
 public class KeyBatchXmlHelper extends BatchXMLHelper {
 

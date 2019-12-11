@@ -6,10 +6,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import de.tu.bs.guido.network.client.FileClient;
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
+import de.tubs.isf.guido.core.proof.controller.IProofControl;
 import de.tubs.isf.guido.core.verifier.ASystemFactory;
-import de.tubs.isf.guido.core.verifier.Control;
 import de.tubs.isf.guido.core.verifier.IJob;
-import de.tubs.isf.guido.core.verifier.Result;
 import de.tubs.isf.guido.key.pooling.distributed.ResultRunnable;
 
 public class ProofRunnable implements ResultRunnable, Serializable {
@@ -23,6 +23,7 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 	private final IJob job;
 	private Object result;
 	private transient String ip;
+	public static String mode;
 
 	public ProofRunnable(IJob job, int fileServerPort) {
 		super();
@@ -38,19 +39,19 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 			
 			System.out.println("Running: "+job);
 			//here Factory adding 
-			Control kc = ASystemFactory.getAbst().createControl();
+			IProofControl kc = ASystemFactory.getAbst().createControl();
 			FileClient fc = new FileClient(ip, fileServerPort);
-			String source = job.getSource();
-			String classpath = job.getClasspath();
-			File sourceFile = getFileForName(fc, source, localTemp);
-			File classpathFile = getFileForName(fc, classpath, localTemp);
 			
-			List<? extends Result> intermediate;
-			intermediate = kc.getResultForProof(sourceFile, classpathFile, job.getClazz(),
-					job.getMethod(), job.getParameter(), job.getContractNumber(), job.getSo());
-			for (Result result : intermediate) {
-				result.setCode(job.getCode());
-				result.setExperiments(job.getExperiments());
+			//File sourceFile = getFileForName(fc, source, localTemp);
+			//File classpathFile = getFileForName(fc, classpath, localTemp);
+			
+			List<IDataBasisElement> intermediate;
+			kc.performProof(job.getSo());
+			
+			intermediate =  kc.getCurrentResults();
+			for (IDataBasisElement result : intermediate) {
+			//	result.setCode(job.getCode());
+			//	result.setExperiments(job.getExperiments());
 			}
 			ResultCommunication resultComm = new ResultCommunication(job, intermediate);
 			result = resultComm;

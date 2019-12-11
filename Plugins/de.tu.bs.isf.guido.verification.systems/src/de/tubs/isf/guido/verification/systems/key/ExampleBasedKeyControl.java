@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
+import de.tubs.isf.guido.core.proof.controller.IProofControl;
 import de.tubs.isf.guido.core.verifier.Result;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.control.KeYEnvironment;
@@ -14,8 +16,8 @@ import de.uka.ilkd.key.proof.io.ProblemLoaderException;
 import de.uka.ilkd.key.settings.ProofSettings;
 import de.uka.ilkd.key.speclang.Contract;
 
-public class ExampleBasedKeyControl extends AbstractKeyControl {
-
+public class ExampleBasedKeyControl extends AbstractKeyControl implements IProofControl {
+	List<IDataBasisElement> kdb = new ArrayList<IDataBasisElement>();
 	@Override
 	public List<Result> getResultForProof(File source, File classPath, String className, String methodName,
 			String[] parameters, int contractNumber, SettingsObject so) {
@@ -94,6 +96,23 @@ public class ExampleBasedKeyControl extends AbstractKeyControl {
 		} finally {
 			env.dispose();
 		}
+	}
+
+	@Override
+	public void performProof(SettingsObject so) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isClosed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<IDataBasisElement> getCurrentResults() {
+		return kdb;
 	}
 
 }

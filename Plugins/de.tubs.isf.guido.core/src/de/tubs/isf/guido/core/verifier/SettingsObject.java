@@ -1,10 +1,8 @@
 package de.tubs.isf.guido.core.verifier;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public abstract class SettingsObject implements Cloneable, Serializable {
 
@@ -13,12 +11,22 @@ public abstract class SettingsObject implements Cloneable, Serializable {
 	protected int debugNumber;
 	protected int maxSteps;
 	protected Map<String, String> settingsMap = new HashMap<>();
+	protected ACodeContainer cd;
+
+	public ACodeContainer getCd() {
+		return cd;
+	}
+
+	public void setCd(ACodeContainer cd) {
+		this.cd = cd;
+	}
 
 	public SettingsObject() {
-		
+
 	}
-	
+
 	public abstract void reinitialize();
+
 	public int getMaxSteps() {
 		return maxSteps;
 	}
@@ -27,24 +35,19 @@ public abstract class SettingsObject implements Cloneable, Serializable {
 		this.maxSteps = maxSteps;
 	}
 
-
 	public abstract Map<String, String> getSettingsMap();
 
-	public abstract Map<String, String> getTacletMap();
-	
 	public abstract Optionable getOption(OptionableContainer o);
 
 	public abstract void setParameter(Optionable o);
 
 	public abstract void setParameter(String option, String value);
 
-
-
+	public abstract OptionableContainer[] getAllPossibleSettings();
 
 	public abstract int getDebugNumber();
 
 	public abstract void setDebugNumber(int debugNumber);
-
 
 	@Override
 	public abstract int hashCode();
@@ -54,7 +57,6 @@ public abstract class SettingsObject implements Cloneable, Serializable {
 
 	@Override
 	public abstract String toString();
-	
 
 	public abstract SettingsObject clone() throws CloneNotSupportedException;
 }

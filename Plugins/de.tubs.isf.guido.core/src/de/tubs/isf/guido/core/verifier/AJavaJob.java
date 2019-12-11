@@ -1,121 +1,66 @@
 package de.tubs.isf.guido.core.verifier;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public abstract class AJavaJob implements IJob {
+public abstract class AJavaJob implements IJob, Serializable {
+	
 
 	@Override
-	public void reinitialize() {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void reinitialize();
 
 	@Override
-	public SettingsObject getSo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract SettingsObject getSo();
 
 	@Override
-	public void setSo(SettingsObject so) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void setSo(SettingsObject so);
 
 	@Override
-	public String getSource() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract String getSource();
 
 	@Override
-	public void setSource(String source) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void setSource(String source);
+
+
+	public abstract String getClazz();
+
+	
+	public abstract void setClazz(String clazz);
+
+	
+	public abstract String getMethod();
+
+	
+	public abstract void setMethod(String method);
 
 	@Override
-	public String getClazz() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract String getClasspath();
 
 	@Override
-	public void setClazz(String clazz) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void setClasspath(String classpath);
 
-	@Override
-	public String getMethod() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public void setMethod(String method) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract int getContractNumber();
 
-	@Override
-	public String getClasspath() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	public abstract void setContractNumber(int contractNumber);
 
-	@Override
-	public void setClasspath(String classpath) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	public abstract String[] getParameter();
 
-	@Override
-	public int getContractNumber() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
+	public abstract void setParameter(String[] parameter);
 
-	@Override
-	public void setContractNumber(int contractNumber) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	public abstract String getCode();
 
-	@Override
-	public String[] getParameter() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	public abstract void setCode(String code);
 
-	@Override
-	public void setParameter(String[] parameter) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	public abstract Map<String, Integer> getExperiments() ;
 
-	@Override
-	public String getCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setCode(String code) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Map<String, Integer> getExperiments() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IJob clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	public abstract IJob clone() throws CloneNotSupportedException ;
 	
 }

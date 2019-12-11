@@ -15,10 +15,9 @@ public class GuidanceSystemResult implements Serializable {
 	private long executionTime;
 	private int executionSteps;
 	private final Map<String, String> options;
-	private final Map<String, String> taclets;
 	
 	public GuidanceSystemResult(String name, boolean closed, int steps, long timeInMillis2, int execution, long elapsedTime,
-			int executionSteps, Map<String, String> options, Map<String, String> taclets) {
+			int executionSteps, Map<String, String> options) {
 		super();
 		this.executionTime = elapsedTime;
 		this.execution = execution;
@@ -27,7 +26,6 @@ public class GuidanceSystemResult implements Serializable {
 		this.steps = steps;
 		this.timeInMillis = timeInMillis2;
 		this.options = options;
-		this.taclets = taclets;
 		this.executionSteps = executionSteps;
 	}
 	
@@ -53,9 +51,7 @@ public class GuidanceSystemResult implements Serializable {
 	public Map<String, String> getOptions() {
 		return options;
 	}
-	public Map<String, String> getTaclets() {
-		return taclets;
-	}
+
 	public int getExecution() {
 		return execution;
 	}

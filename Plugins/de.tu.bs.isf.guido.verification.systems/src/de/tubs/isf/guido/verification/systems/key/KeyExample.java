@@ -38,7 +38,7 @@ public class KeyExample extends Example{
 	          ChoiceSettings choiceSettings = ProofSettings.DEFAULT_SETTINGS.getChoiceSettings();
 	          HashMap<String, String> oldSettings = choiceSettings.getDefaultChoices();
 	          HashMap<String, String> newSettings = new HashMap<String, String>(oldSettings);
-	          newSettings.putAll(so.getTacletMap());
+	          newSettings.putAll(so.getSettingsMap());
 	          choiceSettings.setDefaultChoices(newSettings);
 	          // Load source code
 	          KeYEnvironment<?> env = KeYEnvironment.load(source, null, classPath, null); // env.getLoadedProof() returns performed proof if a *.proof file is loaded
