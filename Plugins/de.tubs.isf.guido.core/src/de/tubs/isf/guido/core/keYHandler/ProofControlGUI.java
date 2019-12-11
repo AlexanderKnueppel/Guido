@@ -176,7 +176,7 @@ public class ProofControlGUI {
 		waitForKeyGui();
 		Proof p = m.getSelectedProof();
 		applySettings(p, so);
-		m.setMaxAutomaticSteps(so.getMaxSteps());
+		m.setMaxAutomaticSteps((int) so.getMaxEffort());
 	}
 
 	protected void applySettings(Proof p, SettingsObject so) {
@@ -192,8 +192,8 @@ public class ProofControlGUI {
 						key + " is not a valid option or " + value + " is not a valid choice.");
 			}
 		});
-		ProofSettings.DEFAULT_SETTINGS.getStrategySettings().setMaxSteps(so.getMaxSteps());
-		ss.setMaxSteps(so.getMaxSteps());
+		ProofSettings.DEFAULT_SETTINGS.getStrategySettings().setMaxSteps((int) so.getMaxEffort());
+		ss.setMaxSteps((int) so.getMaxEffort());
 		ss.setActiveStrategyProperties(sp);
 		ps.saveSettings();
 		p.setActiveStrategy(p.getServices().getProfile().getDefaultStrategyFactory().create(p, sp));

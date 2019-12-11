@@ -112,7 +112,7 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 		if (noc == null) {
 			GetJobs gj = null;
 
-			gj = ASystemFactory.getAbst().createGetJobs();
+			gj = new KeyGetJobs();
 
 			numberOfContracts = gj.getNumbofJobs(source, classpath, className, methodName, parameters);
 		} else {

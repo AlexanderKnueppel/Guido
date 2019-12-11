@@ -138,7 +138,7 @@ public class MainClass {
 		for (Optionable opt : opts) {
 			so.setParameter(opt);
 		}
-		so.setMaxSteps(maxSteps);
+		so.setMaxEffort(maxSteps);
 		return so;
 	}
 

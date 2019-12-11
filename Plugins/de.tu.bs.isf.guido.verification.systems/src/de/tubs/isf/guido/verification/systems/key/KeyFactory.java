@@ -1,10 +1,8 @@
 package de.tubs.isf.guido.verification.systems.key;
 
-import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
 import de.tubs.isf.guido.core.verifier.ASystemFactory;
 import de.tubs.isf.guido.core.verifier.BatchXMLHelper;
-import de.tubs.isf.guido.core.verifier.GetJobs;
 import de.tubs.isf.guido.core.verifier.OptionableContainer;
 import de.tubs.isf.guido.core.verifier.SampleHelper;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
@@ -19,17 +17,7 @@ public class KeyFactory extends ASystemFactory {
 
 	}
 
-	public GetJobs createGetJobs() {
 
-		return new KeyGetJobs();
-
-	}
-
-	@Override
-	public IDataBasisElement createResult() {
-		// TODO Auto-generated method stub
-		return new KeyDataBasis(null, null, false, 0, 0, null, null);
-	}
 
 
 

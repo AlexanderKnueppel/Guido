@@ -2,7 +2,7 @@ package de.tubs.isf.guido.core.verifier;
 
 import java.io.Serializable;
 
-public abstract class ACodeContainer implements Cloneable, Serializable {
+public class ACodeContainer implements Cloneable, Serializable {
 
 	/**
 	 * 

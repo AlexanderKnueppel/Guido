@@ -69,7 +69,7 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 		waitForKeyGui();
 		Proof p = m.getSelectedProof();
 		applySettings(p, so);
-		m.setMaxAutomaticSteps(so.getMaxSteps());
+		m.setMaxAutomaticSteps((int) so.getMaxEffort());
 	}
 
 	private void applyTaclets(KeYMediator m, SettingsObject so) {

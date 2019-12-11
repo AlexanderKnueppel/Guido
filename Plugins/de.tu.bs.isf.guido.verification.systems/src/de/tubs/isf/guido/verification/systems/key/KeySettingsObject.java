@@ -1,10 +1,12 @@
 package de.tubs.isf.guido.verification.systems.key;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import de.tubs.isf.guido.core.verifier.ACodeContainer;
 import de.tubs.isf.guido.core.verifier.Optionable;
 import de.tubs.isf.guido.core.verifier.OptionableContainer;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
@@ -13,10 +15,11 @@ import de.tubs.isf.guido.verification.systems.key.options.strategies.StrategyOpt
 import de.tubs.isf.guido.verification.systems.key.options.taclets.KeyTacletOptions;
 import de.tubs.isf.guido.verification.systems.key.options.taclets.TacletOptionable;
 
-public class KeySettingsObject extends SettingsObject {
+public class KeySettingsObject extends SettingsObject implements Serializable {
 
 	private static final long serialVersionUID = -5974976146446740045L;
 	private int debugNumber;
+	
 
 	private Map<String, String> tacletMap = new HashMap<>();
 
@@ -41,13 +44,7 @@ public class KeySettingsObject extends SettingsObject {
 			}
 		}
 
-	public int getMaxSteps() {
-		return maxSteps;
-	}
 
-	public void setMaxSteps(int maxSteps) {
-		this.maxSteps = maxSteps;
-	}
 
 	public Map<String, String> getSettingsMap() {
 		return Collections.unmodifiableMap(settingsMap);
@@ -158,7 +155,7 @@ public class KeySettingsObject extends SettingsObject {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + maxSteps;
+		result = (int) (prime * result + maxEffort);
 		result = prime * result + mapHashValue(settingsMap);
 		result = prime * result + mapHashValue(tacletMap);
 		return result;
@@ -173,7 +170,7 @@ public class KeySettingsObject extends SettingsObject {
 		if (getClass() != obj.getClass())
 			return false;
 		KeySettingsObject other = (KeySettingsObject) obj;
-		if (maxSteps != other.maxSteps)
+		if (maxEffort != other.maxEffort)
 			return false;
 		if (settingsMap == null) {
 			if (other.settingsMap != null)
@@ -190,14 +187,14 @@ public class KeySettingsObject extends SettingsObject {
 
 	@Override
 	public String toString() {
-		return "SettingsObject [maxSteps=" + maxSteps + ", settingsMap="
+		return "SettingsObject [maxSteps=" + maxEffort + ", settingsMap="
 				+ settingsMap + ", tacletMap=" + tacletMap + "]";
 	}
 	
 
 	public KeySettingsObject clone() throws CloneNotSupportedException{
 		KeySettingsObject so = new KeySettingsObject();
-		so.maxSteps = maxSteps;
+		so.maxEffort = maxEffort;
 		so.settingsMap = new HashMap<>(settingsMap);
 		so.tacletMap = new HashMap<>(tacletMap);
 		return so;
@@ -213,5 +210,28 @@ public class KeySettingsObject extends SettingsObject {
         return result;
 
 		
+	}
+
+	@Override
+	public double getMaxEffort() {
+		// TODO Auto-generated method stub
+		return maxEffort;
+	}
+
+	@Override
+	public void setMaxEffort(double maxEffort) {
+		// TODO Auto-generated method stub
+		this.maxEffort = maxEffort;
+	}
+
+	@Override
+	public ACodeContainer getCc() {
+		// TODO Auto-generated method stub
+		return cc;
+	}
+
+	@Override
+	public void setCc(ACodeContainer cc) {
+		this.cc=cc;
 	}
 }

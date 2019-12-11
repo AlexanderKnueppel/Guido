@@ -4,57 +4,74 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class SettingsObject implements Cloneable, Serializable {
+public class SettingsObject implements Cloneable, Serializable {
 
 	private static final long serialVersionUID = -5974976146446740045L;
 
 	
-	protected int maxSteps;
+	protected double maxEffort;
+	public double getMaxEffort() {
+		return maxEffort;
+	}
+	
+
+	public void setMaxEffort(double maxEffort) {
+		this.maxEffort = maxEffort;
+	}
+
 	protected Map<String, String> settingsMap = new HashMap<>();
 	protected ACodeContainer cc;
 
 	public ACodeContainer getCc() {
-		return cc;
+		return null;
 	}
 
-	public void setCd(ACodeContainer cc) {
-		this.cc = cc;
+	public void setCc(ACodeContainer cc) {
 	}
 
-	public SettingsObject() {
+	
 
+	public void reinitialize() {
 	}
 
-	public abstract void reinitialize();
+	
 
-	public int getMaxSteps() {
-		return maxSteps;
+	public Map<String, String> getSettingsMap() {
+		return null;
 	}
 
-	public void setMaxSteps(int maxSteps) {
-		this.maxSteps = maxSteps;
+	public Optionable getOption(OptionableContainer o) {
+		return null;
 	}
 
-	public abstract Map<String, String> getSettingsMap();
+	public void setParameter(Optionable o) {
+	}
 
-	public abstract Optionable getOption(OptionableContainer o);
+	public void setParameter(String option, String value) {
+	}
 
-	public abstract void setParameter(Optionable o);
-
-	public abstract void setParameter(String option, String value);
-
-	public abstract OptionableContainer[] getAllPossibleSettings();
+	public OptionableContainer[] getAllPossibleSettings() {
+		return null;
+	}
 
 
 
 	@Override
-	public abstract int hashCode();
+	public int hashCode() {
+		return 0;
+	}
 
 	@Override
-	public abstract boolean equals(Object obj);
+	public boolean equals(Object obj) {
+		return false;
+	}
 
 	@Override
-	public abstract String toString();
+	public String toString() {
+		return null;
+	}
 
-	public abstract SettingsObject clone() throws CloneNotSupportedException;
+	public SettingsObject clone() throws CloneNotSupportedException {
+		return null;
+	}
 }

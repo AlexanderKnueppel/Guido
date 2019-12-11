@@ -42,7 +42,7 @@ public class KeySampleHelper extends SampleHelper {
 				line = line.replaceFirst("\".*\"", "");
 				String[] options = line.split(";");
 				KeySettingsObject so = new KeySettingsObject();
-				so.setMaxSteps(100000);
+				so.setMaxEffort(100000);
 				System.out.print("[");
 				boolean first = true;
 				for (String option : options) {
@@ -104,7 +104,7 @@ public class KeySampleHelper extends SampleHelper {
 						continue;
 					so.setParameter(vals[0], vals[1]);
 				}
-				so.setMaxSteps(100000);
+				so.setMaxEffort(100000);
 				result.add(so);
 			}
 		}
@@ -138,7 +138,7 @@ public class KeySampleHelper extends SampleHelper {
 				}
 
 				int number = Integer.parseInt(config.getName().split("\\.")[0]);
-				so.setMaxSteps(DEFAULT_MAX_STEPS);
+				so.setMaxEffort(DEFAULT_MAX_STEPS);
 				so.setDebugNumber(number);
 				result.add(so);
 			}

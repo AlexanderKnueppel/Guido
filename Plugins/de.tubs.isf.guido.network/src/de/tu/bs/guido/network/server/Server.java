@@ -172,7 +172,13 @@ public class Server implements Observer {
 			String line;
 			Gson gson = new Gson();
 			while ((line = br.readLine()) != null) {
-				IJob j = gson.fromJson(line, IJob.class);
+				IJob j;
+				try {
+					j = gson.fromJson(line, IJob.class);
+				} catch (Exception e) {
+					j = gson.fromJson(line, KeyJavaJob.class);
+				}
+				
 				doneJobs.add(j);
 			}
 		}

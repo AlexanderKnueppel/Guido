@@ -61,14 +61,14 @@ public class PunishmentTracker {
 				} catch (CloneNotSupportedException e) {
 					e.printStackTrace();
 				}
-				int maxSteps = newJob.getSo().getMaxSteps();
+				double maxSteps =  newJob.getSo().getMaxEffort();
 				if (maxSteps >= MAXIMUM_MAX_STEPS) {
 					System.err.println("Maxmium punishment reached for job !_!");
 				} else {
-					int newMaxSteps = MAX_STEPS_GROWTH_FACTOR * maxSteps;
+					double newMaxSteps = MAX_STEPS_GROWTH_FACTOR * maxSteps;
 					if (newMaxSteps > MAXIMUM_MAX_STEPS)
 						newMaxSteps = MAXIMUM_MAX_STEPS;
-					newJob.getSo().setMaxSteps(newMaxSteps);
+					newJob.getSo().setMaxEffort(newMaxSteps);
 					System.out.println("PUNISHED!");
 	
 					Gson gson = new Gson();

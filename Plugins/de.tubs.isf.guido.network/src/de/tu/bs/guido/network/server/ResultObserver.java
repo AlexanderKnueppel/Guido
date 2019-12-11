@@ -69,7 +69,7 @@ public class ResultObserver implements Observer {
 	}
 
 	private boolean punish(ResultCommunication resultCom) {
-		final int maxSteps = resultCom.getJob().getSo().getMaxSteps();
+		final double maxSteps = resultCom.getJob().getSo().getMaxEffort();
 		for (IDataBasisElement res : resultCom.getResults()) 
 			if(!res.isProvable() && res.getEffort() >= maxSteps)
 				return true;

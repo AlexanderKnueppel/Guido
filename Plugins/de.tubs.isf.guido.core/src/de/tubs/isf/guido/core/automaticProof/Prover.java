@@ -132,7 +132,7 @@ public class Prover {
 		SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
 		System.out.println("Proof is not closed yet - Create SettingsObject - Default Settings");
 		so = ASystemFactory.getAbst().createSettingsObject();
-		so.setMaxSteps(1000000);
+		so.setMaxEffort(1000000);
 		System.out.println("Start Proof!");
 		pc.performProof(so);
 		long elapsedTime = (new Date()).getTime() - startTime;
@@ -159,7 +159,7 @@ public class Prover {
 		int proofPerformed = 0;
 		int steps = 0;
 		SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
-		so.setMaxSteps(1000000);
+		so.setMaxEffort(1000000);
 		System.out.println("Proof is not closed yet - Create SettingsObject");
 		//so = createDesiredSettingsObjectGuido(proofPerformed, sourceCodeAnalyzer, contractAnalyzer, so);
 		
@@ -210,7 +210,7 @@ public class Prover {
 		int proofPerformed = 0;
 		int steps = 0;
 		SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
-		so.setMaxSteps(1000000);
+		so.setMaxEffort(1000000);
 		while (elapsedTime < this.time) { // 1*60*1000
 			if(pc.isClosed()) {
 				if(pc.getCurrentResults() != null && pc.getCurrentResults().size() > 0) {
@@ -271,7 +271,7 @@ public class Prover {
 		int proofPerformed = 0;
 		int steps = 0;
 		SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
-		so.setMaxSteps(1000000);
+		so.setMaxEffort(1000000);
 		while (!pc.isClosed() && elapsedTime < this.time) { // 1*60*1000
 			System.out.println("Proof is not closed yet - Create SettingsObject");
 			so = createDesiredSettingsObjectGuido(proofPerformed, sourceCodeAnalyzer, contractAnalyzer, so);
@@ -372,14 +372,14 @@ public class Prover {
 		for (Rule rule : ruler.getRules()) {
 			so.setParameter(rule.getParameter(), rule.getBestOption(proofPerformed, sourceCode, contract));
 		}
-		so.setMaxSteps(soOld.getMaxSteps());
+		so.setMaxEffort(soOld.getMaxEffort());
 		if (so == soOld) { // it does not make sense to prove a proof attempt twice with the same settings!
 			System.out.println("SettingsObjects are the same - create new one!");
 			so = createDesiredSettingsObject(proofPerformed + 1, sourceCode, contract, so);
 		}
 		// so.setMaxSteps(10000 *(proofPerformed + 1));
 		// so.setMaxSteps(10000);
-		so.setMaxSteps(1000000); // Evaluation said this is the best!
+		so.setMaxEffort(1000000); // Evaluation said this is the best!
 		return so;
 	}
 
@@ -555,14 +555,14 @@ public class Prover {
 		for (Entry<String, String> e : solveWithLP(gamma1, gamma2, k, next).entrySet()) {
 			so.setParameter(e.getKey(), e.getValue());
 		}
-		so.setMaxSteps(soOld.getMaxSteps());
+		so.setMaxEffort(soOld.getMaxEffort());
 		if (so == soOld) { // it does not make sense to prove a proof attempt twice with the same settings!
 			System.out.println("SettingsObjects are the same - create new one!");
 			so = createDesiredSettingsObjectGuido(proofPerformed + 1, sourceCode, contract, so);
 		}
 		// so.setMaxSteps(10000 *(proofPerformed + 1));
 		// so.setMaxSteps(10000);
-		so.setMaxSteps(1000000); // Evaluation said this is the best!
+		so.setMaxEffort(1000000); // Evaluation said this is the best!
 		return so;
 	}
 
