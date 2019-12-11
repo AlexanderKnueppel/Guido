@@ -28,6 +28,7 @@ import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.key.pooling.WorkingPool;
 import de.tubs.isf.guido.key.pooling.distributed.DistributedWorkingPool;
 import de.tubs.isf.guido.key.pooling.distributed.NewResultNotifier;
+import de.tubs.isf.guido.verification.systems.key.KeyCodeContainer;
 import de.tubs.isf.guido.verification.systems.key.KeyFactory;
 import de.tubs.isf.guido.verification.systems.key.KeyJavaJob;
 
@@ -54,14 +55,14 @@ public class Server implements Observer {
 			String clazz = args[1];
 			String method = args[2];
 			File samples = new File(args[3]);
-			
+
 			List<SettingsObject> sos = ASystemFactory.getAbst().createSampleHelper().readSPLSamples(samples);
 			jobs = new ArrayList<>(sos.size());
-			
+
 			sos.forEach(so -> jobs.add(new KeyJavaJob("", -1, source, null, clazz, method, null, so)));
 			throw new IllegalArgumentException("not yet updated...");
 		} else if (argsLength == 1) {
-			if (!args[0].equals("key")) { 
+			if (!args[0].equals("key")) {
 				mode = Mode.Key;
 				ASystemFactory.setAbst(new KeyFactory());
 			}
@@ -85,7 +86,7 @@ public class Server implements Observer {
 		} else {
 			throw new IllegalArgumentException("Please pass for parameters: classpath, class, method and samples");
 		}
-		
+
 		PunishmentTracker pt = new PunishmentTracker(PUNISHMENT_FILE);
 		System.out.println("notdied1");
 		PUNISHMENT_FILE.createNewFile();
@@ -101,13 +102,13 @@ public class Server implements Observer {
 				System.out.println("Already done some jobs... " + jobs.size() + " left");
 			}
 			System.out.println("Sorting jobs by step size...");
-			//Collections.shuffle(jobs);
+			// Collections.shuffle(jobs);
 			/*
 			 * Collections.sort(jobs, new CodeComparator(KeyStrategyOptions.STOP_AT,
 			 * KeyStrategyOptions.ONE_STEP_SIMPLIFICATION,
 			 * KeyStrategyOptions.PROOF_SPLITTING, KeyStrategyOptions.LOOP_TREATMENT));
 			 */
-			//Collections.sort(jobs, new StepSizeComparator());
+			// Collections.sort(jobs, new StepSizeComparator());
 			System.out.println("Going to write open file");
 			OPEN_FILE.delete();
 			try (BufferedWriter bw = new BufferedWriter(new FileWriter(OPEN_FILE))) {
@@ -120,8 +121,11 @@ public class Server implements Observer {
 			System.out.println("Open file writen");
 			Set<String> whiteLists = new HashSet<>();
 			for (IJob j : jobs) {
-				whiteLists.add(j.getSource());
-				whiteLists.add(j.getClasspath());
+				if (ASystemFactory.getAbst() instanceof KeyFactory) {
+
+					whiteLists.add(((KeyCodeContainer) j.getSo().getCc()).getClasspath());
+					whiteLists.add(((KeyCodeContainer) j.getSo().getCc()).getClasspath());
+				}
 			}
 			File temp = new File(new File("Temp"), "Server");
 			temp.mkdirs();
@@ -139,8 +143,8 @@ public class Server implements Observer {
 				if (a.equals(b)) {
 					jobs.remove(j);
 					j--;
-					//a.setCode(a.getCode() + ", " + b.getCode());
-				//	a.getExperiments().putAll(b.getExperiments());
+					// a.setCode(a.getCode() + ", " + b.getCode());
+					// a.getExperiments().putAll(b.getExperiments());
 				}
 			}
 		}
@@ -163,7 +167,7 @@ public class Server implements Observer {
 
 	private static List<IJob> readDoneJobs(File f) throws FileNotFoundException, IOException {
 		List<IJob> doneJobs = new ArrayList<>();
-	
+
 		try (BufferedReader br = new BufferedReader(new FileReader(f))) {
 			String line;
 			Gson gson = new Gson();

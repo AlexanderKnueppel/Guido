@@ -16,13 +16,12 @@ import de.tubs.isf.guido.verification.systems.key.options.taclets.TacletOptionab
 public class KeySettingsObject extends SettingsObject {
 
 	private static final long serialVersionUID = -5974976146446740045L;
-
-	private int maxSteps;
 	private int debugNumber;
-	private Map<String, String> settingsMap = new HashMap<>();
+
 	private Map<String, String> tacletMap = new HashMap<>();
 
 	public KeySettingsObject() {
+		this.cc=new KeyCodeContainer();
 		for (KeyStrategyOptions option : KeyStrategyOptions.values()) {
 			setOption(option.getDefault());
 		}

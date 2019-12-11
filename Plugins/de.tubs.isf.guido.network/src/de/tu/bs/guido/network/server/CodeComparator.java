@@ -22,19 +22,19 @@ public class CodeComparator implements Comparator<IJob>{
 			arr[i] = sb.toString();
 		}
 	}
-	
+	@Deprecated
 	@Override
 	public int compare(IJob o1, IJob o2) {
 		
 		for (String s : arr) {
-			boolean o1c = o1.getCode().contains(s);
-			boolean o2c = o2.getCode().contains(s);
+			//boolean o1c = o1.getCode().contains(s);
+			//boolean o2c = o2.getCode().contains(s);
 			
-			if (o1c && !o2c){
-				return -1;
-			} else if (!o1c && o2c){
-				return 1;
-			}
+//			if (o1c && !o2c){
+//				return -1;
+//			} else if (!o1c && o2c){
+//				return 1;
+//			}
 		}
 		return 0;
 	}

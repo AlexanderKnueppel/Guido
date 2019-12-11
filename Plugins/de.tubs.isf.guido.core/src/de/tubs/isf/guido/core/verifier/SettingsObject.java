@@ -8,7 +8,7 @@ public abstract class SettingsObject implements Cloneable, Serializable {
 
 	private static final long serialVersionUID = -5974976146446740045L;
 
-	protected int debugNumber;
+	
 	protected int maxSteps;
 	protected Map<String, String> settingsMap = new HashMap<>();
 	protected ACodeContainer cc;
@@ -45,9 +45,7 @@ public abstract class SettingsObject implements Cloneable, Serializable {
 
 	public abstract OptionableContainer[] getAllPossibleSettings();
 
-	public abstract int getDebugNumber();
 
-	public abstract void setDebugNumber(int debugNumber);
 
 	@Override
 	public abstract int hashCode();

@@ -41,7 +41,7 @@ public class KeySampleHelper extends SampleHelper {
 						- "postfix".length());
 				line = line.replaceFirst("\".*\"", "");
 				String[] options = line.split(";");
-				SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
+				KeySettingsObject so = new KeySettingsObject();
 				so.setMaxSteps(100000);
 				System.out.print("[");
 				boolean first = true;
@@ -96,7 +96,7 @@ public class KeySampleHelper extends SampleHelper {
 						- "postfix".length());
 				line = line.replaceFirst("\".*\"", "");
 				String[] options = line.split(";");
-				SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
+				KeySettingsObject so = new KeySettingsObject();
 				for (String option : options) {
 					option = option.trim();
 					String[] vals = option.split("::");
@@ -127,7 +127,7 @@ public class KeySampleHelper extends SampleHelper {
 		for (File config : configFiles) {
 			try (BufferedReader br = new BufferedReader(new FileReader(config))) {
 				String line;
-				SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
+				KeySettingsObject so = new KeySettingsObject();
 				while ((line = br.readLine()) != null) {
 					line = FeatureIdeTranslator.decode(line);
 					line = line.trim();

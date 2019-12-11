@@ -119,9 +119,10 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 			numberOfContracts = noc;
 		}
 		getSampleForFile(sampleFile, sampleType).forEach(setting -> {
+			KeySettingsObject ks =(KeySettingsObject)setting;
 			for (int num = 0; num < numberOfContracts; num++)
-				result.add(new KeyJavaJob(code, setting.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath), className,
-						methodName, parameters, setting, num));
+				result.add(new KeyJavaJob(code, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath), className,
+						methodName, parameters, ks, num));
 		});
 		return result;
 	}
