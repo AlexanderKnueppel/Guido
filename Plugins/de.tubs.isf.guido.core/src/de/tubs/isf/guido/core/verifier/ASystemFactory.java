@@ -1,5 +1,6 @@
 package de.tubs.isf.guido.core.verifier;
 
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
 
 public abstract class ASystemFactory {
@@ -17,7 +18,7 @@ public abstract class ASystemFactory {
 
 	public abstract GetJobs createGetJobs();
 
-	public abstract Result createResult();
+	public abstract IDataBasisElement createResult();
 
 
 	public abstract SampleHelper createSampleHelper();

@@ -8,8 +8,8 @@ import java.util.Set;
 
 import org.key_project.util.collection.ImmutableSet;
 
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.verifier.Example;
-import de.tubs.isf.guido.core.verifier.Result;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.control.KeYEnvironment;
 import de.uka.ilkd.key.java.abstraction.KeYJavaType;
@@ -25,7 +25,7 @@ import de.uka.ilkd.key.util.KeYTypeUtil;
 
 public class KeyExample extends Example{
 
-	public List<Result> getResultForProof(File source, File classPath,
+	public List<IDataBasisElement> getResultForProof(File source, File classPath,
 			String className, String methodName, SettingsObject so)
 			{
 	      try {
