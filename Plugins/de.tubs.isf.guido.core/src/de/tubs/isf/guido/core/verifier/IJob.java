@@ -7,7 +7,7 @@ import java.util.Map;
 
 
 
-public interface IJob  {
+public interface IJob extends Cloneable  {
 	static final long serialVersionUID = 778517411407136861L;
 
 	String source =null;

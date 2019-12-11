@@ -1,26 +1,11 @@
-package de.tubs.isf.guido.verification.systems.key;
+package de.tubs.isf.guido.core.verifier;
 
 import java.util.Map;
 
-import de.tubs.isf.guido.core.verifier.AJavaJob;
-import de.tubs.isf.guido.core.verifier.IJob;
-import de.tubs.isf.guido.core.verifier.SettingsObject;
-
-public class KeyJavaJob extends AJavaJob {
-
-	public KeyJavaJob(String code, int expNumb, String source, String classpath, String clazz, String method,
-			String[] parameter, SettingsObject so, int num) {
-		
-		// TODO Auto-generated constructor stub
-	}
-
-	public KeyJavaJob(String string, int i, String source, Object object, String clazz, String method, Object object2,
-			SettingsObject so) {
-		// TODO Auto-generated constructor stub
-	}
+public abstract class AJavaJob implements IJob {
 
 	@Override
-	public void reinitialize() { 
+	public void reinitialize() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -132,5 +117,5 @@ public class KeyJavaJob extends AJavaJob {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 }
