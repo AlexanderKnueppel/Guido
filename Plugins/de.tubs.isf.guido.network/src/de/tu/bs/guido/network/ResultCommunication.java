@@ -5,7 +5,6 @@ import java.util.List;
 
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.verifier.IJob;
-import de.tubs.isf.guido.core.verifier.Result;
 
 
 

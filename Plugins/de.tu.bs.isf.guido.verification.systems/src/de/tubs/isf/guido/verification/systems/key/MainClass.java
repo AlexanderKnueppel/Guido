@@ -9,10 +9,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
+import de.tubs.isf.guido.core.proof.controller.IProofControl;
 import de.tubs.isf.guido.core.verifier.ASystemFactory;
-import de.tubs.isf.guido.core.verifier.Control;
 import de.tubs.isf.guido.core.verifier.Optionable;
-import de.tubs.isf.guido.core.verifier.Result;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.key.options.strategies.ArithmeticTreatmentOptions;
 import de.tubs.isf.guido.verification.systems.key.options.strategies.AutoInductionOptions;
@@ -51,7 +51,7 @@ public class MainClass {
 	public static File sourcePath = new File(
 			"./../VerificationData/VerificationData_ThreeWiseSampling/ReduxProblemSolved");
 	public static File reduxPath = new File("./../Resources/JavaRedux");
-	public static Control kc = new ExampleBasedKeyControl();
+	public static IProofControl kc = new ExampleBasedKeyControl();
 
 	public static void calc(File folder) {
 
@@ -125,10 +125,10 @@ public class MainClass {
 
 	}
 
-	private static void outPutProofResults(List<? extends Result> res) {
+	private static void outPutProofResults(List<IDataBasisElement> res) {
 		res.forEach(result -> {
-			System.out.println(result.getName());
-			System.out.println(result.isClosed() ? result.getSteps() : "notClosed!");
+			System.out.println(result.getEffort());
+			System.out.println(result.isProvable() ?  result.getEffort() : "notClosed!");
 			System.out.println("____________________________________________");
 		});
 	}
@@ -142,14 +142,18 @@ public class MainClass {
 		return so;
 	}
 
-	private static List<? extends Result> proof(String classname, String methodname, String[] methodparameter, int contractNumber,
+	private static List<IDataBasisElement> proof(String classname, String methodname, String[] methodparameter, int contractNumber,
 			SettingsObject so) {
-		return kc.getResultForProof(sourcePath, reduxPath, classname, methodname, methodparameter, contractNumber, so);
+		kc.performProof(so);
+		
+		return kc.getCurrentResults(); 
 	}
 
-	private static List<? extends Result> proofWithOwnSourceFile(File source, String classname, String methodname,
+	private static List<IDataBasisElement> proofWithOwnSourceFile(File source, String classname, String methodname,
 			String[] methodparameter, int contractNumber, SettingsObject so) {
-		return kc.getResultForProof(source, reduxPath, classname, methodname, methodparameter, contractNumber, so);
+		kc.performProof(so);
+		
+		return kc.getCurrentResults(); 
 	}
 
 }

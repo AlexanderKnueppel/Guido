@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.tubs.isf.guido.core.verifier.Result;
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.core.KeYMediator;
 import de.uka.ilkd.key.gui.MainWindow;
@@ -38,7 +38,7 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 	 * @return Gibt fuer jeden Vertrag an dieser Methode ein Result-Objekt
 	 *         zurueck.
 	 */
-	public List<Result> getResultForProof(File source, File classPath,
+	public List<IDataBasisElement> getResultForProof(File source, File classPath,
 			String className, String methodName, String[] parameters, int contractNumber,
 			SettingsObject so) {
 		try {
@@ -127,12 +127,12 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 	 *             hat.
 	 * @throws ProofInputException
 	 */
-	private List<Result> executeProofsForMethod(File source, File classPath,
+	private List<IDataBasisElement> executeProofsForMethod(File source, File classPath,
 			String className, String methodName, String[] parameters, int contractNumber,
 			KeySettingsObject so) throws ProblemLoaderException,
 			ProofInputException {
 		MainWindow main = MainWindow.getInstance();
-		List<Result> results = new ArrayList<>();
+		List<IDataBasisElement> results = new ArrayList<>();
 		try {
 			main.setVisible(false);
 			// if (!so.getTacletMap().isEmpty())
@@ -168,7 +168,7 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 		return results;
 	}
 
-	private Result getResult(MainWindow main, InitConfig ic, Contract contract,
+	private KeyDataBasis getResult(MainWindow main, InitConfig ic, Contract contract,
 			KeySettingsObject so) throws ProofInputException {
 		ProofOblInput poi = contract.createProofObl(ic);
 		KeYMediator mediator = main.getMediator();
@@ -213,5 +213,23 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 		} finally {
 			main.dispose();
 		}
+	}
+
+	@Override
+	public void performProof(SettingsObject so) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isClosed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<IDataBasisElement> getCurrentResults() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

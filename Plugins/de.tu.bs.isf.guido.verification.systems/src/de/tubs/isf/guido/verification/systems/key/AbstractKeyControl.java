@@ -12,8 +12,8 @@ import java.util.Map;
 import org.key_project.util.collection.ImmutableArray;
 import org.key_project.util.collection.ImmutableSet;
 
-import de.tubs.isf.guido.core.verifier.Control;
-import de.tubs.isf.guido.core.verifier.Result;
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
+import de.tubs.isf.guido.core.proof.controller.IProofControl;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.java.abstraction.KeYJavaType;
 import de.uka.ilkd.key.logic.Choice;
@@ -30,7 +30,7 @@ import de.uka.ilkd.key.strategy.definition.AbstractStrategyPropertyDefinition;
 import de.uka.ilkd.key.strategy.definition.StrategyPropertyValueDefinition;
 import de.uka.ilkd.key.strategy.definition.StrategySettingsDefinition;
 
-public abstract class AbstractKeyControl implements Control {
+public abstract class AbstractKeyControl implements IProofControl {
 
 	private static final Map<String, Map<String, String>> VALUES = new HashMap<>();
 	private static final Map<String, String> PROPERTIES = new HashMap<>();
@@ -50,27 +50,30 @@ public abstract class AbstractKeyControl implements Control {
 		});
 	}
 
-	public List<Result> getResultForProof(File source, File classPath, String className, String methodName,
+	public List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
 			SettingsObject so) {
 		return getResultForProof(source, classPath, className, methodName, -1, so);
 
 	}
 
-	public List<Result> getResultForProof(File source, File classPath, String className, String methodName,
+	public List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
 			int contractNumber, SettingsObject so) {
 		return getResultForProof(source, classPath, className, methodName, null, contractNumber, so);
 	}
+	abstract List<IDataBasisElement> getResultForProof(File source, File classPath,
+			String className, String methodName, String[] parameters, int contractNumber, SettingsObject so);
 
-	@Override
-	public List<Result> getResultForProof(File source, File classPath, String className, String methodName,
+	public List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
 			String[] parameters, SettingsObject so) {
 		return getResultForProof(source, classPath, className, methodName, parameters, -1, so);
 	}
 
-	@Override
+
 	public int getNumberOfContracts(File source, File classPath, String className, String methodName) {
 		return getNumberOfContracts(source, classPath, className, methodName, null);
 	}
+	public abstract  int getNumberOfContracts(File source, File classPath,
+			String className, String methodName, String[] parameters);
 
 	/**
 	 * Ermittelt die Namen der mitgegebenen Strategie-Option, aller Unterstrategien
@@ -273,13 +276,13 @@ public abstract class AbstractKeyControl implements Control {
 		return proofContracts;
 	}
 
-	protected KeyResult createResult(Contract contract, Proof p) {
+	protected KeyDataBasis createResult(Contract contract, Proof p) {
 		StrategySettings ss = p.getSettings().getStrategySettings();
 		StrategyProperties sp = ss.getActiveStrategyProperties();
 		ImmutableSet<Choice> immTacletChoices = p.getSettings().getChoiceSettings().getDefaultChoicesAsSet();
 		Map<String, String> tacletChoices = new HashMap<>(immTacletChoices.size());
 		immTacletChoices.forEach(choice -> tacletChoices.put(choice.category(), choice.name().toString()));
-		return new KeyResult(contract.toString(), contract.getName(), p.closed(), p.countNodes(),
+		return new KeyDataBasis(contract.toString(), contract.getName(), p.closed(), p.countNodes(),
 				p.getStatistics().timeInMillis, createSmallReadableOptionMap(sp), tacletChoices);
 	}
 }

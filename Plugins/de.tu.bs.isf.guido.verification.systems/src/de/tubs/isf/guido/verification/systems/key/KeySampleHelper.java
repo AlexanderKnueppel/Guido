@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.verifier.ASystemFactory;
-import de.tubs.isf.guido.core.verifier.Result;
 import de.tubs.isf.guido.core.verifier.SampleHelper;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.key.generators.FeatureIdeTranslator;
@@ -59,16 +59,16 @@ public class KeySampleHelper extends SampleHelper {
 					so.setParameter(vals[0], vals[1]);
 				}
 				System.out.println("]");
-				List<? extends Result> res = outPutProofResults(kc.getResultForProof(
+				List<IDataBasisElement> res = outPutProofResults(kc.getResultForProof(
 						source, null, clazz, method, so));
 				int nums = 0;
-				for (Result result : res) {
+				for (IDataBasisElement result : res) {
 					if (!(results.size() > nums)) {
 						results.add(new ArrayList<String>());
 					}
 					List<String> resultList = results.get(nums++);
 					resultList.add(""
-							+ (result.isClosed() ? result.getSteps() : -1));
+							+ (result.isProvable() ? result.getEffort() : -1));
 				}
 			}
 		}
@@ -147,24 +147,28 @@ public class KeySampleHelper extends SampleHelper {
 	}
 
 
-	
-	public List<Result> outPutProofResults(List<Result> res) {
+	public List<IDataBasisElement> outPutProofResults(List<IDataBasisElement> res) {
+		
 		res.forEach(result -> {
-			System.out.println(result.getName());
-			System.out.println(result.getProof());
-			System.out.println(result.isClosed() ? result.getSteps()
+			KeyDataBasis kres = (KeyDataBasis)result;
+			System.out.println(kres.getName());
+			System.out.println(kres.getProof());
+			System.out.println(kres.isClosed() ? kres.getSteps()
 					: "notClosed!");
 			System.out.println();
 			System.out.println("Options:");
-			result.getOptions().forEach(
+			kres.getOptions().forEach(
 					(key, value) -> System.out.println(key + ": " + value));
 			System.out.println();
 			System.out.println("Taclets:");
-			result.getTaclets().forEach(
+			kres.getTaclets().forEach(
 					(key, value) -> System.out.println(key + ": " + value));
 			System.out.println("____________________________________________");
 		});
 		return res;
 	}
+
+	
+
 
 }

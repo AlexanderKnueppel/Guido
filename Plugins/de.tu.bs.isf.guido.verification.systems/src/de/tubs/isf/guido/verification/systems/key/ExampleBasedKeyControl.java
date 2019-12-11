@@ -6,7 +6,6 @@ import java.util.List;
 
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
-import de.tubs.isf.guido.core.verifier.Result;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.control.KeYEnvironment;
 import de.uka.ilkd.key.java.abstraction.KeYJavaType;
@@ -19,11 +18,11 @@ import de.uka.ilkd.key.speclang.Contract;
 public class ExampleBasedKeyControl extends AbstractKeyControl implements IProofControl {
 	List<IDataBasisElement> kdb = new ArrayList<IDataBasisElement>();
 	@Override
-	public List<Result> getResultForProof(File source, File classPath, String className, String methodName,
+	public List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
 			String[] parameters, int contractNumber, SettingsObject so) {
 		KeySettingsObject so1 = (KeySettingsObject) so;
 		
-		List<Result> res = new ArrayList<Result>();
+		List<IDataBasisElement> res = new ArrayList<IDataBasisElement>();
 		if (!ProofSettings.isChoiceSettingInitialised()) {
 			KeYEnvironment<?> env = null;
 			try {
@@ -59,7 +58,7 @@ public class ExampleBasedKeyControl extends AbstractKeyControl implements IProof
 		return res;
 	}
 
-	private KeyResult getResult(KeYEnvironment<?> env, Contract contract, KeySettingsObject so) {
+	private KeyDataBasis getResult(KeYEnvironment<?> env, Contract contract, KeySettingsObject so) {
 		Proof proof = null;
 		try {
 			proof = env.createProof(contract.createProofObl(env.getInitConfig(), contract));
@@ -100,7 +99,10 @@ public class ExampleBasedKeyControl extends AbstractKeyControl implements IProof
 
 	@Override
 	public void performProof(SettingsObject so) {
-		// TODO Auto-generated method stub
+		KeySettingsObject kso = (KeySettingsObject) so;
+		KeyCodeContainer kcc = (KeyCodeContainer) kso.getCc();
+		
+		getResultForProof(new File(kcc.getSource()), new File(kcc.getClasspath()), kcc.getClazz(), kcc.getMethod(), kso);
 		
 	}
 

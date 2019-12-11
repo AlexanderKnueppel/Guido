@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
+
 public abstract class SampleHelper {
 	
 	protected static final int DEFAULT_MAX_STEPS = 1000;
@@ -19,6 +21,6 @@ public abstract class SampleHelper {
 	public abstract List<SettingsObject> readFeatureIDESamples(File sampleFolder)
 			throws IOException;
 
-	public abstract List<Result> outPutProofResults(List<Result> res);
+	public abstract List<IDataBasisElement> outPutProofResults(List<IDataBasisElement> res);
 
 }

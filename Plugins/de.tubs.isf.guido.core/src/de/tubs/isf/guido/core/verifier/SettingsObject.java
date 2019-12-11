@@ -11,14 +11,14 @@ public abstract class SettingsObject implements Cloneable, Serializable {
 	protected int debugNumber;
 	protected int maxSteps;
 	protected Map<String, String> settingsMap = new HashMap<>();
-	protected ACodeContainer cd;
+	protected ACodeContainer cc;
 
-	public ACodeContainer getCd() {
-		return cd;
+	public ACodeContainer getCc() {
+		return cc;
 	}
 
-	public void setCd(ACodeContainer cd) {
-		this.cd = cd;
+	public void setCd(ACodeContainer cc) {
+		this.cc = cc;
 	}
 
 	public SettingsObject() {
