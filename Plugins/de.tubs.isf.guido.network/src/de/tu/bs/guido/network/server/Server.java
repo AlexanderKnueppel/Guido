@@ -178,7 +178,7 @@ public class Server implements Observer {
 				} catch (Exception e) {
 					j = gson.fromJson(line, KeyJavaJob.class);
 				}
-				
+
 				doneJobs.add(j);
 			}
 		}

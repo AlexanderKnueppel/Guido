@@ -8,15 +8,15 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
-*
-* @author  Carsten Padylla
-* @author  Maren Süwer
-* @author  Alexander Knüppel
-* 
-* @version 1.0
-* 
-* @since   2018-01-01 
-*/
+ *
+ * @author Carsten Padylla
+ * @author Maren Süwer
+ * @author Alexander Knüppel
+ * 
+ * @version 1.0
+ * 
+ * @since 2018-01-01
+ */
 public class Client {
 	int jobs = 0;
 	private static final int MAX_JOBS = 1;

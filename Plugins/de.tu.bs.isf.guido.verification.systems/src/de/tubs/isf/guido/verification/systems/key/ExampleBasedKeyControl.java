@@ -102,7 +102,7 @@ public class ExampleBasedKeyControl extends AbstractKeyControl implements IProof
 		KeySettingsObject kso = (KeySettingsObject) so;
 		KeyCodeContainer kcc = (KeyCodeContainer) kso.getCc();
 		
-		getResultForProof(new File(kcc.getSource()), new File(kcc.getClasspath()), kcc.getClazz(), kcc.getMethod(), kso);
+		kdb.addAll(getResultForProof(new File(kcc.getSource()), new File(kcc.getClasspath()), kcc.getClazz(), kcc.getMethod(), kso));
 		
 	}
 

@@ -18,11 +18,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import de.tubs.isf.guido.core.verifier.ASystemFactory;
 import de.tubs.isf.guido.core.verifier.BatchXMLHelper;
 import de.tubs.isf.guido.core.verifier.GetJobs;
 import de.tubs.isf.guido.core.verifier.IJob;
-import de.tubs.isf.guido.core.verifier.SampleHelper;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 
 public class KeyBatchXmlHelper extends BatchXMLHelper {
@@ -119,10 +117,10 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 			numberOfContracts = noc;
 		}
 		getSampleForFile(sampleFile, sampleType).forEach(setting -> {
-			KeySettingsObject ks =(KeySettingsObject)setting;
+			KeySettingsObject ks = (KeySettingsObject) setting;
 			for (int num = 0; num < numberOfContracts; num++)
-				result.add(new KeyJavaJob(code, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath), className,
-						methodName, parameters, ks, num));
+				result.add(new KeyJavaJob(code, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath),
+						className, methodName, parameters, ks, num));
 		});
 		return result;
 	}
@@ -144,7 +142,8 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 			if (type == SPL_SAMPLE_FILE) {
 				result = Collections.unmodifiableList(new KeySampleHelper().readSPLSamples(new File(sampleFile)));
 			} else {
-				result = Collections.unmodifiableList(new KeySampleHelper().readFeatureIDESamples(new File(sampleFile)));
+				result = Collections
+						.unmodifiableList(new KeySampleHelper().readFeatureIDESamples(new File(sampleFile)));
 			}
 			parsedSamples.put(sampleFile, result);
 		}
@@ -157,7 +156,6 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 		private final String clazz;
 		private final String method;
 		private final String[] parameter;
-		private KeyBatchXmlHelper bx;
 
 		public SearchParameter(String codeunit, String clazz, String method, String[] parameter) {
 			super();

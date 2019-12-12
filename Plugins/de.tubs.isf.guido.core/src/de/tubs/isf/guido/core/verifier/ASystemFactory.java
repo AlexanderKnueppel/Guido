@@ -15,17 +15,13 @@ public abstract class ASystemFactory {
 
 	public abstract IProofControl createControl();
 
-
-
 	public abstract SampleHelper createSampleHelper();
-
 
 	public abstract BatchXMLHelper createBatchXMLHelper();
 
 	public abstract SettingsObject createSettingsObject();
 
-
 	public abstract OptionableContainer[] createContainer();
 
-	public abstract OptionableContainer createContainer(String name) ;
+	public abstract OptionableContainer createContainer(String name);
 }

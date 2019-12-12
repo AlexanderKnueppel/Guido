@@ -25,11 +25,9 @@ public class PunishmentTracker {
 		this.punishments = punishments;
 	}
 
-	private List<IJob> readPunishments() throws FileNotFoundException,
-			IOException {
+	private List<IJob> readPunishments() throws FileNotFoundException, IOException {
 		List<IJob> punishments = new ArrayList<IJob>();
-		try (BufferedReader br = new BufferedReader(new FileReader(
-				this.punishments))) {
+		try (BufferedReader br = new BufferedReader(new FileReader(this.punishments))) {
 			String line;
 			Gson gson = new Gson();
 			while ((line = br.readLine()) != null) {
@@ -42,26 +40,25 @@ public class PunishmentTracker {
 
 	public void updatePunishments(List<IJob> jobs) throws FileNotFoundException, IOException {
 		List<IJob> otherList = readPunishments();
-		for (int i = 0; i < otherList.size(); i+=2){
+		for (int i = 0; i < otherList.size(); i += 2) {
 			IJob oldOne = otherList.get(i);
-			if(jobs.contains(oldOne)){
+			if (jobs.contains(oldOne)) {
 				jobs.remove(oldOne);
-				jobs.add(otherList.get(i+1));
-			} 
+				jobs.add(otherList.get(i + 1));
+			}
 		}
 	}
 
 	public IJob punish(IJob j) throws IOException {
 		synchronized (punishments) {
-			try (BufferedWriter bw = new BufferedWriter(new FileWriter(punishments,
-					true))) {
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(punishments, true))) {
 				IJob newJob = null;
 				try {
 					newJob = j.clone();
 				} catch (CloneNotSupportedException e) {
 					e.printStackTrace();
 				}
-				double maxSteps =  newJob.getSo().getMaxEffort();
+				double maxSteps = newJob.getSo().getMaxEffort();
 				if (maxSteps >= MAXIMUM_MAX_STEPS) {
 					System.err.println("Maxmium punishment reached for job !_!");
 				} else {
@@ -70,7 +67,7 @@ public class PunishmentTracker {
 						newMaxSteps = MAXIMUM_MAX_STEPS;
 					newJob.getSo().setMaxEffort(newMaxSteps);
 					System.out.println("PUNISHED!");
-	
+
 					Gson gson = new Gson();
 					bw.write(gson.toJson(j));
 					bw.newLine();

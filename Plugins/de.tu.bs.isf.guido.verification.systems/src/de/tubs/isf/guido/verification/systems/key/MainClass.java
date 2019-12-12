@@ -128,7 +128,7 @@ public class MainClass {
 	private static void outPutProofResults(List<IDataBasisElement> res) {
 		res.forEach(result -> {
 			System.out.println(result.getEffort());
-			System.out.println(result.isProvable() ?  result.getEffort() : "notClosed!");
+			System.out.println(result.isProvable() ? result.getEffort() : "notClosed!");
 			System.out.println("____________________________________________");
 		});
 	}
@@ -142,18 +142,18 @@ public class MainClass {
 		return so;
 	}
 
-	private static List<IDataBasisElement> proof(String classname, String methodname, String[] methodparameter, int contractNumber,
-			SettingsObject so) {
+	private static List<IDataBasisElement> proof(String classname, String methodname, String[] methodparameter,
+			int contractNumber, SettingsObject so) {
 		kc.performProof(so);
-		
-		return kc.getCurrentResults(); 
+
+		return kc.getCurrentResults();
 	}
 
 	private static List<IDataBasisElement> proofWithOwnSourceFile(File source, String classname, String methodname,
 			String[] methodparameter, int contractNumber, SettingsObject so) {
 		kc.performProof(so);
-		
-		return kc.getCurrentResults(); 
+
+		return kc.getCurrentResults();
 	}
 
 }

@@ -19,12 +19,11 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 
 	private static final long serialVersionUID = -5974976146446740045L;
 	private int debugNumber;
-	
 
 	private Map<String, String> tacletMap = new HashMap<>();
 
 	public KeySettingsObject() {
-		this.cc=new KeyCodeContainer();
+		this.cc = new KeyCodeContainer();
 		for (KeyStrategyOptions option : KeyStrategyOptions.values()) {
 			setOption(option.getDefault());
 		}
@@ -32,19 +31,17 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 			setTaclet(taclet.getDefault());
 		}
 	}
-	
-	public void reinitialize(){
-			for (KeyStrategyOptions option : KeyStrategyOptions.values()) {
-				if(!settingsMap.containsKey(option.getValue()))
-					setOption(option.getDefault());
-			}
-			for (KeyTacletOptions taclet : KeyTacletOptions.values()) {
-				if(!tacletMap.containsKey(taclet.getValue()))
-					setTaclet(taclet.getDefault());
-			}
+
+	public void reinitialize() {
+		for (KeyStrategyOptions option : KeyStrategyOptions.values()) {
+			if (!settingsMap.containsKey(option.getValue()))
+				setOption(option.getDefault());
 		}
-
-
+		for (KeyTacletOptions taclet : KeyTacletOptions.values()) {
+			if (!tacletMap.containsKey(taclet.getValue()))
+				setTaclet(taclet.getDefault());
+		}
+	}
 
 	public Map<String, String> getSettingsMap() {
 		return Collections.unmodifiableMap(settingsMap);
@@ -53,13 +50,13 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 	public Map<String, String> getTacletMap() {
 		return Collections.unmodifiableMap(tacletMap);
 	}
-	
-	public Optionable getOption(OptionableContainer o){
+
+	public Optionable getParameterOption(OptionableContainer o) {
 		String key = o.getValue();
-		if (o instanceof KeyStrategyOptions){
+		if (o instanceof KeyStrategyOptions) {
 			String value = settingsMap.get(o.getValue());
 			return KeyStrategyOptions.getOption(key, value);
-		} else if (o instanceof KeyTacletOptions){
+		} else if (o instanceof KeyTacletOptions) {
 			String value = tacletMap.get(o.getValue());
 			return KeyTacletOptions.getOption(key, value);
 		}
@@ -72,9 +69,7 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 		} else if (o instanceof TacletOptionable) {
 			setTaclet((TacletOptionable) o);
 		} else {
-			throw new IllegalArgumentException(
-					o
-							+ " is unknown, so it can not be determined to be option or taclet");
+			throw new IllegalArgumentException(o + " is unknown, so it can not be determined to be option or taclet");
 		}
 	}
 
@@ -85,8 +80,7 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 			setTaclet(option, value);
 		} else {
 			throw new IllegalArgumentException(
-					option
-							+ " is unknown, so it can not be determined to be option or taclet");
+					option + " is unknown, so it can not be determined to be option or taclet");
 		}
 	}
 
@@ -135,19 +129,18 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 		}
 	}
 
-	private static boolean mapEquals(Map<String, String> thisMap,
-			Map<String, String> thatMap) {
-		if(thisMap.size() != thatMap.size()){
+	private static boolean mapEquals(Map<String, String> thisMap, Map<String, String> thatMap) {
+		if (thisMap.size() != thatMap.size()) {
 			return false;
 		}
-		
+
 		for (Entry<String, String> entry : thisMap.entrySet()) {
 			String thatMapValue = thatMap.get(entry.getKey());
-			if(!thatMapValue.equals(entry.getValue())){
+			if (!thatMapValue.equals(entry.getValue())) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -175,24 +168,23 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 		if (settingsMap == null) {
 			if (other.settingsMap != null)
 				return false;
-		} else if (!mapEquals(settingsMap,other.settingsMap))
+		} else if (!mapEquals(settingsMap, other.settingsMap))
 			return false;
 		if (tacletMap == null) {
 			if (other.tacletMap != null)
 				return false;
-		} else if (!mapEquals(tacletMap,other.tacletMap))
+		} else if (!mapEquals(tacletMap, other.tacletMap))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "SettingsObject [maxSteps=" + maxEffort + ", settingsMap="
-				+ settingsMap + ", tacletMap=" + tacletMap + "]";
+		return "SettingsObject [maxSteps=" + maxEffort + ", settingsMap=" + settingsMap + ", tacletMap=" + tacletMap
+				+ "]";
 	}
-	
 
-	public KeySettingsObject clone() throws CloneNotSupportedException{
+	public KeySettingsObject clone() throws CloneNotSupportedException {
 		KeySettingsObject so = new KeySettingsObject();
 		so.maxEffort = maxEffort;
 		so.settingsMap = new HashMap<>(settingsMap);
@@ -203,13 +195,12 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 	@Override
 	public OptionableContainer[] getAllPossibleSettings() {
 		int aLen = KeyStrategyOptions.values().length;
-        int bLen = KeyTacletOptions.values().length;
-        OptionableContainer[] result = new OptionableContainer[aLen + bLen];
-        System.arraycopy(KeyStrategyOptions.values(), 0, result, 0, aLen);
-        System.arraycopy(KeyTacletOptions.values(), 0, result, aLen, bLen);
-        return result;
+		int bLen = KeyTacletOptions.values().length;
+		OptionableContainer[] result = new OptionableContainer[aLen + bLen];
+		System.arraycopy(KeyStrategyOptions.values(), 0, result, 0, aLen);
+		System.arraycopy(KeyTacletOptions.values(), 0, result, aLen, bLen);
+		return result;
 
-		
 	}
 
 	@Override
@@ -232,6 +223,6 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 
 	@Override
 	public void setCc(ACodeContainer cc) {
-		this.cc=cc;
+		this.cc = cc;
 	}
 }

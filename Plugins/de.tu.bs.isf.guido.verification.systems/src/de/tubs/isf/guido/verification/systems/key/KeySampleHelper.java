@@ -12,20 +12,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
-import de.tubs.isf.guido.core.verifier.ASystemFactory;
 import de.tubs.isf.guido.core.verifier.SampleHelper;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.key.generators.FeatureIdeTranslator;
 
 public class KeySampleHelper extends SampleHelper {
-	
+
 	private static final int DEFAULT_MAX_STEPS = 1000;
 
-	public void main(String[] args) throws FileNotFoundException,
-			IOException{
+	public void main(String[] args) throws FileNotFoundException, IOException {
 		if (args.length != 4) {
-			throw new IllegalArgumentException(
-					"Pass four parameters: classpath, class, method and samples");
+			throw new IllegalArgumentException("Pass four parameters: classpath, class, method and samples");
 		}
 		List<List<String>> results = new ArrayList<>();
 		GuiBasedKeyControl kc = new GuiBasedKeyControl();
@@ -37,8 +34,7 @@ public class KeySampleHelper extends SampleHelper {
 			String line;
 			while ((line = br.readLine()) != null) {
 				line = line.trim();
-				line = line.substring("prefix".length(), line.length()
-						- "postfix".length());
+				line = line.substring("prefix".length(), line.length() - "postfix".length());
 				line = line.replaceFirst("\".*\"", "");
 				String[] options = line.split(";");
 				KeySettingsObject so = new KeySettingsObject();
@@ -59,16 +55,14 @@ public class KeySampleHelper extends SampleHelper {
 					so.setParameter(vals[0], vals[1]);
 				}
 				System.out.println("]");
-				List<IDataBasisElement> res = outPutProofResults(kc.getResultForProof(
-						source, null, clazz, method, so));
+				List<IDataBasisElement> res = outPutProofResults(kc.getResultForProof(source, null, clazz, method, so));
 				int nums = 0;
 				for (IDataBasisElement result : res) {
 					if (!(results.size() > nums)) {
 						results.add(new ArrayList<String>());
 					}
 					List<String> resultList = results.get(nums++);
-					resultList.add(""
-							+ (result.isProvable() ? result.getEffort() : -1));
+					resultList.add("" + (result.isProvable() ? result.getEffort() : -1));
 				}
 			}
 		}
@@ -85,15 +79,13 @@ public class KeySampleHelper extends SampleHelper {
 
 	}
 
-	public List<SettingsObject> readSPLSamples(File samples)
-			throws IOException {
+	public List<SettingsObject> readSPLSamples(File samples) throws IOException {
 		List<SettingsObject> result = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new FileReader(samples))) {
 			String line;
 			while ((line = br.readLine()) != null) {
 				line = line.trim();
-				line = line.substring("prefix".length(), line.length()
-						- "postfix".length());
+				line = line.substring("prefix".length(), line.length() - "postfix".length());
 				line = line.replaceFirst("\".*\"", "");
 				String[] options = line.split(";");
 				KeySettingsObject so = new KeySettingsObject();
@@ -111,17 +103,15 @@ public class KeySampleHelper extends SampleHelper {
 		return result;
 	}
 
-	public List<SettingsObject> readFeatureIDESamples(File sampleFolder)
-			throws IOException {
+	public List<SettingsObject> readFeatureIDESamples(File sampleFolder) throws IOException {
 		List<SettingsObject> result = new ArrayList<>();
 		List<File> configFiles = new ArrayList<>();
 		if (!sampleFolder.isDirectory()) {
-			throw new IOException("Folder is not a folder: "+sampleFolder.getAbsolutePath());
+			throw new IOException("Folder is not a folder: " + sampleFolder.getAbsolutePath());
 		}
 		File[] files = sampleFolder.listFiles(file -> file.isDirectory());
 		for (File configFolder : files) {
-			File[] configFileArray = configFolder.listFiles(file -> file
-					.getName().endsWith(".config"));
+			File[] configFileArray = configFolder.listFiles(file -> file.getName().endsWith(".config"));
 			configFiles.addAll(Arrays.asList(configFileArray));
 		}
 		for (File config : configFiles) {
@@ -146,29 +136,22 @@ public class KeySampleHelper extends SampleHelper {
 		return result;
 	}
 
-
 	public List<IDataBasisElement> outPutProofResults(List<IDataBasisElement> res) {
-		
+
 		res.forEach(result -> {
-			KeyDataBasis kres = (KeyDataBasis)result;
+			KeyDataBasis kres = (KeyDataBasis) result;
 			System.out.println(kres.getName());
 			System.out.println(kres.getProof());
-			System.out.println(kres.isClosed() ? kres.getSteps()
-					: "notClosed!");
+			System.out.println(kres.isClosed() ? kres.getSteps() : "notClosed!");
 			System.out.println();
 			System.out.println("Options:");
-			kres.getOptions().forEach(
-					(key, value) -> System.out.println(key + ": " + value));
+			kres.getOptions().forEach((key, value) -> System.out.println(key + ": " + value));
 			System.out.println();
 			System.out.println("Taclets:");
-			kres.getTaclets().forEach(
-					(key, value) -> System.out.println(key + ": " + value));
+			kres.getTaclets().forEach((key, value) -> System.out.println(key + ": " + value));
 			System.out.println("____________________________________________");
 		});
 		return res;
 	}
-
-	
-
 
 }

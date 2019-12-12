@@ -40,7 +40,7 @@ public class SettingsObject implements Cloneable, Serializable {
 		return null;
 	}
 
-	public Optionable getOption(OptionableContainer o) {
+	public Optionable getParameterOption(OptionableContainer o) {
 		return null;
 	}
 

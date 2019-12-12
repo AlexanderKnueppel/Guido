@@ -5,11 +5,11 @@ import java.util.Comparator;
 import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.OptionableContainer;
 
-public class CodeComparator implements Comparator<IJob>{
+public class CodeComparator implements Comparator<IJob> {
 
 	private String[] arr;
-	
-	public CodeComparator(OptionableContainer... oc){
+
+	public CodeComparator(OptionableContainer... oc) {
 		arr = new String[oc.length];
 		for (int i = 0; i < oc.length; i++) {
 			String[] splitted = oc[i].getValue().split(" ");
@@ -22,14 +22,15 @@ public class CodeComparator implements Comparator<IJob>{
 			arr[i] = sb.toString();
 		}
 	}
+
 	@Deprecated
 	@Override
 	public int compare(IJob o1, IJob o2) {
-		
+
 		for (String s : arr) {
-			//boolean o1c = o1.getCode().contains(s);
-			//boolean o2c = o2.getCode().contains(s);
-			
+			// boolean o1c = o1.getCode().contains(s);
+			// boolean o2c = o2.getCode().contains(s);
+
 //			if (o1c && !o2c){
 //				return -1;
 //			} else if (!o1c && o2c){
