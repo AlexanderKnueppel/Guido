@@ -89,11 +89,11 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 							: null;
 					result.addAll(getJobsForMethod(methodCode, cleanEmpty(source), cleanEmpty(classpath), name,
 							methodName, parameters, sampleFile, sampleType));
+
 				}
 			}
 
 		}
-
 		return result;
 	}
 
@@ -116,12 +116,20 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 		} else {
 			numberOfContracts = noc;
 		}
-		getSampleForFile(sampleFile, sampleType).forEach(setting -> {
-			KeySettingsObject ks = (KeySettingsObject) setting;
-			for (int num = 0; num < numberOfContracts; num++)
-				result.add(new KeyJavaJob(code, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath),
-						className, methodName, parameters, ks, num));
-		});
+		List<SettingsObject> al =getSampleForFile(sampleFile, sampleType);
+		for (int i = 0; i < al.size(); i++) {
+			KeySettingsObject ks = (KeySettingsObject) al.get(i);
+			for (int num = 0; num < numberOfContracts; num++) {
+			result.add(new KeyJavaJob(code, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath),
+					className, methodName, parameters, ks, num));
+		}}
+//		getSampleForFile(sampleFile, sampleType).forEach( setting -> {
+//			KeySettingsObject ks = (KeySettingsObject) setting;
+//			
+//			for (int num = 0; num < numberOfContracts; num++)
+//				result.add(new KeyJavaJob(code, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath),
+//						className, methodName, parameters, setting, num));
+//		});
 		return result;
 	}
 

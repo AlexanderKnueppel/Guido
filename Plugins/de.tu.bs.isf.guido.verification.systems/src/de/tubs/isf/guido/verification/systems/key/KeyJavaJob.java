@@ -10,15 +10,7 @@ public class KeyJavaJob implements IJob, Serializable {
 			String[] parameter, SettingsObject so, int num) {
 
 		this.setSo(so);
-		((KeyCodeContainer) this.getSo().getCc()).setSource(source);
-		((KeyCodeContainer) this.getSo().getCc()).setClasspath(classpath);
-		;
-		((KeyCodeContainer) this.getSo().getCc()).setClazz(clazz);
-		((KeyCodeContainer) this.getSo().getCc()).setMethod(method);
-		((KeyCodeContainer) this.getSo().getCc()).setParameter(parameter);
-		((KeyCodeContainer) this.getSo().getCc()).setMethod(method);
-		((KeyCodeContainer) this.getSo().getCc()).setContractNumber(num);
-		((KeyCodeContainer) this.getSo().getCc()).getExperiments().put(code, expNumb);
+		so.setCc(new KeyCodeContainer(code, expNumb, source, classpath, clazz, method, parameter, num));
 
 	}
 
@@ -34,7 +26,7 @@ public class KeyJavaJob implements IJob, Serializable {
 	}
 
 	static final long serialVersionUID = 778517411407136861L;
-	SettingsObject so;
+	KeySettingsObject so;
 
 	public void reinitialize() {
 		so.reinitialize();
@@ -45,7 +37,7 @@ public class KeyJavaJob implements IJob, Serializable {
 	}
 
 	public void setSo(SettingsObject so) {
-		this.so = so;
+		this.so = (KeySettingsObject) so;
 	}
 
 	@Override
@@ -56,7 +48,7 @@ public class KeyJavaJob implements IJob, Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		IJob other = (IJob) obj;
+		KeyJavaJob other = (KeyJavaJob) obj;
 
 		if (so == null) {
 			if (other.getSo() != null)

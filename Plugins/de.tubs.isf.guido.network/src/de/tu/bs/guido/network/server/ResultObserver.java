@@ -15,6 +15,7 @@ import de.tu.bs.guido.network.ResultCommunication;
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.key.pooling.WorkingPool;
+import de.tubs.isf.guido.verification.systems.key.KeyJavaJob;
 
 public class ResultObserver implements Observer {
 
@@ -25,8 +26,7 @@ public class ResultObserver implements Observer {
 	private int port;
 	private PunishmentTracker pt;
 
-	public ResultObserver(File result, File done, WorkingPool pool, int port, PunishmentTracker pt)
-			throws IOException {
+	public ResultObserver(File result, File done, WorkingPool pool, int port, PunishmentTracker pt) throws IOException {
 		ergebnisse = new BufferedWriter(new FileWriter(result, true));
 		doneJob = new BufferedWriter(new FileWriter(done, true));
 		this.pool = pool;
@@ -42,6 +42,7 @@ public class ResultObserver implements Observer {
 	public void update(Observable o, Object arg) {
 		ResultCommunication resCom = (ResultCommunication) arg;
 		if (punish(resCom)) {
+
 			IJob j = resCom.getJob();
 			try {
 				j = pt.punish(j);
@@ -57,8 +58,10 @@ public class ResultObserver implements Observer {
 						ergebnisse.write(gson.toJson(res));
 						ergebnisse.newLine();
 					}
+
 					doneJob.write(gson.toJson(resCom.getJob()));
 					doneJob.newLine();
+
 					ergebnisse.flush();
 					doneJob.flush();
 				} catch (IOException e) {
@@ -70,8 +73,8 @@ public class ResultObserver implements Observer {
 
 	private boolean punish(ResultCommunication resultCom) {
 		final double maxSteps = resultCom.getJob().getSo().getMaxEffort();
-		for (IDataBasisElement res : resultCom.getResults()) 
-			if(!res.isProvable() && res.getEffort() >= maxSteps)
+		for (IDataBasisElement res : resultCom.getResults())
+			if (!res.isProvable() && res.getEffort() >= maxSteps)
 				return true;
 		return false;
 	}

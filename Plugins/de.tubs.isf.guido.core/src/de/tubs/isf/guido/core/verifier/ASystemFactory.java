@@ -13,6 +13,8 @@ public abstract class ASystemFactory {
 		ASystemFactory.abst = abst;
 	}
 
+	public abstract IJob getJobwithGson(String line);
+
 	public abstract IProofControl createControl();
 
 	public abstract SampleHelper createSampleHelper();

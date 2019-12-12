@@ -19,11 +19,12 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 
 	private static final long serialVersionUID = -5974976146446740045L;
 	private int debugNumber;
+	protected KeyCodeContainer cc;
 
 	private Map<String, String> tacletMap = new HashMap<>();
 
 	public KeySettingsObject() {
-		this.cc = new KeyCodeContainer();
+		this.cc = new KeyCodeContainer(null, 0, null, null, null, null, null, 0);
 		for (KeyStrategyOptions option : KeyStrategyOptions.values()) {
 			setOption(option.getDefault());
 		}
@@ -163,6 +164,11 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		KeySettingsObject other = (KeySettingsObject) obj;
+		if (cc == null) {
+			if (other.cc != null)
+				return false;
+		} else if (!cc.equals(other.cc))
+			return false;
 		if (maxEffort != other.maxEffort)
 			return false;
 		if (settingsMap == null) {
@@ -175,6 +181,7 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 				return false;
 		} else if (!mapEquals(tacletMap, other.tacletMap))
 			return false;
+
 		return true;
 	}
 
@@ -223,6 +230,6 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 
 	@Override
 	public void setCc(ACodeContainer cc) {
-		this.cc = cc;
+		this.cc = (KeyCodeContainer) cc;
 	}
 }

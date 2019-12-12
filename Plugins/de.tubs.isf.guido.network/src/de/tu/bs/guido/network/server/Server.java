@@ -31,6 +31,7 @@ import de.tubs.isf.guido.key.pooling.distributed.NewResultNotifier;
 import de.tubs.isf.guido.verification.systems.key.KeyCodeContainer;
 import de.tubs.isf.guido.verification.systems.key.KeyFactory;
 import de.tubs.isf.guido.verification.systems.key.KeyJavaJob;
+import de.tubs.isf.guido.verification.systems.key.KeySettingsObject;
 
 public class Server implements Observer {
 
@@ -88,10 +89,9 @@ public class Server implements Observer {
 		}
 
 		PunishmentTracker pt = new PunishmentTracker(PUNISHMENT_FILE);
-		System.out.println("notdied1");
+
 		PUNISHMENT_FILE.createNewFile();
 		if (PUNISHMENT_FILE.exists()) {
-			System.out.println("notdied2");
 			pt.updatePunishments(jobs);
 			if (DONE_FILE.exists()) {
 				List<IJob> doneJobs = readDoneJobs(DONE_FILE);
@@ -136,6 +136,7 @@ public class Server implements Observer {
 	}
 
 	private static void filterListForDuplicates(List<IJob> jobs) {
+
 		for (int i = 0; i < jobs.size(); i++) {
 			IJob a = jobs.get(i);
 			for (int j = i + 1; j < jobs.size(); j++) {
@@ -151,6 +152,7 @@ public class Server implements Observer {
 		if (jobs instanceof ArrayList) {
 			((ArrayList<?>) jobs).trimToSize();
 		}
+
 	}
 //	@Deprecated
 //	private static void filterListForMe(List<IJob> joblist) {
@@ -173,11 +175,8 @@ public class Server implements Observer {
 			Gson gson = new Gson();
 			while ((line = br.readLine()) != null) {
 				IJob j;
-				try {
-					j = gson.fromJson(line, IJob.class);
-				} catch (Exception e) {
-					j = gson.fromJson(line, KeyJavaJob.class);
-				}
+
+				j = ASystemFactory.getAbst().getJobwithGson(line);
 
 				doneJobs.add(j);
 			}

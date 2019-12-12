@@ -1,5 +1,6 @@
 package de.tubs.isf.guido.verification.systems.key;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,20 @@ public class KeyCodeContainer extends ACodeContainer {
 	private int contractNumber = -1;
 	private String code;
 	private Map<String, Integer> experiments = new HashMap<>();
+
+	public KeyCodeContainer(String code, int expNumb, String source, String classpath, String clazz, String method,
+			String[] parameter, int contractNumber) {
+		super();
+		this.source = source;
+		this.clazz = clazz;
+		this.method = method;
+
+		this.classpath = classpath;
+		this.contractNumber = contractNumber;
+		this.parameter = parameter;
+		this.code = code;
+		experiments.put(code, expNumb);
+	}
 
 	public String getSource() {
 		return source;
@@ -84,4 +99,44 @@ public class KeyCodeContainer extends ACodeContainer {
 		this.experiments = experiments;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+
+		if (this == obj) {
+
+			return true;
+		}
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		KeyCodeContainer other = (KeyCodeContainer) obj;
+		if (classpath == null) {
+			if (other.classpath != null)
+				return false;
+		} else if (!classpath.equals(other.classpath))
+			return false;
+		if (clazz == null) {
+			if (other.clazz != null)
+				return false;
+		} else if (!clazz.equals(other.clazz))
+			return false;
+		if (contractNumber != other.contractNumber)
+			return false;
+		if (method == null) {
+			if (other.method != null)
+				return false;
+		} else if (!method.equals(other.method))
+			return false;
+		if (!Arrays.equals(parameter, other.parameter))
+			return false;
+
+		if (source == null) {
+			if (other.source != null)
+				return false;
+		} else if (!source.equals(other.source))
+			return false;
+
+		return true;
+	}
 }

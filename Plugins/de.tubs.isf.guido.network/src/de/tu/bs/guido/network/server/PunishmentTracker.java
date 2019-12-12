@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import de.tubs.isf.guido.core.verifier.ASystemFactory;
 import de.tubs.isf.guido.core.verifier.IJob;
 
 public class PunishmentTracker {
@@ -31,7 +32,7 @@ public class PunishmentTracker {
 			String line;
 			Gson gson = new Gson();
 			while ((line = br.readLine()) != null) {
-				IJob j = gson.fromJson(line, IJob.class);
+				IJob j = ASystemFactory.getAbst().getJobwithGson(line);
 				punishments.add(j);
 			}
 		}
