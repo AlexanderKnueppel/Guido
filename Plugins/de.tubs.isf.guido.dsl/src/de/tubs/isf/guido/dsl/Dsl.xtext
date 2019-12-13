@@ -1,0 +1,52 @@
+grammar de.tubs.isf.guido.dsl.Dsl with org.eclipse.xtext.common.Terminals
+
+generate dsl "http://www.tubs.de/isf/guido/dsl/Dsl"
+
+Dsl: 
+	(elements+=AbstractElement)*;
+	
+AbstractElement:
+    Type | Import ;
+    
+Type:
+    Hypothesis | Parameter | System | Databases;
+  
+Hypothesis:
+    'hypothesis' name=QualifiedName ('on' type=Parameter (',' types=Parameter)*) '{'
+        description=Description  definition=Definition constructs=Constructs
+    '}';
+ 
+Parameter:
+    'parameter' name=ID ;
+    
+Databases:
+	'Databases' ':' values=File;    
+ 	
+System:
+	'System'  ':' name=ID;
+	
+Description:
+    'Description' ':' name=STRING ';';
+    
+Definition:
+	'Definition' ':' optionA=ID 'is' (property=Property) 'than' optionB=ID  ';';
+
+Property:
+	'more' 'efficient' | 'less' 'efficient' | 'more' 'effective' | 'less' 'effective'
+;
+Constructs:
+	'Constructs' ':' '[' element=QualifiedName (',' elements=QualifiedName)*']' ';';
+
+File:
+	ID '.' ID;
+    
+Import:
+    'Import' importedNamespace=QualifiedNameWithWildcard;
+    
+QualifiedNameWithWildcard:
+    QualifiedName '.*'?;
+    
+QualifiedName:
+    ID ('.' ID)*;
+    
+    
