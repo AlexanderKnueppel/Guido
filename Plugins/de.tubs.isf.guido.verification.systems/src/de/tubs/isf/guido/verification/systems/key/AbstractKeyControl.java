@@ -276,13 +276,13 @@ public abstract class AbstractKeyControl implements IProofControl {
 		return proofContracts;
 	}
 
-	protected KeyDataBasis createResult(Contract contract, Proof p) {
+	protected KeyDataBasisElement createResult(Contract contract, Proof p) {
 		StrategySettings ss = p.getSettings().getStrategySettings();
 		StrategyProperties sp = ss.getActiveStrategyProperties();
 		ImmutableSet<Choice> immTacletChoices = p.getSettings().getChoiceSettings().getDefaultChoicesAsSet();
 		Map<String, String> tacletChoices = new HashMap<>(immTacletChoices.size());
 		immTacletChoices.forEach(choice -> tacletChoices.put(choice.category(), choice.name().toString()));
-		return new KeyDataBasis(contract.toString(), contract.getName(), p.closed(), p.countNodes(),
+		return new KeyDataBasisElement(contract.toString(), contract.getName(), p.closed(), p.countNodes(),
 				p.getStatistics().timeInMillis, createSmallReadableOptionMap(sp), tacletChoices);
 	}
 }

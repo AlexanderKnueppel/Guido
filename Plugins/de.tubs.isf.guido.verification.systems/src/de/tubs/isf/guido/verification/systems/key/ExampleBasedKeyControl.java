@@ -58,7 +58,7 @@ public class ExampleBasedKeyControl extends AbstractKeyControl implements IProof
 		return res;
 	}
 
-	private KeyDataBasis getResult(KeYEnvironment<?> env, Contract contract, KeySettingsObject so) {
+	private KeyDataBasisElement getResult(KeYEnvironment<?> env, Contract contract, KeySettingsObject so) {
 		Proof proof = null;
 		try {
 			proof = env.createProof(contract.createProofObl(env.getInitConfig(), contract));

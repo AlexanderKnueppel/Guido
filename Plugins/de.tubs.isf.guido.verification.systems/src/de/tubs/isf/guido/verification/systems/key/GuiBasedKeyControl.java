@@ -168,7 +168,7 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 		return results;
 	}
 
-	private KeyDataBasis getResult(MainWindow main, InitConfig ic, Contract contract,
+	private KeyDataBasisElement getResult(MainWindow main, InitConfig ic, Contract contract,
 			KeySettingsObject so) throws ProofInputException {
 		ProofOblInput poi = contract.createProofObl(ic);
 		KeYMediator mediator = main.getMediator();

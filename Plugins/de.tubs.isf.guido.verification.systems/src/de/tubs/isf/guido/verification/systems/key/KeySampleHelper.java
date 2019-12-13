@@ -139,7 +139,7 @@ public class KeySampleHelper extends SampleHelper {
 	public List<IDataBasisElement> outPutProofResults(List<IDataBasisElement> res) {
 
 		res.forEach(result -> {
-			KeyDataBasis kres = (KeyDataBasis) result;
+			KeyDataBasisElement kres = (KeyDataBasisElement) result;
 			System.out.println(kres.getName());
 			System.out.println(kres.getProof());
 			System.out.println(kres.isClosed() ? kres.getSteps() : "notClosed!");

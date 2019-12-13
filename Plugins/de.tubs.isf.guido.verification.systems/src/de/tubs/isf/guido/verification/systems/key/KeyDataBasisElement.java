@@ -5,7 +5,7 @@ import java.util.Map;
 
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 
-public class KeyDataBasis implements IDataBasisElement, Serializable {
+public class KeyDataBasisElement implements IDataBasisElement, Serializable {
 
 	/**
 	 * 
@@ -21,7 +21,7 @@ public class KeyDataBasis implements IDataBasisElement, Serializable {
 	private String code;
 	private Map<String, Integer> experiments;
 
-	public KeyDataBasis(String proof, String name, boolean closed, int steps, long timeInMillis2,
+	public KeyDataBasisElement(String proof, String name, boolean closed, int steps, long timeInMillis2,
 			Map<String, String> options, Map<String, String> taclets) {
 		super();
 		this.proof = proof;
