@@ -3,8 +3,8 @@ package de.tu.bs.guido.network;
 import java.io.Serializable;
 import java.util.List;
 
-import de.tu.bs.guido.verification.system.Job;
-import de.tu.bs.guido.verification.system.Result;
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
+import de.tubs.isf.guido.core.verifier.IJob;
 
 
 
@@ -12,15 +12,15 @@ import de.tu.bs.guido.verification.system.Result;
 public class ResultCommunication implements Serializable{
 
 	private static final long serialVersionUID = 6078326954303589087L;
-	private final Job job;
-	private final List<? extends Result> results;
-	public Job getJob() {
+	private final IJob job;
+	private final List<IDataBasisElement> results;
+	public IJob getJob() {
 		return job;
 	}
-	public List<? extends Result> getResults() {
+	public List<IDataBasisElement> getResults() {
 		return results;
 	}
-	public ResultCommunication(Job job, List<? extends Result> intermediate) {
+	public ResultCommunication(IJob job, List<IDataBasisElement> intermediate) {
 		super();
 		this.job = job;
 		this.results = intermediate;

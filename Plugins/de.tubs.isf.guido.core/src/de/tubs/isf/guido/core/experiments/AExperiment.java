@@ -1,9 +1,10 @@
 package de.tubs.isf.guido.core.experiments;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -62,6 +63,7 @@ public abstract class AExperiment {
 		protected List<DataPoint> data;
 		protected Label label;
 		private Function<DataPoint,String> tostring = null;
+		private Function<String, T> toT = null;
 		
 		public Label getLabel() {
 			return label;
@@ -71,14 +73,17 @@ public abstract class AExperiment {
 			this.label = label;
 		}
 		
+		@SuppressWarnings("unchecked")
 		public DataColumn(Label label) {
 			this.label = label;
 			this.data = new ArrayList<DataPoint>();
+			toT = (str) -> {return (T)str;};
 		}
 		
-		public DataColumn(Label label, Function<DataPoint,String> tostring) {
+		public DataColumn(Label label, Function<DataPoint,String> tostring, Function<String,T> toT) {
 			this(label);
 			this.tostring = tostring;
+			this.toT  = toT;
 		}
 		
 		List<DataPoint> getData() {
@@ -90,6 +95,10 @@ public abstract class AExperiment {
 				point.setStringRepresentation(tostring);
 				this.data.add(point);
 			}
+		}
+		
+		public T cast(String representation) {
+			return toT.apply(representation);
 		}
 		
 		@SuppressWarnings("unchecked")
@@ -106,8 +115,13 @@ public abstract class AExperiment {
 	
 	AExperiment(String name) {
 		data = new ArrayList<DataColumn<?>>();
+		this.name = name;
 		addColumns();
 		sort();
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public void addColumn(DataColumn<?> column) {
@@ -140,6 +154,52 @@ public abstract class AExperiment {
 	
 	protected abstract void addColumns();
 	protected void sort() {}
+	
+	public void writeToFile(File file) throws IOException {
+		if(!file.exists()) {
+			//file.mkdirs();
+			file.createNewFile();
+		}
+		StringBuffer result=new StringBuffer();
+		result.append(getHeader().stream().collect(Collectors.joining("|")) + "\n");
+		
+		getRows().stream().forEach(row -> {
+			result.append(row.stream().map(r -> r.toString()).collect(Collectors.joining("|")) + "\n");
+		});
+		
+		FileWriter writer = new FileWriter(file);
+	    writer.write(result.toString());
+	    writer.close();
+	}
+
+	public static AExperiment readFromFile(File file) throws IOException {
+		AExperiment ae = null;
+		if(!file.exists() || file.isDirectory()) {
+			throw new IllegalArgumentException("'" + file.getPath() + "' is not a valid (experiment) file...");
+		}
+		
+		List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+		if(!lines.isEmpty()) { //hope for the best and only test for the right number of columns
+			String line = lines.get(0);
+			if(line.split("\\|").length == SingleExperiment.BaseLabel.values().length) {
+				ae = new SingleExperiment(file.getName());
+			} else if(line.split("\\|").length == PairExperiment.BaseLabel.values().length) {
+				ae = new PairExperiment(file.getName());
+			} else {
+				throw new IOException("File seems to be corrupted... not a valid experiment file!");
+			}
+			lines.remove(0); //remove header...
+		}
+		for(String line : lines) {
+			Object[] objects = line.replace(" ", "").split("\\|");
+			List<Object> l = new ArrayList<Object>();
+			for(int i = 0; i < objects.length; ++i) {
+				l.add(ae.getColumn(i).cast((String)objects[i]));
+			}
+			ae.addRow(l.toArray());
+		}
+		return ae;
+	}
 	
 	public List<String> getHeader() {
 		return data.stream().map(c -> c.getLabel().toString()).collect(Collectors.toList());

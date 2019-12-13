@@ -10,11 +10,12 @@ import java.util.Observer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import de.tu.bs.guido.key.pooling.WorkingPool;
 import de.tu.bs.guido.network.ProofRunnable;
 import de.tu.bs.guido.network.ResultCommunication;
-import de.tu.bs.guido.verification.system.Job;
-import de.tu.bs.guido.verification.system.Result;
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
+import de.tubs.isf.guido.core.verifier.IJob;
+import de.tubs.isf.guido.key.pooling.WorkingPool;
+import de.tubs.isf.guido.verification.systems.key.KeyJavaJob;
 
 public class ResultObserver implements Observer {
 
@@ -25,8 +26,7 @@ public class ResultObserver implements Observer {
 	private int port;
 	private PunishmentTracker pt;
 
-	public ResultObserver(File result, File done, WorkingPool pool, int port, PunishmentTracker pt)
-			throws IOException {
+	public ResultObserver(File result, File done, WorkingPool pool, int port, PunishmentTracker pt) throws IOException {
 		ergebnisse = new BufferedWriter(new FileWriter(result, true));
 		doneJob = new BufferedWriter(new FileWriter(done, true));
 		this.pool = pool;
@@ -42,7 +42,8 @@ public class ResultObserver implements Observer {
 	public void update(Observable o, Object arg) {
 		ResultCommunication resCom = (ResultCommunication) arg;
 		if (punish(resCom)) {
-			Job j = resCom.getJob();
+
+			IJob j = resCom.getJob();
 			try {
 				j = pt.punish(j);
 			} catch (IOException e) {
@@ -53,12 +54,14 @@ public class ResultObserver implements Observer {
 		} else {
 			synchronized (ergebnisse) {
 				try {
-					for (Result res : resCom.getResults()) {
+					for (IDataBasisElement res : resCom.getResults()) {
 						ergebnisse.write(gson.toJson(res));
 						ergebnisse.newLine();
 					}
+
 					doneJob.write(gson.toJson(resCom.getJob()));
 					doneJob.newLine();
+
 					ergebnisse.flush();
 					doneJob.flush();
 				} catch (IOException e) {
@@ -69,9 +72,9 @@ public class ResultObserver implements Observer {
 	}
 
 	private boolean punish(ResultCommunication resultCom) {
-		final int maxSteps = resultCom.getJob().getSo().getMaxSteps();
-		for (Result res : resultCom.getResults()) 
-			if(!res.isClosed() && res.getSteps() >= maxSteps)
+		final double maxSteps = resultCom.getJob().getSo().getMaxEffort();
+		for (IDataBasisElement res : resultCom.getResults())
+			if (!res.isProvable() && res.getEffort() >= maxSteps)
 				return true;
 		return false;
 	}

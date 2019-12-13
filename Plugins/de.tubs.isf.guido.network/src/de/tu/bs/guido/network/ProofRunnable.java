@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-import de.tu.bs.guido.key.pooling.distributed.ResultRunnable;
 import de.tu.bs.guido.network.client.FileClient;
-import de.tu.bs.guido.verification.system.AbstractFactory;
-import de.tu.bs.guido.verification.system.Control;
-import de.tu.bs.guido.verification.system.Job;
-import de.tu.bs.guido.verification.system.Result;
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
+import de.tubs.isf.guido.core.proof.controller.IProofControl;
+import de.tubs.isf.guido.core.verifier.AVerificationSystemFactory;
+import de.tubs.isf.guido.core.verifier.IJob;
+import de.tubs.isf.guido.key.pooling.distributed.ResultRunnable;
 
 public class ProofRunnable implements ResultRunnable, Serializable {
 
@@ -18,13 +18,14 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 6790934214721419957L;
-	
+
 	private final int fileServerPort;
-	private final Job job;
+	private final IJob job;
 	private Object result;
 	private transient String ip;
+	public static String mode;
 
-	public ProofRunnable(Job job, int fileServerPort) {
+	public ProofRunnable(IJob job, int fileServerPort) {
 		super();
 		this.job = job;
 		this.fileServerPort = fileServerPort;
@@ -33,24 +34,24 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 	@Override
 	public void run() {
 		try {
-			File localTemp = new File(new File("Temp"),"Client");
+			File localTemp = new File(new File("Temp"), "Client");
 			localTemp.mkdirs();
-			
-			System.out.println("Running: "+job);
-			//here Factory adding 
-			Control kc = AbstractFactory.getAbst().createControl();
+
+			System.out.println("Running: " + job);
+			// here Factory adding
+			IProofControl kc = AVerificationSystemFactory.getFactory().createProofControl();
 			FileClient fc = new FileClient(ip, fileServerPort);
-			String source = job.getSource();
-			String classpath = job.getClasspath();
-			File sourceFile = getFileForName(fc, source, localTemp);
-			File classpathFile = getFileForName(fc, classpath, localTemp);
-			
-			List<? extends Result> intermediate;
-			intermediate = kc.getResultForProof(sourceFile, classpathFile, job.getClazz(),
-					job.getMethod(), job.getParameter(), job.getContractNumber(), job.getSo());
-			for (Result result : intermediate) {
-				result.setCode(job.getCode());
-				result.setExperiments(job.getExperiments());
+
+			// File sourceFile = getFileForName(fc, source, localTemp);
+			// File classpathFile = getFileForName(fc, classpath, localTemp);
+
+			List<IDataBasisElement> intermediate;
+			kc.performProof(job.getSo());
+
+			intermediate = kc.getCurrentResults();
+			for (IDataBasisElement result : intermediate) {
+				// result.setCode(job.getCode());
+				// result.setExperiments(job.getExperiments());
 			}
 			ResultCommunication resultComm = new ResultCommunication(job, intermediate);
 			result = resultComm;
@@ -59,17 +60,18 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 		}
 	}
 
-	private static File getFileForName(FileClient fc, String name, File temp) throws ClassNotFoundException, IOException{
-		if(name == null)
+	private static File getFileForName(FileClient fc, String name, File temp)
+			throws ClassNotFoundException, IOException {
+		if (name == null)
 			return null;
-		
+
 		String localSourceName = fc.getFilename(name);
-		File localSourceFile = new File(temp,localSourceName);
-		if(!localSourceFile.exists())
+		File localSourceFile = new File(temp, localSourceName);
+		if (!localSourceFile.exists())
 			fc.getFile(localSourceName, temp);
 		return localSourceFile;
 	}
-	
+
 	@Override
 	public Object getResult() {
 		return result;

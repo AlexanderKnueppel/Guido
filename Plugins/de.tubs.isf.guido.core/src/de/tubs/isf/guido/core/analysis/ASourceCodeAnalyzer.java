@@ -10,7 +10,7 @@ public abstract class ASourceCodeAnalyzer implements IAnalyzer {
 	protected int loc = -1;
 
 	public enum SourceCodeConstruct implements LanguageConstruct {
-		LOOPS_TRUE("loops_true"), LOOPS_FALSE("loops_false"), HAS_LOOP_INVARIANTS_TRUE("loop_invariants_true"),
+		ARRAYS_TRUE("arrays_true"), LOOPS_TRUE("loops_true"), LOOPS_FALSE("loops_false"), HAS_LOOP_INVARIANTS_TRUE("loop_invariants_true"),
 		HAS_LOOP_INVARIANTS_FALSE("loop_invariants_false"), BRANCHING_TRUE("branching_true"),
 		BRANCHING_FALSE("branching_false"), ARGUMENTS_TRUE("arguments_true"), ARGUMENTS_FALSE("arguments_false"),
 		METHOD_CALLS_TRUE("methodCalls_true"), METHOD_CALLS_FALSE("methodCalls_false"),

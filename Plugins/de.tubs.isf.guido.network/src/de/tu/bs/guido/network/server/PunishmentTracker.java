@@ -12,7 +12,8 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import de.tu.bs.guido.verification.system.Job;
+import de.tubs.isf.guido.core.verifier.AVerificationSystemFactory;
+import de.tubs.isf.guido.core.verifier.IJob;
 
 public class PunishmentTracker {
 	private static final int MAXIMUM_MAX_STEPS = 1000000;
@@ -25,52 +26,49 @@ public class PunishmentTracker {
 		this.punishments = punishments;
 	}
 
-	private List<Job> readPunishments() throws FileNotFoundException,
-			IOException {
-		List<Job> punishments = new ArrayList<Job>();
-		try (BufferedReader br = new BufferedReader(new FileReader(
-				this.punishments))) {
+	private List<IJob> readPunishments() throws FileNotFoundException, IOException {
+		List<IJob> punishments = new ArrayList<IJob>();
+		try (BufferedReader br = new BufferedReader(new FileReader(this.punishments))) {
 			String line;
 			Gson gson = new Gson();
 			while ((line = br.readLine()) != null) {
-				Job j = gson.fromJson(line, Job.class);
+				IJob j = AVerificationSystemFactory.getFactory().parseJobWithGson(line);
 				punishments.add(j);
 			}
 		}
 		return punishments;
 	}
 
-	public void updatePunishments(List<Job> jobs) throws FileNotFoundException, IOException {
-		List<Job> otherList = readPunishments();
-		for (int i = 0; i < otherList.size(); i+=2){
-			Job oldOne = otherList.get(i);
-			if(jobs.contains(oldOne)){
+	public void updatePunishments(List<IJob> jobs) throws FileNotFoundException, IOException {
+		List<IJob> otherList = readPunishments();
+		for (int i = 0; i < otherList.size(); i += 2) {
+			IJob oldOne = otherList.get(i);
+			if (jobs.contains(oldOne)) {
 				jobs.remove(oldOne);
-				jobs.add(otherList.get(i+1));
-			} 
+				jobs.add(otherList.get(i + 1));
+			}
 		}
 	}
 
-	public Job punish(Job j) throws IOException {
+	public IJob punish(IJob j) throws IOException {
 		synchronized (punishments) {
-			try (BufferedWriter bw = new BufferedWriter(new FileWriter(punishments,
-					true))) {
-				Job newJob = null;
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(punishments, true))) {
+				IJob newJob = null;
 				try {
 					newJob = j.clone();
 				} catch (CloneNotSupportedException e) {
 					e.printStackTrace();
 				}
-				int maxSteps = newJob.getSo().getMaxSteps();
+				double maxSteps = newJob.getSo().getMaxEffort();
 				if (maxSteps >= MAXIMUM_MAX_STEPS) {
 					System.err.println("Maxmium punishment reached for job !_!");
 				} else {
-					int newMaxSteps = MAX_STEPS_GROWTH_FACTOR * maxSteps;
+					double newMaxSteps = MAX_STEPS_GROWTH_FACTOR * maxSteps;
 					if (newMaxSteps > MAXIMUM_MAX_STEPS)
 						newMaxSteps = MAXIMUM_MAX_STEPS;
-					newJob.getSo().setMaxSteps(newMaxSteps);
+					newJob.getSo().setMaxEffort(newMaxSteps);
 					System.out.println("PUNISHED!");
-	
+
 					Gson gson = new Gson();
 					bw.write(gson.toJson(j));
 					bw.newLine();

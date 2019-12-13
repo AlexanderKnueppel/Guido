@@ -6,6 +6,7 @@ import java.util.List;
 public class Hypothesis implements Serializable {
 	private static final long serialVersionUID = 4015855254309825043L;
 
+	protected final String identifier;
 	protected final String parameter;
 	protected final String optionA;
 	protected final String optionB;
@@ -13,9 +14,10 @@ public class Hypothesis implements Serializable {
 	protected final String dependency;
 	protected final List<String> properties;
 
-	public Hypothesis(String parameter, String optionA, String optionB, String requirement, String dependency,
-			List<String> properties) {
+	public Hypothesis(String identifier, String parameter, String optionA, String optionB, String requirement,
+			String dependency, List<String> properties) {
 		super();
+		this.identifier = identifier;
 		this.parameter = parameter;
 		this.optionA = optionA;
 		this.optionB = optionB;
@@ -46,6 +48,14 @@ public class Hypothesis implements Serializable {
 
 	public String getOptionB() {
 		return optionB;
+	}
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public String getDependency() {
+		return dependency;
 	}
 
 	public boolean hasProperty() {
@@ -80,6 +90,23 @@ public class Hypothesis implements Serializable {
 			return getOptionB();
 		}
 		return getOptionB();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+
+		if (!(o instanceof Hypothesis)) {
+			return false;
+		}
+
+		Hypothesis h = (Hypothesis) o;
+
+		return optionA.equals(h.getOptionA()) && optionB.equals(h.getOptionB()) && dependency.equals(h.getDependency())
+				&& identifier.equals(h.getIdentifier()) && requirement.equals(h.getRequirement())
+				&& (!hasProperty() || (h.hasProperty() && properties.equals(h.getProperties())));
 	}
 
 	@Override

@@ -9,6 +9,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.workingPools"/>
 	<classpathentry kind="lib" path="libs/KeY/KeY.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/de.tu.bs.isf.guido.verification.systems"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.verification.systems"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

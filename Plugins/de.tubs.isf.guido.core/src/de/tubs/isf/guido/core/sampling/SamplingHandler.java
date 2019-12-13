@@ -2,15 +2,9 @@ package de.tubs.isf.guido.core.sampling;
 
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.LinkedBlockingQueue;
-
 import de.ovgu.featureide.fm.core.analysis.cnf.LiteralSet;
-import de.ovgu.featureide.fm.core.base.IFeatureModel;
 import de.ovgu.featureide.fm.core.base.impl.ConfigurationFactoryManager;
 import de.ovgu.featureide.fm.core.base.impl.DefaultConfigurationFactory;
-import de.ovgu.featureide.fm.core.base.impl.DefaultFeatureModelFactory;
-import de.ovgu.featureide.fm.core.base.impl.FMFactoryManager;
 import de.ovgu.featureide.fm.core.job.monitor.ConsoleMonitor;
 import de.ovgu.featureide.fm.core.job.monitor.IMonitor;
 
