@@ -11,7 +11,7 @@ import java.util.List;
 
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
-import de.tubs.isf.guido.core.verifier.ASystemFactory;
+import de.tubs.isf.guido.core.verifier.AVerificationSystemFactory;
 import de.tubs.isf.guido.core.verifier.Optionable;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.key.options.strategies.ArithmeticTreatmentOptions;
@@ -134,7 +134,7 @@ public class MainClass {
 	}
 
 	public static SettingsObject createDesiredSettingsObject(Optionable[] opts, int maxSteps) {
-		SettingsObject so = ASystemFactory.getAbst().createSettingsObject();
+		SettingsObject so = AVerificationSystemFactory.getAbst().createSettingsObject();
 		for (Optionable opt : opts) {
 			so.setParameter(opt);
 		}

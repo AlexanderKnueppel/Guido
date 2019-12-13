@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import de.tu.bs.guido.network.server.Server;
-import de.tubs.isf.guido.core.verifier.ASystemFactory;
+import de.tubs.isf.guido.core.verifier.AVerificationSystemFactory;
 import de.tubs.isf.guido.verification.systems.key.KeyFactory;
 
 public class Client {
 
 	public static void main(String[] args) throws UnknownHostException, ClassNotFoundException, IOException {
-		ASystemFactory.setAbst(new KeyFactory());
+		AVerificationSystemFactory.setAbst(new KeyFactory());
 		if (args[0].equals("key")) {
-			ASystemFactory.setAbst(new KeyFactory());
+			AVerificationSystemFactory.setAbst(new KeyFactory());
 		}
 		String ip = "127.0.0.1";
 		if (args.length > 1) {

@@ -3,7 +3,7 @@ package de.tubs.isf.guido.verification.systems.key;
 import com.google.gson.Gson;
 
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
-import de.tubs.isf.guido.core.verifier.ASystemFactory;
+import de.tubs.isf.guido.core.verifier.AVerificationSystemFactory;
 import de.tubs.isf.guido.core.verifier.BatchXMLHelper;
 import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.OptionableContainer;
@@ -11,7 +11,7 @@ import de.tubs.isf.guido.core.verifier.SampleHelper;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.key.options.strategies.KeyStrategyOptions;
 
-public class KeyFactory extends ASystemFactory {
+public class KeyFactory extends AVerificationSystemFactory {
 
 	public IProofControl createControl() {
 

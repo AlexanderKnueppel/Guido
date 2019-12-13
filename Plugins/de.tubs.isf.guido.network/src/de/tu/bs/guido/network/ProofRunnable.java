@@ -8,7 +8,7 @@ import java.util.List;
 import de.tu.bs.guido.network.client.FileClient;
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
-import de.tubs.isf.guido.core.verifier.ASystemFactory;
+import de.tubs.isf.guido.core.verifier.AVerificationSystemFactory;
 import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.key.pooling.distributed.ResultRunnable;
 
@@ -39,7 +39,7 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 
 			System.out.println("Running: " + job);
 			// here Factory adding
-			IProofControl kc = ASystemFactory.getAbst().createControl();
+			IProofControl kc = AVerificationSystemFactory.getAbst().createControl();
 			FileClient fc = new FileClient(ip, fileServerPort);
 
 			// File sourceFile = getFileForName(fc, source, localTemp);

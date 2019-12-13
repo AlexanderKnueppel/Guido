@@ -2,15 +2,15 @@ package de.tubs.isf.guido.core.verifier;
 
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
 
-public abstract class ASystemFactory {
-	public static ASystemFactory abst;
+public abstract class AVerificationSystemFactory {
+	public static AVerificationSystemFactory abst;
 
-	public static ASystemFactory getAbst() {
+	public static AVerificationSystemFactory getAbst() {
 		return abst;
 	}
 
-	public static void setAbst(ASystemFactory abst) {
-		ASystemFactory.abst = abst;
+	public static void setAbst(AVerificationSystemFactory abst) {
+		AVerificationSystemFactory.abst = abst;
 	}
 
 	public abstract IJob getJobwithGson(String line);
