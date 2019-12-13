@@ -13,11 +13,11 @@ public class DefaultDataBasisElement implements IDataBasisElement, Serializable 
 
 	private static final long serialVersionUID = 4015855254309825043L;
 
-	private final String name;
-	private final boolean closed;
-	private final long timeInMillis;
-	private final List<String> languageConstructs;
-	private final Map<String, String> options;
+	protected final String name;
+	protected final boolean closed;
+	protected final long timeInMillis;
+	protected final List<String> languageConstructs;
+	protected final Map<String, String> options;
 
 	public DefaultDataBasisElement(String name, boolean closed, long timeInMillis, List<String> languageConstructs,
 			Map<String, String> options) {

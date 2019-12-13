@@ -3,7 +3,10 @@ package de.tubs.isf.guido.verification.systems.key;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import de.tubs.isf.guido.core.analysis.JMLContractAnalyzer;
+import de.tubs.isf.guido.core.analysis.JavaSourceCodeAnalyzer;
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.core.KeYMediator;
@@ -21,6 +24,8 @@ import de.uka.ilkd.key.speclang.Contract;
 import de.uka.ilkd.key.ui.AbstractMediatorUserInterfaceControl;
 
 public class GuiBasedKeyControl extends AbstractKeyControl {
+	
+	JavaSourceCodeAnalyzer jsca = null;
 
 	/**
 	 * Stellt die Schnittstelle
@@ -82,6 +87,14 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 			File classPath, String className, String methodName, String[] parameters, 
 			KeySettingsObject so) throws ProofInputException,
 			ProblemLoaderException {
+		
+		File dir = source;
+		if (dir.isFile())
+			dir = source.getParentFile();
+
+		jsca = new JavaSourceCodeAnalyzer(dir, className, methodName, parameters);
+		jsca.setContractAnalyzer(new JMLContractAnalyzer());
+		
 		System.out.println("Loading proof to apply taclets");
 		AbstractProblemLoader apl = main.getUserInterface().load(null, source,
 				null, null, null, null, false);
@@ -178,7 +191,8 @@ public class GuiBasedKeyControl extends AbstractKeyControl {
 		applySettings(mediator, so);
 		ui.getProofControl().startAndWaitForAutoMode(p);
 
-		return createResult(contract, p);
+		return createResult(contract, p,
+				jsca.analyze().stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()));
 	}
 
 	@Override

@@ -60,20 +60,21 @@ public abstract class AbstractKeyControl implements IProofControl {
 			int contractNumber, SettingsObject so) {
 		return getResultForProof(source, classPath, className, methodName, null, contractNumber, so);
 	}
-	abstract List<IDataBasisElement> getResultForProof(File source, File classPath,
-			String className, String methodName, String[] parameters, int contractNumber, SettingsObject so);
+
+	abstract List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
+			String[] parameters, int contractNumber, SettingsObject so);
 
 	public List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
 			String[] parameters, SettingsObject so) {
 		return getResultForProof(source, classPath, className, methodName, parameters, -1, so);
 	}
 
-
 	public int getNumberOfContracts(File source, File classPath, String className, String methodName) {
 		return getNumberOfContracts(source, classPath, className, methodName, null);
 	}
-	public abstract  int getNumberOfContracts(File source, File classPath,
-			String className, String methodName, String[] parameters);
+
+	public abstract int getNumberOfContracts(File source, File classPath, String className, String methodName,
+			String[] parameters);
 
 	/**
 	 * Ermittelt die Namen der mitgegebenen Strategie-Option, aller Unterstrategien
@@ -276,13 +277,14 @@ public abstract class AbstractKeyControl implements IProofControl {
 		return proofContracts;
 	}
 
-	protected KeyDataBasisElement createResult(Contract contract, Proof p) {
+	protected KeyDataBasisElement createResult(Contract contract, Proof p, List<String> languageConstructs) {
 		StrategySettings ss = p.getSettings().getStrategySettings();
 		StrategyProperties sp = ss.getActiveStrategyProperties();
 		ImmutableSet<Choice> immTacletChoices = p.getSettings().getChoiceSettings().getDefaultChoicesAsSet();
 		Map<String, String> tacletChoices = new HashMap<>(immTacletChoices.size());
 		immTacletChoices.forEach(choice -> tacletChoices.put(choice.category(), choice.name().toString()));
+
 		return new KeyDataBasisElement(contract.toString(), contract.getName(), p.closed(), p.countNodes(),
-				p.getStatistics().timeInMillis, createSmallReadableOptionMap(sp), tacletChoices);
+				p.getStatistics().timeInMillis, languageConstructs, createSmallReadableOptionMap(sp), tacletChoices);
 	}
 }

@@ -1,35 +1,26 @@
 package de.tubs.isf.guido.verification.systems.key;
 
-import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
+import de.tubs.isf.guido.core.databasis.DefaultDataBasisElement;
 
-import de.tubs.isf.guido.core.databasis.IDataBasisElement;
-
-public class KeyDataBasisElement implements IDataBasisElement, Serializable {
+public class KeyDataBasisElement extends DefaultDataBasisElement {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1935265156680654042L;
 	private final String proof;
-	private final String name;
-	private final boolean closed;
 	private final int steps;
-	private final long timeInMillis;
-	private final Map<String, String> options;
 	private final Map<String, String> taclets;
 	private String code;
 	private Map<String, Integer> experiments;
 
-	public KeyDataBasisElement(String proof, String name, boolean closed, int steps, long timeInMillis2,
-			Map<String, String> options, Map<String, String> taclets) {
-		super();
+	public KeyDataBasisElement(String proof, String name, boolean closed, int steps, long timeInMillis,
+			List<String> languageConstructs, Map<String, String> options, Map<String, String> taclets) {
+		super(name, closed, timeInMillis, languageConstructs, options);
 		this.proof = proof;
-		this.name = name;
-		this.closed = closed;
 		this.steps = steps;
-		this.timeInMillis = timeInMillis2;
-		this.options = options;
 		this.taclets = taclets;
 	}
 
@@ -53,24 +44,8 @@ public class KeyDataBasisElement implements IDataBasisElement, Serializable {
 		return proof;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public boolean isClosed() {
-		return closed;
-	}
-
 	public int getSteps() {
 		return steps;
-	}
-
-	public long getTimeInMillis() {
-		return timeInMillis;
-	}
-
-	public Map<String, String> getOptions() {
-		return options;
 	}
 
 	public Map<String, String> getTaclets() {
@@ -86,7 +61,7 @@ public class KeyDataBasisElement implements IDataBasisElement, Serializable {
 	@Override
 	public double getEffort() {
 		// TODO Auto-generated method stub
-		return timeInMillis;
+		return steps;
 	}
 
 }

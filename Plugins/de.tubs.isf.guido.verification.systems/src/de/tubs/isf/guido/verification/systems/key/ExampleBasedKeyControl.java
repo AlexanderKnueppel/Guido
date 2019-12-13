@@ -3,7 +3,10 @@ package de.tubs.isf.guido.verification.systems.key;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import de.tubs.isf.guido.core.analysis.JMLContractAnalyzer;
+import de.tubs.isf.guido.core.analysis.JavaSourceCodeAnalyzer;
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
@@ -17,11 +20,22 @@ import de.uka.ilkd.key.speclang.Contract;
 
 public class ExampleBasedKeyControl extends AbstractKeyControl implements IProofControl {
 	List<IDataBasisElement> kdb = new ArrayList<IDataBasisElement>();
+
+	JavaSourceCodeAnalyzer jsca = null;
+
 	@Override
 	public List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
 			String[] parameters, int contractNumber, SettingsObject so) {
+
+		File dir = source;
+		if (dir.isFile())
+			dir = source.getParentFile();
+
+		jsca = new JavaSourceCodeAnalyzer(dir, className, methodName, parameters);
+		jsca.setContractAnalyzer(new JMLContractAnalyzer());
+
 		KeySettingsObject so1 = (KeySettingsObject) so;
-		
+
 		List<IDataBasisElement> res = new ArrayList<IDataBasisElement>();
 		if (!ProofSettings.isChoiceSettingInitialised()) {
 			KeYEnvironment<?> env = null;
@@ -64,7 +78,8 @@ public class ExampleBasedKeyControl extends AbstractKeyControl implements IProof
 			proof = env.createProof(contract.createProofObl(env.getInitConfig(), contract));
 			applySettings(proof, so);
 			env.getUi().getProofControl().startAndWaitForAutoMode(proof);
-			return createResult(contract, proof);
+			return createResult(contract, proof,
+					jsca.analyze().stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()));
 		} catch (ProofInputException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -101,9 +116,10 @@ public class ExampleBasedKeyControl extends AbstractKeyControl implements IProof
 	public void performProof(SettingsObject so) {
 		KeySettingsObject kso = (KeySettingsObject) so;
 		KeyCodeContainer kcc = (KeyCodeContainer) kso.getCc();
-		
-		kdb.addAll(getResultForProof(new File(kcc.getSource()), new File(kcc.getClasspath()), kcc.getClazz(), kcc.getMethod(), kso));
-		
+
+		kdb.addAll(getResultForProof(new File(kcc.getSource()), new File(kcc.getClasspath()), kcc.getClazz(),
+				kcc.getMethod(), kso));
+
 	}
 
 	@Override
