@@ -1,4 +1,4 @@
-package de.tubs.isf.guido.core.analyzer.contract;
+package deprecated.de.tubs.isf.guido.core.analyzer.contract;
 
 import com.github.javaparser.ast.comments.Comment;
 

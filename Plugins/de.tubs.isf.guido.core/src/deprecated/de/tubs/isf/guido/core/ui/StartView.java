@@ -2,7 +2,7 @@ package deprecated.de.tubs.isf.guido.core.ui;
 
 import java.io.File;
 
-import derecated.de.tubs.isf.guido.core.automaticProof.Prover;
+import deprecated.de.tubs.isf.guido.core.automaticProof.Prover;
 
 
 public class StartView {

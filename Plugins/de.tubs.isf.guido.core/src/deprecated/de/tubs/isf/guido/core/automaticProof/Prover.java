@@ -1,4 +1,4 @@
-package derecated.de.tubs.isf.guido.core.automaticProof;
+package deprecated.de.tubs.isf.guido.core.automaticProof;
 
 import java.util.Random;
 import java.io.BufferedReader;
@@ -26,8 +26,6 @@ import com.github.javaparser.ast.comments.Comment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import de.tubs.isf.guido.core.analyzer.contract.ContractAnalyzer;
-import de.tubs.isf.guido.core.analyzer.contract.SourceCodeAnalyzer;
 import de.tubs.isf.guido.core.verifier.AVerificationSystemFactory;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.control.KeYEnvironment;
@@ -40,6 +38,8 @@ import de.uka.ilkd.key.speclang.Contract;
 import deprecated.de.tubs.isf.guido.core.analyzer.Analyzer;
 import deprecated.de.tubs.isf.guido.core.analyzer.Parameter;
 import deprecated.de.tubs.isf.guido.core.analyzer.Result;
+import deprecated.de.tubs.isf.guido.core.analyzer.contract.ContractAnalyzer;
+import deprecated.de.tubs.isf.guido.core.analyzer.contract.SourceCodeAnalyzer;
 import deprecated.de.tubs.isf.guido.core.automaticProof.proofFile.Job;
 import deprecated.de.tubs.isf.guido.core.automaticProof.proofFile.XMLReader;
 import deprecated.de.tubs.isf.guido.core.keYHandler.ProofControl;

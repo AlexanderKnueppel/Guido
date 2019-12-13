@@ -1,4 +1,4 @@
-package derecated.de.tubs.isf.guido.core.automaticProof;
+package deprecated.de.tubs.isf.guido.core.automaticProof;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.tubs.isf.guido.core.analyzer.contract.ContractAnalyzer;
-import de.tubs.isf.guido.core.analyzer.contract.SourceCodeAnalyzer;
 import deprecated.de.tubs.isf.guido.core.analyzer.Option;
+import deprecated.de.tubs.isf.guido.core.analyzer.contract.ContractAnalyzer;
+import deprecated.de.tubs.isf.guido.core.analyzer.contract.SourceCodeAnalyzer;
 
 public class Rule implements Serializable{
 	private static final long serialVersionUID = 4015855254309825043L;

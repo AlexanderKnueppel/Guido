@@ -20,7 +20,7 @@ import org.xml.sax.SAXException;
 
 import de.uka.ilkd.key.proof.init.ProofInputException;
 import de.uka.ilkd.key.proof.io.ProblemLoaderException;
-import derecated.de.tubs.isf.guido.core.automaticProof.Prover;
+import deprecated.de.tubs.isf.guido.core.automaticProof.Prover;
 
 public class XMLReader {
 

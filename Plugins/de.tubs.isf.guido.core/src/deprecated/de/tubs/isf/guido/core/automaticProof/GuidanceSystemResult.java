@@ -1,4 +1,4 @@
-package derecated.de.tubs.isf.guido.core.automaticProof;
+package deprecated.de.tubs.isf.guido.core.automaticProof;
 
 import java.io.Serializable;
 import java.util.Map;

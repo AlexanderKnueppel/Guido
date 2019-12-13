@@ -18,10 +18,10 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import de.uka.ilkd.key.speclang.Contract;
+import deprecated.de.tubs.isf.guido.core.automaticProof.GuidanceSystemResult;
+import deprecated.de.tubs.isf.guido.core.automaticProof.Prover;
+import deprecated.de.tubs.isf.guido.core.automaticProof.ProverThread;
 import deprecated.de.tubs.isf.guido.core.keYHandler.KeYGUI;
-import derecated.de.tubs.isf.guido.core.automaticProof.GuidanceSystemResult;
-import derecated.de.tubs.isf.guido.core.automaticProof.Prover;
-import derecated.de.tubs.isf.guido.core.automaticProof.ProverThread;
 
 public class GuidanceGUI {
 	
