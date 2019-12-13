@@ -134,7 +134,7 @@ public class MainClass {
 	}
 
 	public static SettingsObject createDesiredSettingsObject(Optionable[] opts, int maxSteps) {
-		SettingsObject so = AVerificationSystemFactory.getAbst().createSettingsObject();
+		SettingsObject so = AVerificationSystemFactory.getFactory().createSettingsObject();
 		for (Optionable opt : opts) {
 			so.setParameter(opt);
 		}

@@ -10,9 +10,9 @@ import de.tubs.isf.guido.verification.systems.key.KeyFactory;
 public class Client {
 
 	public static void main(String[] args) throws UnknownHostException, ClassNotFoundException, IOException {
-		AVerificationSystemFactory.setAbst(new KeyFactory());
+		AVerificationSystemFactory.setFactory(new KeyFactory());
 		if (args[0].equals("key")) {
-			AVerificationSystemFactory.setAbst(new KeyFactory());
+			AVerificationSystemFactory.setFactory(new KeyFactory());
 		}
 		String ip = "127.0.0.1";
 		if (args.length > 1) {

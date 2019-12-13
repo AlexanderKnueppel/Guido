@@ -13,7 +13,7 @@ import de.tubs.isf.guido.verification.systems.key.options.strategies.KeyStrategy
 
 public class KeyFactory extends AVerificationSystemFactory {
 
-	public IProofControl createControl() {
+	public IProofControl createProofControl() {
 
 		return new ExampleBasedKeyControl();
 
@@ -37,19 +37,19 @@ public class KeyFactory extends AVerificationSystemFactory {
 	}
 
 	@Override
-	public OptionableContainer[] createContainer() {
+	public OptionableContainer[] createOptionableContainer() {
 		// TODO Auto-generated method stub
 		return KeyStrategyOptions.values();
 	}
 
 	@Override
-	public OptionableContainer createContainer(String name) {
+	public OptionableContainer createOptionableContainer(String name) {
 		// TODO Auto-generated method stub
 		return KeyStrategyOptions.getOption(name);
 	}
 
 	@Override
-	public IJob getJobwithGson(String line) {
+	public IJob parseJobWithGson(String line) {
 		Gson g = new Gson();
 		return g.fromJson(line, KeyJavaJob.class);
 	}

@@ -32,7 +32,7 @@ public class PunishmentTracker {
 			String line;
 			Gson gson = new Gson();
 			while ((line = br.readLine()) != null) {
-				IJob j = AVerificationSystemFactory.getAbst().getJobwithGson(line);
+				IJob j = AVerificationSystemFactory.getFactory().parseJobWithGson(line);
 				punishments.add(j);
 			}
 		}

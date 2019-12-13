@@ -3,19 +3,19 @@ package de.tubs.isf.guido.core.verifier;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
 
 public abstract class AVerificationSystemFactory {
-	public static AVerificationSystemFactory abst;
+	public static AVerificationSystemFactory factory;
 
-	public static AVerificationSystemFactory getAbst() {
-		return abst;
+	public static AVerificationSystemFactory getFactory() {
+		return factory;
 	}
 
-	public static void setAbst(AVerificationSystemFactory abst) {
-		AVerificationSystemFactory.abst = abst;
+	public static void setFactory(AVerificationSystemFactory abst) {
+		AVerificationSystemFactory.factory = abst;
 	}
 
-	public abstract IJob getJobwithGson(String line);
+	public abstract IJob parseJobWithGson(String line);
 
-	public abstract IProofControl createControl();
+	public abstract IProofControl createProofControl();
 
 	public abstract SampleHelper createSampleHelper();
 
@@ -23,7 +23,7 @@ public abstract class AVerificationSystemFactory {
 
 	public abstract SettingsObject createSettingsObject();
 
-	public abstract OptionableContainer[] createContainer();
+	public abstract OptionableContainer[] createOptionableContainer();
 
-	public abstract OptionableContainer createContainer(String name);
+	public abstract OptionableContainer createOptionableContainer(String name);
 }

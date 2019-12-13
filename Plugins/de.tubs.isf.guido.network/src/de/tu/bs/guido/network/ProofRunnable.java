@@ -39,7 +39,7 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 
 			System.out.println("Running: " + job);
 			// here Factory adding
-			IProofControl kc = AVerificationSystemFactory.getAbst().createControl();
+			IProofControl kc = AVerificationSystemFactory.getFactory().createProofControl();
 			FileClient fc = new FileClient(ip, fileServerPort);
 
 			// File sourceFile = getFileForName(fc, source, localTemp);

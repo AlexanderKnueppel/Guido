@@ -129,9 +129,9 @@ public class Prover {
 		System.out.println("Set proof environment");
 		ProofControl pc = new ProofControl(sourcePath, reduxPath, provingClass, provingMethod, parameter, contract);
 		long startTime = System.currentTimeMillis();
-		SettingsObject so = AVerificationSystemFactory.getAbst().createSettingsObject();
+		SettingsObject so = AVerificationSystemFactory.getFactory().createSettingsObject();
 		System.out.println("Proof is not closed yet - Create SettingsObject - Default Settings");
-		so = AVerificationSystemFactory.getAbst().createSettingsObject();
+		so = AVerificationSystemFactory.getFactory().createSettingsObject();
 		so.setMaxEffort(1000000);
 		System.out.println("Start Proof!");
 		pc.performProof(so);
@@ -158,7 +158,7 @@ public class Prover {
 		long elapsedTime = 0L;
 		int proofPerformed = 0;
 		int steps = 0;
-		SettingsObject so = AVerificationSystemFactory.getAbst().createSettingsObject();
+		SettingsObject so = AVerificationSystemFactory.getFactory().createSettingsObject();
 		so.setMaxEffort(1000000);
 		System.out.println("Proof is not closed yet - Create SettingsObject");
 		//so = createDesiredSettingsObjectGuido(proofPerformed, sourceCodeAnalyzer, contractAnalyzer, so);
@@ -209,7 +209,7 @@ public class Prover {
 		long elapsedTime = 0L;
 		int proofPerformed = 0;
 		int steps = 0;
-		SettingsObject so = AVerificationSystemFactory.getAbst().createSettingsObject();
+		SettingsObject so = AVerificationSystemFactory.getFactory().createSettingsObject();
 		so.setMaxEffort(1000000);
 		while (elapsedTime < this.time) { // 1*60*1000
 			if(pc.isClosed()) {
@@ -270,7 +270,7 @@ public class Prover {
 		long elapsedTime = 0L;
 		int proofPerformed = 0;
 		int steps = 0;
-		SettingsObject so = AVerificationSystemFactory.getAbst().createSettingsObject();
+		SettingsObject so = AVerificationSystemFactory.getFactory().createSettingsObject();
 		so.setMaxEffort(1000000);
 		while (!pc.isClosed() && elapsedTime < this.time) { // 1*60*1000
 			System.out.println("Proof is not closed yet - Create SettingsObject");
@@ -353,7 +353,7 @@ public class Prover {
 	}
 
 	public SettingsObject createDesiredSettingsObject(GuidanceSystemResult res) {
-		SettingsObject so = AVerificationSystemFactory.getAbst().createSettingsObject();
+		SettingsObject so = AVerificationSystemFactory.getFactory().createSettingsObject();
 		for (Entry<String, String> tac : res.getOptions().entrySet()) {
 			so.setParameter(tac.getKey(), tac.getValue());
 		}
@@ -361,13 +361,13 @@ public class Prover {
 	}
 
 	public SettingsObject createSPLConquerorSettingsObject() {
-		SettingsObject so = AVerificationSystemFactory.getAbst().createSettingsObject();
+		SettingsObject so = AVerificationSystemFactory.getFactory().createSettingsObject();
 		return so;
 	}
 
 	public SettingsObject createDesiredSettingsObject(int proofPerformed, SourceCodeAnalyzer sourceCode,
 			ContractAnalyzer contract, SettingsObject soOld) {
-		SettingsObject so = AVerificationSystemFactory.getAbst().createSettingsObject();
+		SettingsObject so = AVerificationSystemFactory.getFactory().createSettingsObject();
 		// TODO create here the strategy....
 		for (Rule rule : ruler.getRules()) {
 			so.setParameter(rule.getParameter(), rule.getBestOption(proofPerformed, sourceCode, contract));
@@ -519,7 +519,7 @@ public class Prover {
 
 	public SettingsObject createDesiredSettingsObjectGuido(int proofPerformed, SourceCodeAnalyzer sourceCode,
 			ContractAnalyzer contract, SettingsObject soOld) {
-		SettingsObject so = AVerificationSystemFactory.getAbst().createSettingsObject();
+		SettingsObject so = AVerificationSystemFactory.getFactory().createSettingsObject();
 
 		double gamma1, gamma2, k;
 		boolean next;

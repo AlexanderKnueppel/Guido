@@ -50,14 +50,14 @@ public class Server implements Observer {
 	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
 		ArrayList<IJob> jobs;
 		int argsLength = args.length;
-		AVerificationSystemFactory.setAbst(new KeyFactory());
+		AVerificationSystemFactory.setFactory(new KeyFactory());
 		if (argsLength == 4) { // NOT USABLE SINCE EXCPETION IS THROWN! (no reason is mentioned for it)
 			String source = args[0];
 			String clazz = args[1];
 			String method = args[2];
 			File samples = new File(args[3]);
 
-			List<SettingsObject> sos = AVerificationSystemFactory.getAbst().createSampleHelper().readSPLSamples(samples);
+			List<SettingsObject> sos = AVerificationSystemFactory.getFactory().createSampleHelper().readSPLSamples(samples);
 			jobs = new ArrayList<>(sos.size());
 
 			sos.forEach(so -> jobs.add(new KeyJavaJob("", -1, source, null, clazz, method, null, so)));
@@ -65,22 +65,22 @@ public class Server implements Observer {
 		} else if (argsLength == 1) {
 			if (!args[0].equals("key")) {
 				mode = Mode.Key;
-				AVerificationSystemFactory.setAbst(new KeyFactory());
+				AVerificationSystemFactory.setFactory(new KeyFactory());
 			}
 			System.out.println("Going to read jobs...");
 			String testArgsInput = args[0]; // "./../../VerificationData/VerificationData_AutomatedVerification/exampleJob.xml";
-			jobs = AVerificationSystemFactory.getAbst().createBatchXMLHelper().generateJobFromXML(new File(testArgsInput));
+			jobs = AVerificationSystemFactory.getFactory().createBatchXMLHelper().generateJobFromXML(new File(testArgsInput));
 			filterListForDuplicates(jobs);
 //			filterListForMe(jobs);
 			System.out.println("So many jobs read... " + jobs.size());
 		} else if (argsLength == 2) {
 			if (!args[1].equals("key")) {
 				mode = Mode.Key;
-				AVerificationSystemFactory.setAbst(new KeyFactory());
+				AVerificationSystemFactory.setFactory(new KeyFactory());
 			}
 			System.out.println("Going to read jobs...");
 			String testArgsInput = args[0]; // "./../../VerificationData/VerificationData_AutomatedVerification/exampleJob.xml";
-			jobs = AVerificationSystemFactory.getAbst().createBatchXMLHelper().generateJobFromXML(new File(testArgsInput));
+			jobs = AVerificationSystemFactory.getFactory().createBatchXMLHelper().generateJobFromXML(new File(testArgsInput));
 			filterListForDuplicates(jobs);
 //			filterListForMe(jobs);
 			System.out.println("So many jobs read... " + jobs.size());
@@ -121,7 +121,7 @@ public class Server implements Observer {
 			System.out.println("Open file writen");
 			Set<String> whiteLists = new HashSet<>();
 			for (IJob j : jobs) {
-				if (AVerificationSystemFactory.getAbst() instanceof KeyFactory) {
+				if (AVerificationSystemFactory.getFactory() instanceof KeyFactory) {
 
 					whiteLists.add(((KeyCodeContainer) j.getSo().getCc()).getClasspath());
 					whiteLists.add(((KeyCodeContainer) j.getSo().getCc()).getClasspath());
@@ -176,7 +176,7 @@ public class Server implements Observer {
 			while ((line = br.readLine()) != null) {
 				IJob j;
 
-				j = AVerificationSystemFactory.getAbst().getJobwithGson(line);
+				j = AVerificationSystemFactory.getFactory().parseJobWithGson(line);
 
 				doneJobs.add(j);
 			}
