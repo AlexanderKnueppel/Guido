@@ -12,9 +12,11 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -26,8 +28,6 @@ import org.xml.sax.SAXException;
 
 import de.tu.bs.guido.network.client.Client;
 import de.tu.bs.guido.network.server.Server;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
 import swing2swt.layout.FlowLayout;
 
 public class FileWindow extends Dialog {
@@ -157,7 +157,6 @@ public class FileWindow extends Dialog {
 			public void modifyText(ModifyEvent arg0) {
 				System.out.println("war");
 				ProjectSettings.pathJob = textServer.getText();
-				
 
 			}
 		});
@@ -186,7 +185,6 @@ public class FileWindow extends Dialog {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					textServer.setText(file.getPath());
-					
 
 				} else {
 
@@ -198,56 +196,40 @@ public class FileWindow extends Dialog {
 		new Label(shell_1, SWT.NONE);
 		new Label(shell_1, SWT.NONE);
 
-		Label lblStarteDasGuidance = new Label(shell_1, SWT.NONE);
-		lblStarteDasGuidance.setText("Start the Guidance Sytem");
-		new Label(shell_1, SWT.NONE);
-
-		Composite composite_2 = new Composite(shell_1, SWT.NONE);
-		composite_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		Button button = new Button(composite_2, SWT.NONE);
-		button.setText("Start");
-		new Label(shell_1, SWT.NONE);
-		button.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
-
-				runGuidance();
-			}
-		});
 		new Label(shell_1, SWT.NONE);
 		new Label(shell_1, SWT.NONE);
 		Label lblSpeicherortDerGenerierten = new Label(shell_1, SWT.NONE);
 		lblSpeicherortDerGenerierten.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		lblSpeicherortDerGenerierten.setText("Desired Location of the generated Files");
-				new Label(shell_1, SWT.NONE);
-		
-				text = new Text(shell_1, SWT.BORDER);
-				text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-				Button btnChangeLocation = new Button(shell_1, SWT.NONE);
-				btnChangeLocation.setText("Change Location");
-				btnChangeLocation.addSelectionListener(new SelectionAdapter() {
-					public void widgetSelected(SelectionEvent event) {
-						File workingDirectory = null;
-						if (defaultPath.equals("./")) {
-							workingDirectory = new File(System.getProperty("user.dir"));
-						} else {
-							workingDirectory = new File(defaultPath);
-						}
-						JFileChooser fc = new JFileChooser(workingDirectory);
-						int returnVal = fc.showOpenDialog(null);
-						if (returnVal == JFileChooser.APPROVE_OPTION) {
-							File file = fc.getSelectedFile();
-							textServer.setText(file.getPath());
-							File x = new File(textServer.getText());
-							defaultPath = file.getAbsolutePath();
+		new Label(shell_1, SWT.NONE);
 
-						} else {
+		text = new Text(shell_1, SWT.BORDER);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-						}
+		Button btnChangeLocation = new Button(shell_1, SWT.NONE);
+		btnChangeLocation.setText("Change Location");
+		btnChangeLocation.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				File workingDirectory = null;
+				if (defaultPath.equals("./")) {
+					workingDirectory = new File(System.getProperty("user.dir"));
+				} else {
+					workingDirectory = new File(defaultPath);
+				}
+				JFileChooser fc = new JFileChooser(workingDirectory);
+				int returnVal = fc.showOpenDialog(null);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					textServer.setText(file.getPath());
+					File x = new File(textServer.getText());
+					defaultPath = file.getAbsolutePath();
 
-					}
-				});
+				} else {
+
+				}
+
+			}
+		});
 		// Set the OK button as the default, so
 		// user can type input and press Enter
 		// to dismiss
@@ -265,8 +247,7 @@ public class FileWindow extends Dialog {
 	}
 
 	protected void runServer(String[] path) {
-		
-		
+
 		try {
 
 			Server.main(path);
@@ -302,7 +283,4 @@ public class FileWindow extends Dialog {
 		return true;
 	}
 
-	protected void runGuidance() {
-		de.tubs.isf.guido.core.automaticProof.Main.main(null);
-	}
 }
