@@ -77,5 +77,6 @@
 	<classpathentry kind="lib" path="libs/CPAChecker/ultimate-model.jar"/>
 	<classpathentry kind="lib" path="libs/CPAChecker/ultimate-smt-solver-bridge.jar"/>
 	<classpathentry kind="lib" path="libs/CPAChecker/ultimate-util.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/xml-apis-2.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

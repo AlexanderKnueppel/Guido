@@ -79,14 +79,11 @@ public class CPACheckerSampleHelper extends SampleHelper{
 		res.forEach(result -> {
 			CPACheckerDataBasisElement kres = (CPACheckerDataBasisElement) result;
 			System.out.println(kres.getName());
-			System.out.println(kres.getProof());
-			System.out.println(kres.isClosed() ? kres.getSteps() : "notClosed!");
+			System.out.println(kres.getCpuTime());
 			System.out.println();
 			System.out.println("Options:");
 			kres.getOptions().forEach((key, value) -> System.out.println(key + ": " + value));
 			System.out.println();
-			System.out.println("Specification:");
-			kres.getSpezification().forEach((key, value) -> System.out.println(key + ": " + value));
 			System.out.println("____________________________________________");
 		});
 		return res;

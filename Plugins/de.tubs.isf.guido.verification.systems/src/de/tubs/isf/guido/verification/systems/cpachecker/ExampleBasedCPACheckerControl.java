@@ -3,6 +3,7 @@ package de.tubs.isf.guido.verification.systems.cpachecker;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.sosy_lab.cpachecker.core.CPAcheckerResult;
@@ -17,10 +18,10 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 	List<IDataBasisElement> cdb = new ArrayList<IDataBasisElement>();
 	
 	CSourceCodeAnalyzer csca = null;
-	
+
 	@Override
-	public List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
-			String[] parameters, int contractNumber, SettingsObject so) {
+	public List<IDataBasisElement> getResultForProof(File source, File configFile, String className, String methodName,
+			String[] parameters, SettingsObject so) {
 
 		File dir = source;
 		if (dir.isFile())
@@ -31,30 +32,25 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 		CPASettingsObject so1 = (CPASettingsObject) so;
 
 		List<IDataBasisElement> res = new ArrayList<IDataBasisElement>();
+		res.add(getResult(configFile, source,methodName, parameters, so1));
 
-		try {
-			final List<Contract> proofContracts = getCorrectContract(methodName, parameters,
-					env.getSpecificationRepository(), type);
-			if (contractNumber == -1) {
-				for (Contract contract : proofContracts) {
-					res.add(getResult(env, contract, so1));
-				}
-			} else {
-				res.add(getResult( proofContracts.get(contractNumber), so1));
-			}
-		} finally {
-			env.dispose();
-		}
 		return res;
 	}
 
-	private CPACheckerDataBasisElement getResult( CPASettingsObject so) {
-		
-		CPAcheckerResult result = MainClass.main(configFile, programFile, stats, option);
-		return createResult(result,
-					csca.analyze().stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()));
-
-		return null;
+	private CPACheckerDataBasisElement getResult(File configFile, File source, String methodName, String[] parameters, CPASettingsObject so) {
+		Map<String,String> settings = so.getSettingsMap();
+		String option = "";
+		for(Map.Entry<String,String> entry: settings.entrySet()) {
+			option = option + " " + entry.getKey() + "=" + entry.getValue();
+		}
+		String parameter = "";
+		for(String param: parameters) {
+			parameter = parameter +" "+ param;
+		}
+		CPAcheckerResult result = MainClass.main(configFile.getAbsolutePath(), source.getAbsolutePath(), parameter, option);
+		return createResult(methodName, result,	
+				csca.analyze().stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()),
+				settings);
 	}
 
 	@Override
@@ -62,7 +58,7 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 		CPASettingsObject cso = (CPASettingsObject) so;
 		CPACheckerCodeContainer ccc = (CPACheckerCodeContainer) cso.getCc();
 
-		cdb.addAll(getResultForProof(new File(ccc.getSource()), new File(ccc.getSpecificationPath()), ccc.getClazz(),
+		cdb.addAll(getResultForProof(new File(ccc.getSource()), new File(ccc.getConfigFilePath()), ccc.getClazz(),
 				ccc.getMethod(), cso));
 
 	}
@@ -77,4 +73,6 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 	public List<IDataBasisElement> getCurrentResults() {
 		return cdb;
 	}
+
+
 }

@@ -8,58 +8,45 @@ import de.tubs.isf.guido.core.databasis.DefaultDataBasisElement;
 public class CPACheckerDataBasisElement  extends DefaultDataBasisElement {
 
 	private static final long serialVersionUID = -1935265156680654042L;
-	private final String proof;
-	private final int steps;
-	private final Map<String, String> specification;
-	private String code;
-	private Map<String, Integer> experiments;
+
+	private long CPUTime;
+	private long totalTime;
+	private long totalVirtMem;
 	
-	public CPACheckerDataBasisElement(String proof, String name, boolean closed, int steps, long timeInMillis,
-			List<String> languageConstructs, Map<String, String> options, Map<String, String> specification) {
+	public CPACheckerDataBasisElement(String name, boolean closed, long timeInMillis,
+			long CPUTime, long totalTime, long totalVirtMem,List<String> languageConstructs, Map<String, String> options) {
 		super(name, closed, timeInMillis, languageConstructs, options);
-		this.proof = proof;
-		this.steps = steps;
-		this.specification = specification;
+		this.CPUTime = CPUTime;
+		this.totalTime = totalTime;
+		this.totalVirtMem = totalVirtMem;
+	}
+	public long getCpuTime() {
+		return CPUTime;
+	}
+
+	public void setCPUTime(long CPUTime) {
+		this.CPUTime = CPUTime;
 	}
 	
-	public String getCode() {
-		return code;
+	public long getTotalTime() {
+		return totalTime;
 	}
-
-	public void setCode(String code) {
-		this.code = code;
+	
+	public void setTotalTime(long totalTime) {
+		this.totalTime = totalTime;
 	}
-
-	public Map<String, Integer> getExperiments() {
-		return experiments;
+	public long gettotalVirtMem() {
+		return totalVirtMem;
 	}
-
-	public void setExperiments(Map<String, Integer> experiments) {
-		this.experiments = experiments;
-	}
-
-	public String getProof() {
-		return proof;
-	}
-
-	public int getSteps() {
-		return steps;
-	}
-
-	public Map<String, String> getSpezification() {
-		return specification;
+	
+	public void settotalVirtMem(long totalVirtMem) {
+		this.totalVirtMem = totalVirtMem;
 	}
 
 	@Override
 	public boolean isProvable() {
 		// TODO Auto-generated method stub
 		return isClosed();
-	}
-
-	@Override
-	public double getEffort() {
-		// TODO Auto-generated method stub
-		return steps;
 	}
 
 }

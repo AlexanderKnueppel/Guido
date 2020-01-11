@@ -4,17 +4,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.key_project.util.collection.ImmutableArray;
-import org.key_project.util.collection.ImmutableSet;
 import org.sosy_lab.cpachecker.core.CPAcheckerResult;
 
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
@@ -22,57 +17,30 @@ import de.tubs.isf.guido.core.proof.controller.IProofControl;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 
 
-public class AbstractCPACheckerControl implements IProofControl{
+public abstract class AbstractCPACheckerControl implements IProofControl{
 	private static final Map<String, Map<String, String>> VALUES = new HashMap<>();
 	private static final Map<String, String> PROPERTIES = new HashMap<>();
 
 	private static final Map<String, Map<String, String>> BACKWARDS_VALUES = new HashMap<>();
 	private static final Map<String, String> BACKWARDS_PROPERTIES = new HashMap<>();
 	
-	static {
-		ssd.getProperties().forEach(action -> analyzeStratProp(action));
-
-		PROPERTIES.forEach((property, keyProperty) -> BACKWARDS_PROPERTIES.put(keyProperty, property));
-		VALUES.forEach((property, values) -> {
-			Map<String, String> backwards_values = new HashMap<>();
-			BACKWARDS_VALUES.put(PROPERTIES.get(property), backwards_values);
-			values.forEach((value, keyValue) -> backwards_values.put(keyValue, value));
-		});
-	}
-	
-	public List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
-			SettingsObject so) {
-		return getResultForProof(source, classPath, className, methodName, -1, so);
-
-	}
 
 	public List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
-			int contractNumber, SettingsObject so) {
-		return getResultForProof(source, classPath, className, methodName, null, contractNumber, so);
+			 SettingsObject so) {
+		return getResultForProof(source, classPath, className, methodName, null,  so);
 	}
 
 	abstract List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
-			String[] parameters, int contractNumber, SettingsObject so);
+			String[] parameters, SettingsObject so);
 
-	public List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
-			String[] parameters, SettingsObject so) {
-		return getResultForProof(source, classPath, className, methodName, parameters, -1, so);
-	}
 
-	public int getNumberOfContracts(File source, File classPath, String className, String methodName) {
-		return getNumberOfContracts(source, classPath, className, methodName, null);
-	}
-
-	public abstract int getNumberOfContracts(File source, File classPath, String className, String methodName,
-			String[] parameters);
-	
 	/**
 	 * Ermittelt die Namen der mitgegebenen Strategie-Option, aller Unterstrategien
 	 * und die der dazugehoerigen Auswahlmoeglichkeiten. Speichert diese in VALUES
 	 * und PROPERTIES ab.
 	 * 
 	 * @param stratProp Die zu analysierende Strategie-Option
-	 */
+	
 	private static void analyzeStratProp(AbstractStrategyPropertyDefinition stratProp) {
 		try {
 			// Sonderlocke fuer Expand local queries -_-
@@ -91,7 +59,7 @@ public class AbstractCPACheckerControl implements IProofControl{
 			e.printStackTrace();
 		}
 	}
-
+ */
 	/**
 	 * Ermittelt die Auswahlmoeglichkeiten zu einer Strategie und speichert die
 	 * Werte in der mitgegebenen Map.
@@ -99,7 +67,7 @@ public class AbstractCPACheckerControl implements IProofControl{
 	 * @param stratValue Der zu analysierende Wert
 	 * @param valueMap   Die Map, in die der Name und der Key-Name hinzugefuegt
 	 *                   werden sollen
-	 */
+	 
 	private static void analyzeStratValue(Object stratValue, Map<String, String> valueMap) {
 		if (stratValue instanceof StrategyPropertyValueDefinition) {
 			try {
@@ -122,7 +90,7 @@ public class AbstractCPACheckerControl implements IProofControl{
 			throw new IllegalArgumentException("StratValue is not a StrategyPropertyValueDefinition");
 		}
 	}
-
+*/
 	private static Map<String, Map<String, String>> UNMOD_VALUES;
 
 	private Map<String, Map<String, String>> getValues() {
@@ -167,57 +135,13 @@ public class AbstractCPACheckerControl implements IProofControl{
 		return UNMOD_BACKWARDS_PROPERTIES;
 	}
 
-	/**
-	 * Mappt die Optionen aus Key zurueck auf die lesbaren Optionen und gibt diese
-	 * zurueck.
-	 * 
-	 * @param props Die fuer einen Beweis verwendeten Optionen
-	 * @return
-	 */
-	protected Map<String, String> createSmallReadableOptionMap(StrategyProperties props) {
-		Map<String, String> result = new HashMap<>();
-
-		props.forEach((key, value) -> {
-			String outputKey = getBackwardsProperties().get(key);
-			if (outputKey == null) {
-				return;
-			}
-			String outputValue = getBackwardsValues().get(key).get(value);
-			if (outputValue != null) {
-				result.put(outputKey, outputValue);
-			}
-		});
-
-		return result;
-	}
-
-	private IObserverFunction getCorrectIObserverFunction(String methodName, String[] parameter,
-			SpecificationRepository specRepo, KeYJavaType kjt) {
-		ImmutableSet<IObserverFunction> targets = specRepo.getContractTargets(kjt);
-		top: for (IObserverFunction iObserverFunction : targets) {
-			boolean b = iObserverFunction.name().toString().endsWith("::" + methodName);
-			if (b) {
-				if (parameter == null) {
-					return iObserverFunction;
-				} else {
-					ImmutableArray<KeYJavaType> kjts = iObserverFunction.getParamTypes();
-					if (kjts.size() == parameter.length) {
-						for (int i = 0; i < parameter.length; i++) {
-							if (!kjts.get(i).getFullName().equals(parameter[i]))
-								continue top;
-						}
-						return iObserverFunction;
-					}
-				}
-			}
-		}
-		throw new IllegalArgumentException("Could not find contract for method " + methodName);
-	}
-
-
-	protected CPACheckerDataBasisElement createResult( CPAcheckerResult result, List<String> languageConstructs) {
+	protected CPACheckerDataBasisElement createResult( String name, CPAcheckerResult result, List<String> languageConstructs, Map<String,String> optionMap) {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		String timeInSec = "";
+		Long timeInMillis = 0L;
+		Long totalTime = 0L;
+		Long CPUTime = 0L;
+		boolean bool = false;
+		Long totalVirtMem = 0L;
 		try {
 			PrintStream ps = new PrintStream(baos, true, "UTF-8");
 			result.printStatistics(ps);
@@ -225,19 +149,39 @@ public class AbstractCPACheckerControl implements IProofControl{
 			e.printStackTrace();
 		}
 		String data = new String(baos.toByteArray(), StandardCharsets.UTF_8);
+		data = data.substring(data.indexOf("CPAchecker general statistics"));
 		String[] dataArray = data.split("\n");
 		for(String d : dataArray) {
 			if(d.startsWith("Time for Analysis:  ")) {
-				timeInSec = d.replace("Time for Analysis:  ", "").trim();
-				timeInSec.replace("s","");
-				Double time = Double.valueOf(timeInSec);
-				time=time*1000;
+				timeInMillis = getTimeFromString(d,"Time for Analysis:  ");
+			}
+			if(d.startsWith("Total time for CPAchecker:  ")) {
+				totalTime = getTimeFromString(d,"Total time for CPAchecker:  ");
+			}
+			if(d.startsWith("Total CPU time for CPAchecker:  ")) {
+				CPUTime = getTimeFromString(d,"Total CPU time for CPAchecker:  ");
+			}
+			if(d.startsWith("Total process virtual memory:")) {
+				String[] memStringArray = d.split("MB");
+				String memString = memStringArray[0].replace("Total process virtual memory:","");
+				memString = memString.replace(" ", "");
+				memString = memString.replace("MB", "");
+				totalVirtMem = Long.valueOf(memString);
 			}
 		}
-		
-		return new CPACheckerDataBasisElement(result.getResultString(), contract.getName(), p.closed(), p.countNodes(),
-				Long.valueOf(timeInSec), languageConstructs, createSmallReadableOptionMap(sp), );
+		if(result.getStatistics().equals("TRUE")) {
+			bool = true;
+		}
+		return new CPACheckerDataBasisElement(name,bool, 
+				timeInMillis, CPUTime, totalTime,totalVirtMem,languageConstructs,optionMap);
 	}
-}
+	private Long getTimeFromString (String s, String statistic) {
+		String timeInSec = s.replace(statistic, "").trim();
+		timeInSec.replace("s","");
+		Double time = Double.valueOf(timeInSec);
+		time=time*1000;		
+		return Long.valueOf(timeInSec);
+			
+	}
 
 }

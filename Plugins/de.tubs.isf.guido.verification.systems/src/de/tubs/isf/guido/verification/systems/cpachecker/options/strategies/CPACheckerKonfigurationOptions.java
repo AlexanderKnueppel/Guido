@@ -7,15 +7,15 @@ import de.tubs.isf.guido.core.verifier.OptionableContainer;
 import de.tubs.isf.guido.verification.systems.key.options.strategies.MergePointStatementsOptions;
 import de.tubs.isf.guido.verification.systems.key.options.strategies.StrategyOptionable;
 
-public enum CPACheckerStrategyOptions implements OptionableContainer {
+public enum CPACheckerKonfigurationOptions implements OptionableContainer {
 	MERGE_POINT_STATEMENTS("Merge point statements", MergePointStatementsOptions.values(),
 			MergePointStatementsOptions.MERGE);
-	private static final Map<String, CPACheckerStrategyOptions> optionMap = new HashMap<>();
+	private static final Map<String, CPACheckerKonfigurationOptions> optionMap = new HashMap<>();
 	private static final Map<String, StrategyOptionable> outputName = new HashMap<>();
-	private static final Map<CPACheckerStrategyOptions, Map<String, StrategyOptionable>> valueMap = new HashMap<>();
+	private static final Map<CPACheckerKonfigurationOptions, Map<String, StrategyOptionable>> valueMap = new HashMap<>();
 	
 	static {
-		for (CPACheckerStrategyOptions kto : CPACheckerStrategyOptions.values()) {
+		for (CPACheckerKonfigurationOptions kto : CPACheckerKonfigurationOptions.values()) {
 			optionMap.put(kto.getValue(), kto);
 			Map<String, StrategyOptionable> values = new HashMap<>();
 			valueMap.put(kto, values);
@@ -30,7 +30,7 @@ public enum CPACheckerStrategyOptions implements OptionableContainer {
 		return optionMap.containsKey(value);
 	}
 	
-	public static CPACheckerStrategyOptions getOption(String value){
+	public static CPACheckerKonfigurationOptions getOption(String value){
 		return optionMap.get(value);
 	}
 	
@@ -46,7 +46,7 @@ public enum CPACheckerStrategyOptions implements OptionableContainer {
 	private final StrategyOptionable[] options;
 	private final StrategyOptionable defaultOption;
 
-	CPACheckerStrategyOptions(String value, StrategyOptionable[] options,
+	CPACheckerKonfigurationOptions(String value, StrategyOptionable[] options,
 			StrategyOptionable defaultOptionable) {
 		this.value = value;
 		this.options = options;

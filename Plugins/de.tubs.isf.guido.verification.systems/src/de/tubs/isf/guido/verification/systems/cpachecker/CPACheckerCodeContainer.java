@@ -13,19 +13,19 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 	private String clazz;
 	private String method;
 	private String[] parameter;
-	private String specificationPath;
+	private String ConfigFilePath;
 	private int contractNumber = -1;
 	private String binary;
 	private Map<String, Integer> experiments = new HashMap<>();
 	
-	public CPACheckerCodeContainer(String binary,int expNumb, String source, String specificationPath, String clazz, String method,
+	public CPACheckerCodeContainer(String binary,int expNumb, String source, String ConfigFilePath, String clazz, String method,
 		String[] parameter, int contractNumber) {
 		super();
 		this.source = source;
 		this.clazz = clazz;
 		this.method = method;
 		this.binary = binary;
-		this.specificationPath = specificationPath;
+		this.ConfigFilePath = ConfigFilePath;
 		this.contractNumber = contractNumber;
 		this.parameter = parameter;
 		experiments.put(binary, expNumb);
@@ -70,12 +70,12 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 		this.parameter = parameter;
 	}
 
-	public String getSpecificationPath() {
-		return specificationPath;
+	public String getConfigFilePath() {
+		return ConfigFilePath;
 	}
 
-	public void setSpecificationPath(String classpath) {
-		this.specificationPath = classpath;
+	public void setConfigFilePath(String classpath) {
+		this.ConfigFilePath = classpath;
 	}
 
 	public int getContractNumber() {
@@ -106,10 +106,10 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 		if (getClass() != obj.getClass())
 			return false;
 		CPACheckerCodeContainer other = (CPACheckerCodeContainer) obj;
-		if (specificationPath == null) {
-			if (other.specificationPath != null)
+		if (ConfigFilePath == null) {
+			if (other.ConfigFilePath != null)
 				return false;
-		} else if (!specificationPath.equals(other.specificationPath))
+		} else if (!ConfigFilePath.equals(other.ConfigFilePath))
 			return false;
 		if (clazz == null) {
 			if (other.clazz != null)

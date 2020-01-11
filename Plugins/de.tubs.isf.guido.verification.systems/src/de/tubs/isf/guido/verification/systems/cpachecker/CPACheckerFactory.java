@@ -9,7 +9,7 @@ import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.OptionableContainer;
 import de.tubs.isf.guido.core.verifier.SampleHelper;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
-import de.tubs.isf.guido.verification.systems.cpachecker.options.strategies.CPACheckerStrategyOptions;
+import de.tubs.isf.guido.verification.systems.cpachecker.options.strategies.CPACheckerKonfigurationOptions;
 
 public class CPACheckerFactory extends AVerificationSystemFactory{
 	public IProofControl createProofControl() {
@@ -37,13 +37,13 @@ public class CPACheckerFactory extends AVerificationSystemFactory{
 	@Override
 	public OptionableContainer[] createOptionableContainer() {
 		// TODO Auto-generated method stub
-		return CPACheckerStrategyOptions.values();
+		return CPACheckerKonfigurationOptions.values();
 	}
 
 	@Override
 	public OptionableContainer createOptionableContainer(String name) {
 		// TODO Auto-generated method stub
-		return CPACheckerStrategyOptions.getOption(name);
+		return CPACheckerKonfigurationOptions.getOption(name);
 	}
 
 	@Override

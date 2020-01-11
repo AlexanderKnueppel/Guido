@@ -71,7 +71,7 @@ public class MainClass {
 
 	@SuppressWarnings("resource") // We don't close LogManager
 
-	public static CPAcheckerResult main(String configFile,String programFile,String stats,String option) {
+	public static CPAcheckerResult main(String configFile,String programFile,String parameters,String option) {
 		Locale.setDefault(Locale.US);
 
 		/**String configFile = "-predicateAnalysis";
@@ -79,7 +79,8 @@ public class MainClass {
 		String stats = "-stats";
 		String options = "";
 		**/
-		String[] cmd = { configFile, stats, programFile, option };
+		String[] cmd = { configFile, programFile, option,parameters};
+		
 
 		Configuration cpaConfig = null;
 		LoggingOptions logOptions = null;
