@@ -1,9 +1,12 @@
 package de.tubs.isf.guido.verification.systems.cpachecker.generators;
 
-import java.awt.List;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.w3c.dom.Document;
@@ -35,14 +38,15 @@ public class FeatureIdeTranslator {
 		return intermediate;
 		
 	}
+	
 	public static void translateModelToStrategies(String file) {
 		String optionName = "";
-		
+		String stringForCongiFile ="";
 		Document doc = readFile(file);
 		doc.getDocumentElement().normalize();
 		NodeList nList = doc.getElementsByTagName("alt");
 		//for (int temp = 0; temp < nList.getLength(); temp++) {
-		for(int temp = 0; temp < 1; temp++) {
+		for(int temp = 0; temp < 2; temp++) {
 			LinkedList<String> values = new LinkedList<String>();
 			Node nNode = nList.item(temp);
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -56,27 +60,118 @@ public class FeatureIdeTranslator {
 					values.add(name);
 				}
 			}
-			writeOptionJavaFile(optionName,values);
-		System.out.println(optionName);
-		for(String names : values) {
-			System.out.println(names);
+			String methodName = "";
+			String option = "";
+			//create string for the java files
+			String[] tempt = optionName.split("\\.");
+			
+			for(int j = 0; j < tempt.length;j++) {
+				String firstLetter = tempt[j].substring(0, 1).toUpperCase();
+				methodName = methodName + firstLetter + tempt[j].substring(1);
+				option = option + "_" + tempt[j].toUpperCase();					
+			}
+			option = option.substring(1,option.length()).trim();
+			methodName = methodName.trim() + "Options";
+			
+			
+			writeOptionJavaFile(methodName,option,values);
+			
+			stringForCongiFile = stringForCongiFile + option +
+						"(\""+ optionName +"\","+ methodName+".values(), "+
+						methodName + "." + values.getFirst().toUpperCase()+
+						"),\n";
 		}
-		}
+		stringForCongiFile = stringForCongiFile.substring(0, stringForCongiFile.length()-2)+ ";";
+		writeCPACheckerKongigurationOptionsFile(stringForCongiFile);
+	}
+	public static void writeCPACheckerKongigurationOptionsFile(String line) {
+		//changing the CPACheckerKongiguration file to at the enums
+				String CPAKonfigFilePath = "src/de/tubs/isf/guido/verification/systems/cpachecker/options/strategies/CPACheckerKonfigurationOptions.java"; 
+			    String tempFile = "src/de/tubs/isf/guido/verification/systems/cpachecker/options/strategies/temp.java";
+			    String temp2File = "src/de/tubs/isf/guido/verification/systems/cpachecker/options/strategies/temp2.java";
+				
+			    FileOutputStream fos ;
+				File file = new File(CPAKonfigFilePath);
+			    BufferedReader bufferedReader;
+			    
+				try {				
+					bufferedReader = new BufferedReader(new FileReader(file));
+					String allData = "";
+				     String st;
+				     while ((st = bufferedReader.readLine()) != null) {		 		   	 
+			    	 	if(st.contains("implements OptionableContainer {")) {
+			    	 		allData = allData + "\n" + st + "\n" + line+ "\n\n" ;	
+			    	 		while(!st.contains("private static final Map")) {		
+			    	 				st = bufferedReader.readLine();			    	 			
+			    	 		}			    	 					    	 		
+			    	 	}
+			    	 	allData = allData + st + "\n";	
+				     }
+				     bufferedReader.close();
+				     file.delete();
+				     fos = new FileOutputStream(CPAKonfigFilePath);
+				     fos.write(allData.getBytes());
+				     fos.close();
+				     
 
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}    
+				// Delete old file and rename new file to old
+				/**
+			    File oldFile = new File(CPAKonfigFilePath);
+			    File newFile = new File(tempFile);
+
+			    oldFile.delete();
+			    newFile.renameTo(oldFile);**/
 	}
 	
-	public static void writeOptionJavaFile(String name, LinkedList<String> values) {
-		String FilePath = "/options/strategies/"+name+".java";
-		  
-	        try {
-	        	File file = new File(FilePath);
-				if(file.createNewFile()){
-				    System.out.println(FilePath+" File Created");
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	public static void writeOptionJavaFile(String methodName, String option, LinkedList<String> values) {
+		// "cpachecker" + File.separator +"options"+ File.separator +"strategies"+ File.separator +
+	
+
+		String valuesString = "";
+		for(String val:values) {
+			valuesString = valuesString + val.toUpperCase() + "(\"" + val + "\"),";
+		}
+		valuesString = valuesString.substring(0,valuesString.length()-1);
+		
+		String filePath ="src/de/tubs/isf/guido/verification/systems/cpachecker/options/strategies/" + methodName +".java";
+ 
+		String fileData = "package de.tubs.isf.guido.verification.systems.cpachecker.options.strategies;\n\n" +
+				"import de.tubs.isf.guido.core.verifier.OptionableContainer;\n\n "+
+				"public enum " +  methodName+ " implements KonfigurationOptionable{\n"+
+				"\t"+ valuesString + ";\n"+
+				"\t"+ "private final String value;\n\n"+
+				"\t"+ methodName +"(String value) {\n"+
+				"\t\t"+ "this.value = value;\n"+
+				"\t"+ "}\n"+
+				"\t"+ "public String getValue() {\n"+
+				"\t\t"+ "return value;\n"+
+				"\t"+ "}\n"+
+				"\t"+ "@Override\n"+
+				"\t"+ "public OptionableContainer getOptionableContainer() {\n"+
+				"\t\t"+ "return CPACheckerKonfigurationOptions."+ option +";\n"+
+				"\t"+ "}\n"+
+				"}\n";
+		try {
+			FileOutputStream fos = new FileOutputStream(filePath);
+			fos.write(fileData.getBytes());
+			fos.flush();
+			fos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+	     
 	}
 	
 	public static Document readFile(String file){
