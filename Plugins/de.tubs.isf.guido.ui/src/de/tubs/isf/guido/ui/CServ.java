@@ -202,7 +202,7 @@ public class CServ {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				runClient();
+				runClient(new String[] { Mode.values()[mode].toString(), txtIp.getText() });
 
 			}
 
@@ -240,7 +240,7 @@ public class CServ {
 	}
 
 	protected void runServer(String[] path) {
-		Display.getDefault().asyncExec(new Runnable() {
+		Thread t = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -254,17 +254,18 @@ public class CServ {
 
 			}
 		});
+		t.start();
 		
 
 	}
 
-	protected void runClient() {
-		Display.getDefault().asyncExec(new Runnable() {
+	protected void runClient(String[] mainArgs) {
+		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
 
-					Client.main(new String[] { Mode.values()[mode].toString(), txtIp.getText() });
+					Client.main(mainArgs);
 					Client.opS = new CustomOutputStream(consoleClient);
 				} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
@@ -278,6 +279,7 @@ public class CServ {
 				}
 			}
 		});
+		t.start();
 
 	}
 

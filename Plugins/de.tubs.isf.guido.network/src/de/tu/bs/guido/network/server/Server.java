@@ -40,8 +40,6 @@ public class Server implements Observer {
 
 	Observer o;
 
-
-
 	private static final int FILE_SERVER_PORT = PORT + 1;
 	private static final File DONE_FILE = new File("done.txt");
 	private static final File OPEN_FILE = new File("open.txt");
@@ -56,7 +54,7 @@ public class Server implements Observer {
 	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
 		ArrayList<IJob> jobs;
 		int argsLength = args.length;
-		if(opS!=null) {
+		if (opS != null) {
 			System.setOut(new PrintStream(opS));
 		}
 		if (args[0].equals("key")) {
@@ -98,6 +96,7 @@ public class Server implements Observer {
 			String testArgsInput = args[0]; // "./../../VerificationData/VerificationData_AutomatedVerification/exampleJob.xml";
 			jobs = AVerificationSystemFactory.getFactory().createBatchXMLHelper()
 					.generateJobFromXML(new File(testArgsInput));
+
 			filterListForDuplicates(jobs);
 //			filterListForMe(jobs);
 			System.out.println("So many jobs read... " + jobs.size());

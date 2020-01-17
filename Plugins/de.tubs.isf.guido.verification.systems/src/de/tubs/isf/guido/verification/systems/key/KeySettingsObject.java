@@ -167,7 +167,8 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 		if (cc == null) {
 			if (other.cc != null)
 				return false;
-		} else if (!cc.equals(other.cc))
+		}
+		if (!cc.equals(other.cc))
 			return false;
 		if (maxEffort != other.maxEffort)
 			return false;
