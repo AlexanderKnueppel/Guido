@@ -1,0 +1,307 @@
+package de.tubs.isf.guido.ui;
+
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TabFolder;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.UnknownHostException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Text;
+import org.xml.sax.SAXException;
+
+import de.tu.bs.guido.network.client.Client;
+import de.tu.bs.guido.network.server.Server;
+import de.tubs.isf.guido.core.verifier.Mode;
+
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.graphics.Point;
+
+public class CServ {
+	int mode;
+	protected Shell shell;
+	private Text text;
+	private Text consoleServer;
+	private Text consoleClient;
+	private Text txtIp;
+
+
+	/**
+	 * Launch the application.
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		try {
+			CServ window = new CServ();
+			window.open();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Open the window.
+	 */
+	public void open() {
+		Display display = Display.getDefault();
+		createContents();
+		shell.open();
+		shell.layout();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+	}
+
+	/**
+	 * Create contents of the window.
+	 */
+	protected void createContents() {
+		shell = new Shell();
+		shell.setMinimumSize(new Point(400, 400));
+		shell.setSize(400, 500);
+		shell.setText("SWT Application");
+		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
+
+		TabItem tbtmServer = new TabItem(tabFolder, SWT.NONE);
+		tbtmServer.setText("Server");
+
+		SashForm sashForm = new SashForm(tabFolder, SWT.NONE);
+		sashForm.setSashWidth(1);
+		tbtmServer.setControl(sashForm);
+
+		Composite composite = new Composite(sashForm, SWT.NONE);
+		composite.setLayout(new GridLayout(2, false));
+
+		Button btnStartServer = new Button(composite, SWT.NONE);
+		btnStartServer.setEnabled(false);
+		btnStartServer.setText("Start Server");
+		btnStartServer.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				runServer(new String[] { text.getText(), Mode.values()[mode].name() });
+				System.out.println(text.getText());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+
+			}
+		});
+
+		Group grpMode = new Group(composite, SWT.NONE);
+		grpMode.setText("Mode");
+		grpMode.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpMode.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
+
+		CCombo combo = new CCombo(grpMode, SWT.BORDER);
+		combo.setEditable(false);
+		for (Mode iterable_element : Mode.values()) {
+			combo.add(iterable_element.name());
+		}
+		combo.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				btnStartServer.setEnabled(true);
+				mode = combo.getSelectionIndex();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		Button btnSearchFile = new Button(composite, SWT.NONE);
+
+		btnSearchFile.setBounds(0, 0, 88, 30);
+		btnSearchFile.setText("Search File!");
+		btnSearchFile.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				FileDialog fd = new FileDialog(shell, SWT.OPEN);
+				fd.setText("Open");
+				fd.setFilterPath("C:/");
+				String[] filterExt = { "*.xml" };
+				fd.setFilterExtensions(filterExt);
+				String selected = fd.open();
+				text.setText(selected);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		;
+
+		text = new Text(composite, SWT.BORDER);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+		text.setBounds(0, 0, 88, 30);
+		sashForm.setWeights(new int[] { 1 });
+
+		TabItem tbtmClient = new TabItem(tabFolder, SWT.NONE);
+		tbtmClient.setText("Client");
+
+		SashForm sashForm_1 = new SashForm(tabFolder, SWT.NONE);
+		tbtmClient.setControl(sashForm_1);
+
+		Composite composite_1 = new Composite(sashForm_1, SWT.NONE);
+		composite_1.setLayout(new GridLayout(1, false));
+
+		Group grpIp = new Group(composite_1, SWT.NONE);
+		grpIp.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+		grpIp.setText("IP");
+		grpIp.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		txtIp = new Text(grpIp, SWT.BORDER);
+
+		Button btnStartClient = new Button(composite_1, SWT.NONE);
+		btnStartClient.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1));
+		btnStartClient.setText("Start Client");
+		
+		Group grpConsole = new Group(composite_1, SWT.NONE);
+		grpConsole.setText("Console");
+		grpConsole.setLayout(new FillLayout(SWT.HORIZONTAL));
+		GridData gd_grpConsole = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_grpConsole.heightHint = 126;
+		gd_grpConsole.widthHint = 355;
+		grpConsole.setLayoutData(gd_grpConsole);
+		
+		consoleClient = new Text(grpConsole, SWT.BORDER | SWT.V_SCROLL);
+		consoleClient.setEditable(false);
+		
+		btnStartClient.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				runClient();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		sashForm_1.setWeights(new int[] { 1 });
+
+		TabItem tbtmSettings = new TabItem(tabFolder, SWT.NONE);
+		tbtmSettings.setText("Settings");
+		new Label(composite, SWT.NONE);
+		Group grpMode2 = new Group(composite, SWT.NONE);
+		grpMode2.setText("Console");
+		grpMode2.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpMode2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		setConsole(new Text(grpMode2, SWT.BORDER | SWT.READ_ONLY | SWT.V_SCROLL | SWT.MULTI));
+	}
+
+	/**
+	 * @return the console
+	 */
+	public Text getConsole() {
+		return consoleServer;
+	}
+
+	/**
+	 * @param console the console to set
+	 */
+	public void setConsole(Text console) {
+		this.consoleServer = console;
+	}
+
+	protected void runServer(String[] path) {
+		Display.getDefault().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					Server.opS = new CustomOutputStream(consoleServer);
+					Server.main(path);
+				} catch (IOException | SAXException | ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
+		
+
+	}
+
+	protected void runClient() {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				try {
+
+					Client.main(new String[] { Mode.values()[mode].toString(), txtIp.getText() });
+					Client.opS = new CustomOutputStream(consoleClient);
+				} catch (UnknownHostException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+
+	}
+
+	public class CustomOutputStream extends OutputStream {
+
+		private Text list;
+
+		public CustomOutputStream(Text list) {
+			this.list = list;
+		}
+
+		@Override
+		public void write(int b) throws IOException {
+			Display.getDefault().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					String old = list.getText();
+					old = old + (char) b;
+					list.setText(old);
+					
+				}});
+			
+
+		}
+	}
+}

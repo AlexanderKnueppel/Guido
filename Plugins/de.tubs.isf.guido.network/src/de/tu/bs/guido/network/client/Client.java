@@ -1,22 +1,31 @@
 package de.tu.bs.guido.network.client;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.UnknownHostException;
 
 import de.tu.bs.guido.network.server.Server;
 import de.tubs.isf.guido.core.verifier.AVerificationSystemFactory;
+import de.tubs.isf.guido.core.verifier.Mode;
 import de.tubs.isf.guido.verification.systems.key.KeyFactory;
 
 public class Client {
+	public static OutputStream opS;
 
 	public static void main(String[] args) throws UnknownHostException, ClassNotFoundException, IOException {
 		AVerificationSystemFactory.setFactory(new KeyFactory());
-		if (args[0].equals("key")) {
+		if (opS != null) {
+			System.setOut(new PrintStream(opS));
+		}
+		if (args[0].equals(Mode.Key.toString())) {
 			AVerificationSystemFactory.setFactory(new KeyFactory());
 		}
 		String ip = "127.0.0.1";
 		if (args.length > 1) {
-			ip = args[1];
+			if (args[1] != null) {
+				ip = args[1];
+			}
 		}
 		de.tubs.isf.guido.key.pooling.distributed.Client c = new de.tubs.isf.guido.key.pooling.distributed.Client(ip,
 				Server.PORT);
