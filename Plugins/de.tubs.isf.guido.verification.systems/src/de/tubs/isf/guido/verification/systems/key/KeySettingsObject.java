@@ -1,6 +1,7 @@
 package de.tubs.isf.guido.verification.systems.key;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -197,6 +198,15 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 		so.maxEffort = maxEffort;
 		so.settingsMap = new HashMap<>(settingsMap);
 		so.tacletMap = new HashMap<>(tacletMap);
+		int i =0;
+		if( this.cc.getExperiments()!=null) {
+			i= this.cc.getExperiments().get(this.cc.getCode());
+		}
+		String[] para = null;
+		if(this.cc.getParameter()!=null) {
+			 para = Arrays.copyOf(this.cc.getParameter(), this.cc.getParameter().length);
+		}
+		so.cc=new KeyCodeContainer(this.cc.getCode(),i, this.cc.getSource(), this.cc.getClasspath(), this.cc.getClazz(), this.cc.getMethod(), para, this.cc.getContractNumber());
 		return so;
 	}
 

@@ -120,8 +120,13 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 		for (int i = 0; i < al.size(); i++) {
 			KeySettingsObject ks = (KeySettingsObject) al.get(i);
 			for (int num = 0; num < numberOfContracts; num++) {
-			result.add(new KeyJavaJob(code, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath),
-					className, methodName, parameters, ks, num));
+			try {
+				result.add(new KeyJavaJob(code, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath),
+						className, methodName, parameters, ks.clone(), num));
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}}
 //		getSampleForFile(sampleFile, sampleType).forEach( setting -> {
 //			KeySettingsObject ks = (KeySettingsObject) setting;

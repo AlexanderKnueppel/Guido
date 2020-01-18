@@ -78,6 +78,7 @@ public class ExampleBasedKeyControl extends AbstractKeyControl implements IProof
 			proof = env.createProof(contract.createProofObl(env.getInitConfig(), contract));
 			applySettings(proof, so);
 			env.getUi().getProofControl().startAndWaitForAutoMode(proof);
+			jsca.analyze().stream();
 			return createResult(contract, proof,
 					jsca.analyze().stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()));
 		} catch (ProofInputException e) {
