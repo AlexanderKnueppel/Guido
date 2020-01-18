@@ -1,12 +1,14 @@
 package de.tubs.isf.guido.ui;
 
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.UnknownHostException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,6 +29,7 @@ import de.tu.bs.guido.network.server.Server;
 import de.tubs.isf.guido.core.verifier.Mode;
 
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.custom.CCombo;
@@ -38,9 +41,9 @@ public class CServ {
 	protected Shell shell;
 	private Text text;
 	private Text consoleServer;
-	private Text consoleClient;
 	private Text txtIp;
-
+	private Thread serverThread;
+	private Thread clientThread;
 
 	/**
 	 * Launch the application.
@@ -79,9 +82,18 @@ public class CServ {
 		shell.setMinimumSize(new Point(400, 400));
 		shell.setSize(400, 500);
 		shell.setText("SWT Application");
-		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
+		shell.addListener(SWT.Close, new Listener() {
+
+			@Override
+			public void handleEvent(Event arg0) {
+				System.exit(0);
+			}
+			
+		});
+		shell.setLayout(new GridLayout(1, false));
 
 		TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		TabItem tbtmServer = new TabItem(tabFolder, SWT.NONE);
 		tbtmServer.setText("Server");
@@ -186,18 +198,7 @@ public class CServ {
 		Button btnStartClient = new Button(composite_1, SWT.NONE);
 		btnStartClient.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1));
 		btnStartClient.setText("Start Client");
-		
-		Group grpConsole = new Group(composite_1, SWT.NONE);
-		grpConsole.setText("Console");
-		grpConsole.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_grpConsole = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_grpConsole.heightHint = 126;
-		gd_grpConsole.widthHint = 355;
-		grpConsole.setLayoutData(gd_grpConsole);
-		
-		consoleClient = new Text(grpConsole, SWT.BORDER | SWT.V_SCROLL);
-		consoleClient.setEditable(false);
-		
+
 		btnStartClient.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -216,13 +217,12 @@ public class CServ {
 
 		TabItem tbtmSettings = new TabItem(tabFolder, SWT.NONE);
 		tbtmSettings.setText("Settings");
-		new Label(composite, SWT.NONE);
-		Group grpMode2 = new Group(composite, SWT.NONE);
+		Group grpMode2 = new Group(shell, SWT.NONE);
+		grpMode2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpMode2.setText("Console");
 		grpMode2.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpMode2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		setConsole(new Text(grpMode2, SWT.BORDER | SWT.READ_ONLY | SWT.V_SCROLL | SWT.MULTI));
+		
+				setConsole(new Text(grpMode2, SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI));
 	}
 
 	/**
@@ -240,7 +240,7 @@ public class CServ {
 	}
 
 	protected void runServer(String[] path) {
-		Thread t = new Thread(new Runnable() {
+		serverThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -254,19 +254,18 @@ public class CServ {
 
 			}
 		});
-		t.start();
-		
+		serverThread.start();
 
 	}
 
 	protected void runClient(String[] mainArgs) {
-		Thread t = new Thread(new Runnable() {
+		clientThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
 
 					Client.main(mainArgs);
-					Client.opS = new CustomOutputStream(consoleClient);
+					Client.opS = new CustomOutputStream(consoleServer);
 				} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -279,7 +278,7 @@ public class CServ {
 				}
 			}
 		});
-		t.start();
+		clientThread.start();
 
 	}
 
@@ -300,10 +299,14 @@ public class CServ {
 					String old = list.getText();
 					old = old + (char) b;
 					list.setText(old);
-					
-				}});
-			
+					list.setTopIndex(list.getLineCount()-1);
+
+				}
+			});
 
 		}
+		
 	}
+
+
 }
