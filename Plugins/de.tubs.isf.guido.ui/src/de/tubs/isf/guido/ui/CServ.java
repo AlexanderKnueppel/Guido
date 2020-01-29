@@ -8,7 +8,6 @@ import org.eclipse.swt.widgets.TabFolder;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.UnknownHostException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -28,7 +27,6 @@ import de.tu.bs.guido.network.client.Client;
 import de.tu.bs.guido.network.server.Server;
 import de.tubs.isf.guido.core.verifier.Mode;
 
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.layout.GridData;
@@ -307,6 +305,7 @@ public class CServ {
 		}
 		
 	}
+
 
 
 }
