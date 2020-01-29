@@ -18,9 +18,16 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 	List<IDataBasisElement> cdb = new ArrayList<IDataBasisElement>();
 	
 	CSourceCodeAnalyzer csca = null;
-
+	
 	@Override
-	public List<IDataBasisElement> getResultForProof(File source, File configFile, String className, String methodName,
+	List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, String methodName,
+			String[] parameters, int number, SettingsObject so) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public List<IDataBasisElement> getResultForProof(String configFile, File binary, File source, String methodName,
 			String[] parameters, SettingsObject so) {
 
 		File dir = source;
@@ -32,22 +39,27 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 		CPASettingsObject so1 = (CPASettingsObject) so;
 
 		List<IDataBasisElement> res = new ArrayList<IDataBasisElement>();
-		res.add(getResult(configFile, source,methodName, parameters, so1));
+		res.add(getResult(configFile, binary,source,methodName, parameters, so1));
 
 		return res;
 	}
 
-	private CPACheckerDataBasisElement getResult(File configFile, File source, String methodName, String[] parameters, CPASettingsObject so) {
+	private CPACheckerDataBasisElement getResult(String configFile,File binary, File source, String methodName, String[] parameters, CPASettingsObject so) {
 		Map<String,String> settings = so.getSettingsMap();
 		String option = "";
 		for(Map.Entry<String,String> entry: settings.entrySet()) {
+			System.out.println("Es sollte was passieren");
+			System.out.println(entry.getKey() + "=" + entry.getValue());
 			option = option + " " + entry.getKey() + "=" + entry.getValue();
 		}
 		String parameter = "";
+		
 		for(String param: parameters) {
 			parameter = parameter +" "+ param;
 		}
-		CPAcheckerResult result = MainClass.main(configFile.getAbsolutePath(), source.getAbsolutePath(), parameter, option);
+		System.out.println("Starting CPAChecker "+ option);
+		CPAcheckerResult result = MainClass.main(configFile, binary.getAbsolutePath(), parameter, option);
+		System.out.println("Finished CPAChecker " + result.getResultString());
 		return createResult(methodName, result,	
 				csca.analyze().stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()),
 				settings);
@@ -58,8 +70,8 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 		CPASettingsObject cso = (CPASettingsObject) so;
 		CPACheckerCodeContainer ccc = (CPACheckerCodeContainer) cso.getCc();
 
-		cdb.addAll(getResultForProof(new File(ccc.getSource()), new File(ccc.getConfigFilePath()), ccc.getClazz(),
-				ccc.getMethod(), cso));
+		cdb.addAll(getResultForProof(ccc.getConfigFilePath(), new File(ccc.getBinary()),new File(ccc.getSource()), 
+				ccc.getMethod(), ccc.getParameter(),cso));
 
 	}
 
@@ -73,6 +85,12 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 	public List<IDataBasisElement> getCurrentResults() {
 		return cdb;
 	}
+
+	public int getNumberOfJobs(String methodName) {
+		return 0;
+	}
+
+
 
 
 }

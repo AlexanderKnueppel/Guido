@@ -59,7 +59,7 @@ public class SamplingHandler implements Runnable {
 	}
 	
 	public static void main(String[] args) {
-		String fmPath = "testData/model.xml";
+		String fmPath = "/media/marlen/54AFF99F466B2AED/eclipse-workspace/pa-marlen-herter-bernier/FeatureModel/CPAChecker-Model-default.xml";
 		String baseSamplePath = "testData";
 		
 		IConfigurationGenerator gen = new ICPLConfigurationGenerator(FeatureIDEUtil.getFeatueModel(Paths.get(fmPath)), 3, 1000);

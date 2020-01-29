@@ -1,9 +1,11 @@
 package de.tubs.isf.guido.verification.systems.cpachecker;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +15,8 @@ import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.verifier.SampleHelper;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.cpachecker.generators.FeatureIdeTranslator;
+import de.tubs.isf.guido.verification.systems.key.GuiBasedKeyControl;
+import de.tubs.isf.guido.verification.systems.key.KeySettingsObject;
 
 public class CPACheckerSampleHelper extends SampleHelper{
 	private static final int DEFAULT_MAX_STEPS = 1000;
@@ -20,14 +24,21 @@ public class CPACheckerSampleHelper extends SampleHelper{
 	
 	
 	public List<SettingsObject> readSPLSamples(File samples) throws IOException {
+		if(!samples.exists()) {
+			System.out.println("SampleFile not found ");
+		}		
+
 		List<SettingsObject> result = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new FileReader(samples))) {
 			String line;
 			while ((line = br.readLine()) != null) {
+				if(!line.contains("_2_")) {
+					continue;
+				}
 				line = line.trim();
-				line = line.substring("prefix".length(), line.length() - "postfix".length());
-				line = line.replaceFirst("\".*\"", "");
-				String[] options = line.split(";");
+				line = line.replace("_2_", ".");				
+				line = line.replace("_1__1_", "_");
+				String[] options = line.split("_");
 				CPASettingsObject so = new CPASettingsObject();
 				for (String option : options) {
 					option = option.trim();
@@ -90,8 +101,62 @@ public class CPACheckerSampleHelper extends SampleHelper{
 	}
 
 	public void main(String[] args) throws FileNotFoundException, IOException {
-		// TODO Auto-generated method stub
-		
+		if (args.length != 4) {
+			throw new IllegalArgumentException("Pass four parameters: classpath, class, method and samples");
+		}
+		List<List<String>> results = new ArrayList<>();
+		GuiBasedKeyControl kc = new GuiBasedKeyControl();
+		File source = new File(args[0]);
+		String clazz = args[1];
+		String method = args[2];
+		File samples = new File(args[3]);
+		try (BufferedReader br = new BufferedReader(new FileReader(samples))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				line = line.trim();
+				line = line.substring("prefix".length(), line.length() - "postfix".length());
+				line = line.replaceFirst("\".*\"", "");
+				String[] options = line.split(";");
+				KeySettingsObject so = new KeySettingsObject();
+				so.setMaxEffort(100000);
+				System.out.print("[");
+				boolean first = true;
+				for (String option : options) {
+					option = option.trim();
+					String[] vals = option.split("::");
+					if (vals.length != 2)
+						continue;
+					if (first) {
+						first = false;
+					} else {
+						System.out.print(", ");
+					}
+					System.out.print(option);
+					so.setParameter(vals[0], vals[1]);
+				}
+				System.out.println("]");
+				List<IDataBasisElement> res = outPutProofResults(kc.getResultForProof(source, null, clazz, method, so));
+				int nums = 0;
+				for (IDataBasisElement result : res) {
+					if (!(results.size() > nums)) {
+						results.add(new ArrayList<String>());
+					}
+					List<String> resultList = results.get(nums++);
+					resultList.add("" + (result.isProvable() ? result.getEffort() : -1));
+				}
+			}
+		}
+
+		int num = 0;
+		for (List<String> list : results) {
+			File f = new File(num + ".txt");
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(f))) {
+				for (String string : list) {
+					bw.append(string).append("\n");
+				}
+			}
+		}
+
 	}
 
 }

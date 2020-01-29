@@ -4,9 +4,33 @@ import java.util.HashMap;
 import java.util.Map;
 import de.tubs.isf.guido.core.verifier.OptionableContainer;
 
+
+
+
+
+
+
+
+
+
 public enum CPACheckerKonfigurationOptions implements OptionableContainer {
-ANALYSIS_RESTARTAFTERUNKNOWN("analysis.restartAfterUnknown ",AnalysisRestartAfterUnknownOptions.values(), AnalysisRestartAfterUnknownOptions.TRUE),
-CFA_USECFACLONINGFORMULTITHREADEDPROGRAMS("cfa.useCFACloningForMultiThreadedPrograms",CfaUseCFACloningForMultiThreadedProgramsOptions.values(), CfaUseCFACloningForMultiThreadedProgramsOptions.TRUE);
+ANALYSIS_RESTARTAFTERUNKNOWN("analysis.restartAfterUnknown",AnalysisRestartAfterUnknownOptions.values(), AnalysisRestartAfterUnknownOptions.TRUE),
+CFA_USECFACLONINGFORMULTITHREADEDPROGRAMS("cfa.useCFACloningForMultiThreadedPrograms",CfaUseCFACloningForMultiThreadedProgramsOptions.values(), CfaUseCFACloningForMultiThreadedProgramsOptions.TRUE),
+CPA_SMG_EXPORTSMGWHEN("cpa.smg.exportSMGwhen",CpaSmgExportSMGwhenOptions.values(), CpaSmgExportSMGwhenOptions.INERESTING),
+CPA_SMG_MEMORYERRORS("cpa.smg.memoryErrors",CpaSmgMemoryErrorsOptions.values(), CpaSmgMemoryErrorsOptions.TRUE),
+CPA_SMG_ENABLEMALLOCFAIL("cpa.smg.enableMallocFail",CpaSmgEnableMallocFailOptions.values(), CpaSmgEnableMallocFailOptions.FALSE),
+CPA_SMG_UNKNOWNONUNDEFINED("cpa.smg.unknownOnUndefined",CpaSmgUnknownOnUndefinedOptions.values(), CpaSmgUnknownOnUndefinedOptions.FALSE),
+CPA_SMG_RUNTIMECHECK("cpa.smg.runtimeCheck",CpaSmgRuntimeCheckOptions.values(), CpaSmgRuntimeCheckOptions.FULL),
+ANALYSIS_TRAVERSAL_ORDER("analysis.traversal.order",AnalysisTraversalOrderOptions.values(), AnalysisTraversalOrderOptions.RAND),
+ANALYSIS_TRAVERSAL_USEPOSTORDER("analysis.traversal.usePostorder",AnalysisTraversalUsePostorderOptions.values(), AnalysisTraversalUsePostorderOptions.TRUE),
+ANALYSIS_SUMMARYEDGES("analysis.summaryEdges",AnalysisSummaryEdgesOptions.values(), AnalysisSummaryEdgesOptions.TRUE),
+CPA_CALLSTACK_SKIPRECURSION("cpa.callstack.skipRecursion",CpaCallstackSkipRecursionOptions.values(), CpaCallstackSkipRecursionOptions.TRUE),
+CFA_SIMPLIFYCFA("cfa.simplifyCfa",CfaSimplifyCfaOptions.values(), CfaSimplifyCfaOptions.FALSE),
+CFA_SIMPLIFYCONSTEXPRESSIONS("cfa.simplifyConstExpressions",CfaSimplifyConstExpressionsOptions.values(), CfaSimplifyConstExpressionsOptions.FALSE),
+CFA_FINDLIVEVARIABLES("cfa.findLiveVariables",CfaFindLiveVariablesOptions.values(), CfaFindLiveVariablesOptions.FALSE),
+CPA_PREDICATE_HANDLESTRINGLITERALINITIALIZERS("cpa.predicate.handleStringLiteralInitializers",CpaPredicateHandleStringLiteralInitializersOptions.values(), CpaPredicateHandleStringLiteralInitializersOptions.TRUE),
+ANALYSIS_USEPARALLELANALYSES("analysis.useParallelAnalyses",AnalysisUseParallelAnalysesOptions.values(), AnalysisUseParallelAnalysesOptions.TRUE),
+CPA_INVARIANTS_ABSTRACTIONSTATEFACTORY("cpa.invariants.abstractionStateFactory",CpaInvariantsAbstractionStateFactoryOptions.values(), CpaInvariantsAbstractionStateFactoryOptions.ENTERING_EDGES);
 
 	private static final Map<String, CPACheckerKonfigurationOptions> optionMap = new HashMap<>();
 	private static final Map<String, KonfigurationOptionable> outputName = new HashMap<>();

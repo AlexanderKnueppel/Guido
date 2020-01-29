@@ -13,19 +13,29 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 	private String clazz;
 	private String method;
 	private String[] parameter;
-	private String ConfigFilePath;
+	private String configFilePath;
 	private int contractNumber = -1;
 	private String binary;
 	private Map<String, Integer> experiments = new HashMap<>();
-	
-	public CPACheckerCodeContainer(String binary,int expNumb, String source, String ConfigFilePath, String clazz, String method,
+	/**
+	 * 
+	 * @param binary - binary of the C-file
+	 * @param expNumb
+	 * @param source - C-File
+	 * @param configFilePath - Path of the configuration file
+	 * @param clazz
+	 * @param method
+	 * @param parameter - parameter that are changed
+	 * @param contractNumber
+	 */
+	public CPACheckerCodeContainer(String configFilePath, String binary, String source, int expNumb,   String clazz, String method,
 		String[] parameter, int contractNumber) {
 		super();
 		this.source = source;
 		this.clazz = clazz;
 		this.method = method;
 		this.binary = binary;
-		this.ConfigFilePath = ConfigFilePath;
+		this.configFilePath = configFilePath;
 		this.contractNumber = contractNumber;
 		this.parameter = parameter;
 		experiments.put(binary, expNumb);
@@ -71,11 +81,11 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 	}
 
 	public String getConfigFilePath() {
-		return ConfigFilePath;
+		return configFilePath;
 	}
 
 	public void setConfigFilePath(String classpath) {
-		this.ConfigFilePath = classpath;
+		this.configFilePath = classpath;
 	}
 
 	public int getContractNumber() {
@@ -106,10 +116,10 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 		if (getClass() != obj.getClass())
 			return false;
 		CPACheckerCodeContainer other = (CPACheckerCodeContainer) obj;
-		if (ConfigFilePath == null) {
-			if (other.ConfigFilePath != null)
+		if (configFilePath == null) {
+			if (other.configFilePath != null)
 				return false;
-		} else if (!ConfigFilePath.equals(other.ConfigFilePath))
+		} else if (!configFilePath.equals(other.configFilePath))
 			return false;
 		if (clazz == null) {
 			if (other.clazz != null)

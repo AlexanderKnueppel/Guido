@@ -2,8 +2,11 @@ package de.tubs.isf.guido.verification.systems.cpachecker;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +26,8 @@ import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 
 public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
-	private static final String METHOD_CONST = "Method";
 	private static final String NAME_CONST = "Name";
+	private static final String CONFIG_FILE = "Configuration";
 	private static final String FEATURE_SAMPLE = "FeatureSample";
 	private static final String SPL_SAMPLE_FILE = "SPLSampleFile";
 	private static final String PARAMETERS_CONST = "Parameters";
@@ -46,53 +49,32 @@ public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 		String rootFeatureSampleFile = root.getAttribute(FEATURE_SAMPLE);
 		String rootBinary = root.getAttribute(BINARY_CONST);
 
+
 		NodeList codeunits = root.getElementsByTagName("Codeunit");
 		for (int i = 0; i < codeunits.getLength(); i++) {
 			Element codeunit = (Element) codeunits.item(i);
 			String source = codeunit.getAttribute("Source");
-			String classpath = codeunit.getAttribute("Classpath");
-			if (classpath.equals(""))
-				classpath = "./../../Resources/JavaRedux";
-			String classpathSPLSampleFile = codeunit.getAttribute(SPL_SAMPLE_FILE);
-			String classpathFeatureSampleFile = codeunit.getAttribute(FEATURE_SAMPLE);
-			String classpathCode = rootBinary;
+			String configuration = codeunit.getAttribute(CONFIG_FILE);
+			String binary = rootBinary;
 			if (codeunit.hasAttribute(BINARY_CONST))
-				classpathCode = codeunit.getAttribute(BINARY_CONST);
-			NodeList clazzes = codeunit.getElementsByTagName("Class");
-			for (int j = 0; j < clazzes.getLength(); j++) {
-				Element clazz = (Element) clazzes.item(j);
-				String name = clazz.getAttribute(NAME_CONST);
-				String classSPLSampleFile = clazz.getAttribute(SPL_SAMPLE_FILE);
-				String classFeatureSampleFile = clazz.getAttribute(FEATURE_SAMPLE);
-				String classCode = classpathCode;
-				if (clazz.hasAttribute(BINARY_CONST))
-					classpathCode = clazz.getAttribute(BINARY_CONST);
-				NodeList methods = clazz.getElementsByTagName(METHOD_CONST);
-				for (int k = 0; k < methods.getLength(); k++) {
-					Element method = (Element) methods.item(k);
-					String methodName = method.getAttribute(NAME_CONST);
-					String methodSPLSampleFile = method.getAttribute(SPL_SAMPLE_FILE);
-					String methodFeatureSampleFile = method.getAttribute(FEATURE_SAMPLE);
-					String methodCode = classCode;
-					if (method.hasAttribute(BINARY_CONST))
-						classpathCode = method.getAttribute(BINARY_CONST);
-
-					String splSampleFile = chooseSampleFile(rootSPLSampleFile, classpathSPLSampleFile,
-							classSPLSampleFile, methodSPLSampleFile);
-					String featureSampleFile = chooseSampleFile(rootFeatureSampleFile, classpathFeatureSampleFile,
-							classFeatureSampleFile, methodFeatureSampleFile);
-
-					String sampleType = cleanEmpty(featureSampleFile) == null ? SPL_SAMPLE_FILE : FEATURE_SAMPLE;
-					String sampleFile = sampleType == SPL_SAMPLE_FILE ? splSampleFile : featureSampleFile;
-					boolean definesParameters = method.hasAttribute(PARAMETERS_CONST);
-					String[] parameters = definesParameters ? getParameters(method.getAttribute(PARAMETERS_CONST))
-							: null;
-					result.addAll(getJobsForMethod(methodCode, cleanEmpty(source), cleanEmpty(classpath), name,
+				binary = codeunit.getAttribute(BINARY_CONST);
+			
+			NodeList problems = codeunit.getElementsByTagName("Problem");
+			for (int j = 0; j < problems.getLength(); j++) {
+				Element problem = (Element) problems.item(j);
+				String name = problem.getAttribute(NAME_CONST);
+				String splSampleFile = problem.getAttribute(SPL_SAMPLE_FILE);
+				String featureSampleFile = problem.getAttribute(FEATURE_SAMPLE);
+				String sampleType = cleanEmpty(featureSampleFile) == null ? SPL_SAMPLE_FILE : FEATURE_SAMPLE;
+				String sampleFile = sampleType == SPL_SAMPLE_FILE ? splSampleFile : featureSampleFile;
+				String methodName = problem.getAttribute("Method");
+				boolean definesParameters = problem.hasAttribute(PARAMETERS_CONST);
+				String[] parameters = definesParameters ? getParameters(problem.getAttribute(PARAMETERS_CONST))
+						: null;
+				result.addAll(getJobsForMethod(binary, cleanEmpty(source), cleanEmpty(configuration), name,
 							methodName, parameters, sampleFile, sampleType));
-
-				}
 			}
-
+			
 		}
 		return result;
 	}
@@ -103,28 +85,20 @@ public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 	}
 
 	@Override
-	protected List<IJob> getJobsForMethod(String binary, String source, String specificationPath, String className,
+	protected List<IJob> getJobsForMethod(String binary, String source, String configurationPath, String problemName,
 			String methodName, String[] parameters, String sampleFile, String sampleType) throws IOException {
 		List<IJob> result = new ArrayList<>();
-		SearchParameter ksp = new SearchParameter(source, className, methodName, parameters);
+		SearchParameter ksp = new SearchParameter(source, problemName, methodName, parameters);
 		Integer noc = alreadyLoadedProofs.get(ksp);
-		int numberOfContracts;
-		if (noc == null) {
-			GetJobs gj = null;
 
-			gj = new CPAGetJobs();
-
-			numberOfContracts = gj.getNumbofJobs(source, specificationPath, className, methodName, parameters);
-		} else {
-			numberOfContracts = noc;
-		}
-		List<SettingsObject> al =getSampleForFile(sampleFile, sampleType);
-		for (int i = 0; i < al.size(); i++) {
+			List<SettingsObject> al = getSampleForFile(sampleFile, sampleType);
+			for (int i = 0; i < al.size(); i++) {
 			CPASettingsObject ks = (CPASettingsObject) al.get(i);
-			for (int num = 0; num < numberOfContracts; num++) {
-			result.add(new CPACJob(binary, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(specificationPath),
-					className, methodName, parameters, ks, num));
-		}}
+
+			result.add(new CPACJob(binary, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(configurationPath),
+					problemName, methodName, parameters, ks, 1));		}
+
+		
 		return result;
 	}
 
@@ -141,23 +115,31 @@ public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 						: cleanEmpty(codeSampleFile) != null ? codeSampleFile : rootSampleFile;
 	}
 
-	@Override
-	protected List<SettingsObject> getSampleForFile(String sampleFile, String type) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SettingsObject> getSampleForFile(String sampleFile, String type) throws IOException {
+		List<SettingsObject> result = parsedSamples.get(sampleFile);
+		if (result == null) {
+			if (type == SPL_SAMPLE_FILE) {
+				result = Collections.unmodifiableList(new CPACheckerSampleHelper().readSPLSamples(new File(sampleFile)));
+			} else {				
+				result = Collections
+						.unmodifiableList(new CPACheckerSampleHelper().readFeatureIDESamples(new File(sampleFile)));
+			}
+			parsedSamples.put(sampleFile, result);
+		}
+		return result;
 	}
 	private static final class SearchParameter {
 
 		private final String codeunit;
-		private final String clazz;
-		private final String method;
+		private final String configuration;
+		private final String problem;
 		private final String[] parameter;
 
-		public SearchParameter(String codeunit, String clazz, String method, String[] parameter) {
+		public SearchParameter(String codeunit, String configuration, String problem, String[] parameter) {
 			super();
 			this.codeunit = codeunit;
-			this.clazz = clazz;
-			this.method = method;
+			this.configuration = configuration;
+			this.problem = problem;
 			this.parameter = parameter;
 		}
 
@@ -165,9 +147,9 @@ public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + ((clazz == null) ? 0 : clazz.hashCode());
+			result = prime * result + ((configuration == null) ? 0 : configuration.hashCode());
 			result = prime * result + ((codeunit == null) ? 0 : codeunit.hashCode());
-			result = prime * result + ((method == null) ? 0 : method.hashCode());
+			result = prime * result + ((problem == null) ? 0 : problem.hashCode());
 			result = prime * result + Arrays.hashCode(parameter);
 			return result;
 		}
@@ -181,20 +163,20 @@ public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 			if (getClass() != obj.getClass())
 				return false;
 			SearchParameter other = (SearchParameter) obj;
-			if (clazz == null) {
-				if (other.clazz != null)
+			if (configuration == null) {
+				if (other.configuration != null)
 					return false;
-			} else if (!clazz.equals(other.clazz))
+			} else if (!configuration.equals(other.configuration))
 				return false;
 			if (codeunit == null) {
 				if (other.codeunit != null)
 					return false;
 			} else if (!codeunit.equals(other.codeunit))
 				return false;
-			if (method == null) {
-				if (other.method != null)
+			if (problem == null) {
+				if (other.problem != null)
 					return false;
-			} else if (!method.equals(other.method))
+			} else if (!problem.equals(other.problem))
 				return false;
 			if (!Arrays.equals(parameter, other.parameter))
 				return false;

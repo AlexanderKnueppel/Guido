@@ -10,7 +10,7 @@ public class CPACJob implements IJob, Serializable {
 	public CPACJob(String binary, int expNumb, String source, String configFilePath, String clazz, String method,
 			String[] parameter, SettingsObject so, int num) {
 		this.setSo(so);
-		so.setCc(new CPACheckerCodeContainer(binary, expNumb, source, configFilePath, clazz, method, parameter, num));
+		so.setCc(new CPACheckerCodeContainer(configFilePath, binary, source, expNumb, clazz, method, parameter, num));
 	}
 	public CPACJob(String code, int i, String source, String configFilePath, String clazz, String method,
 			String[] parameter, SettingsObject so) {

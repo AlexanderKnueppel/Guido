@@ -25,15 +25,18 @@ public abstract class AbstractCPACheckerControl implements IProofControl{
 	private static final Map<String, String> BACKWARDS_PROPERTIES = new HashMap<>();
 	
 
-	public List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
+	public List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, String methodName,
 			 SettingsObject so) {
-		return getResultForProof(source, classPath, className, methodName, null,  so);
+		return getResultForProof(configFilePath, binary, source, methodName, null,  so);
 	}
 
-	abstract List<IDataBasisElement> getResultForProof(File source, File classPath, String className, String methodName,
-			String[] parameters, SettingsObject so);
+	abstract List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, String methodName,
+			String[] parameters,int number, SettingsObject so);
 
-
+	public List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, String methodName,
+			String[] parameters, SettingsObject so) {
+		return getResultForProof(configFilePath, binary, source, methodName, parameters,  so);
+	}
 	/**
 	 * Ermittelt die Namen der mitgegebenen Strategie-Option, aller Unterstrategien
 	 * und die der dazugehoerigen Auswahlmoeglichkeiten. Speichert diese in VALUES

@@ -70,6 +70,9 @@ public class MainClass {
 			.put(CommonCoverageType.COVERAGE_STATEMENT, TestTargetType.STATEMENT).build();
 
 	@SuppressWarnings("resource") // We don't close LogManager
+	public static void main(String[] args) {
+		main("config/default.properties","/media/marlen/54AFF99F466B2AED/eclipse-workspace/pa-marlen-herter-bernier/jobfiles/byte_add_1-2.i" ,"","");
+	}
 
 	public static CPAcheckerResult main(String configFile,String programFile,String parameters,String option) {
 		Locale.setDefault(Locale.US);
@@ -79,9 +82,9 @@ public class MainClass {
 		String stats = "-stats";
 		String options = "";
 		**/
-		String[] cmd = { configFile, programFile, option,parameters};
+		String[] cmd = { "-config",configFile, programFile, option,parameters};
 		
-
+		System.out.println(option);
 		Configuration cpaConfig = null;
 		LoggingOptions logOptions = null;
 		LogManager logManager;
@@ -107,7 +110,6 @@ public class MainClass {
 		CPAchecker cpachecker = null;
 		ProofGenerator proofGenerator = null;
 		ResourceLimitChecker limits = null;
-		ReportGenerator reportGenerator = null;
 		MainOptions options = new MainOptions();
 
 		try {
@@ -127,7 +129,7 @@ public class MainClass {
 			if (options.doPCC) {
 				proofGenerator = new ProofGenerator(cpaConfig, logManager, shutdownNotifier);
 			}
-			reportGenerator = new ReportGenerator(cpaConfig, logManager, logOptions.getOutputFile(), options.programs);
+	
 
 		} catch (InvalidConfigurationException e) {
 			logManager.logUserException(Level.SEVERE, e, "Invalid configuration");

@@ -22,7 +22,7 @@ import javax.xml.parsers.ParserConfigurationException;
 public class FeatureIdeTranslator {
 	
 	public static void main(String[]args) {
-		translateModelToStrategies("/media/marlen/54AFF99F466B2AED/eclipse-workspace/pa-marlen-herter-bernier/FeatureModel/CPAChecker-Model.xml");
+		translateModelToStrategies("/media/marlen/54AFF99F466B2AED/eclipse-workspace/pa-marlen-herter-bernier/FeatureModel/CPAChecker-Model-default.xml");
 	}
 	
 	/**
@@ -45,8 +45,8 @@ public class FeatureIdeTranslator {
 		Document doc = readFile(file);
 		doc.getDocumentElement().normalize();
 		NodeList nList = doc.getElementsByTagName("alt");
-		//for (int temp = 0; temp < nList.getLength(); temp++) {
-		for(int temp = 0; temp < 2; temp++) {
+		for (int temp = 0; temp < nList.getLength(); temp++) {
+		//for(int temp = 0; temp < 2; temp++) {
 			LinkedList<String> values = new LinkedList<String>();
 			Node nNode = nList.item(temp);
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -86,54 +86,41 @@ public class FeatureIdeTranslator {
 	}
 	public static void writeCPACheckerKongigurationOptionsFile(String line) {
 		//changing the CPACheckerKongiguration file to at the enums
-				String CPAKonfigFilePath = "src/de/tubs/isf/guido/verification/systems/cpachecker/options/strategies/CPACheckerKonfigurationOptions.java"; 
-			    String tempFile = "src/de/tubs/isf/guido/verification/systems/cpachecker/options/strategies/temp.java";
-			    String temp2File = "src/de/tubs/isf/guido/verification/systems/cpachecker/options/strategies/temp2.java";
-				
-			    FileOutputStream fos ;
-				File file = new File(CPAKonfigFilePath);
-			    BufferedReader bufferedReader;
-			    
-				try {				
-					bufferedReader = new BufferedReader(new FileReader(file));
-					String allData = "";
-				     String st;
-				     while ((st = bufferedReader.readLine()) != null) {		 		   	 
-			    	 	if(st.contains("implements OptionableContainer {")) {
-			    	 		allData = allData + "\n" + st + "\n" + line+ "\n\n" ;	
-			    	 		while(!st.contains("private static final Map")) {		
-			    	 				st = bufferedReader.readLine();			    	 			
-			    	 		}			    	 					    	 		
-			    	 	}
-			    	 	allData = allData + st + "\n";	
-				     }
-				     bufferedReader.close();
-				     file.delete();
-				     fos = new FileOutputStream(CPAKonfigFilePath);
-				     fos.write(allData.getBytes());
-				     fos.close();
-				     
+		String CPAKonfigFilePath = "src/de/tubs/isf/guido/verification/systems/cpachecker/options/strategies/CPACheckerKonfigurationOptions.java"; 
+	   				
+	    FileOutputStream fos ;
+		File file = new File(CPAKonfigFilePath);
+	    BufferedReader bufferedReader;
+	    
+		try {				
+			bufferedReader = new BufferedReader(new FileReader(file));
+			String allData = "";
+		     String st;
+		     while ((st = bufferedReader.readLine()) != null) {		 		   	 
+	    	 	if(st.contains("implements OptionableContainer {")) {
+	    	 		allData = allData + "\n" + st + "\n" + line+ "\n\n" ;	
+	    	 		while(!st.contains("private static final Map")) {		
+	    	 				st = bufferedReader.readLine();			    	 			
+	    	 		}			    	 					    	 		
+	    	 	}
+	    	 	allData = allData + st + "\n";	
+		     }
+		     bufferedReader.close();
+		     file.delete();
+		     fos = new FileOutputStream(CPAKonfigFilePath);
+		     fos.write(allData.getBytes());
+		     fos.close();			     
 
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}    
-				// Delete old file and rename new file to old
-				/**
-			    File oldFile = new File(CPAKonfigFilePath);
-			    File newFile = new File(tempFile);
-
-			    oldFile.delete();
-			    newFile.renameTo(oldFile);**/
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    
 	}
 	
 	public static void writeOptionJavaFile(String methodName, String option, LinkedList<String> values) {
-		// "cpachecker" + File.separator +"options"+ File.separator +"strategies"+ File.separator +
-	
-
 		String valuesString = "";
 		for(String val:values) {
 			valuesString = valuesString + val.toUpperCase() + "(\"" + val + "\"),";
@@ -167,11 +154,6 @@ public class FeatureIdeTranslator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-	     
 	}
 	
 	public static Document readFile(String file){

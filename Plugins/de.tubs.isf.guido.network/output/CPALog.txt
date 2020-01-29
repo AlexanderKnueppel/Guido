@@ -1,0 +1,140 @@
+2020-01-29 11:16:11:066	INFO	MainClass.detectFrontendLanguageIfNecessary	Language C detected and set for analysis
+
+2020-01-29 11:16:11:107	INFO	ResourceLimitChecker.fromConfiguration	Using the following resource limits: CPU-time limit of 900s
+
+2020-01-29 11:16:11:240	INFO	CPAchecker.run	CPAchecker 1.9 / default (Java HotSpot(TM) 64-Bit Server VM 1.8.0_201) started
+
+2020-01-29 11:16:11:290	INFO	CPAchecker.parse	Parsing CFA from file(s) "/media/marlen/54AFF99F466B2AED/eclipse-workspace/pa-marlen-herter-bernier/jobfiles/byte_add_1-2.i"
+
+2020-01-29 11:16:13:089	INFO	CoreComponentsFactory.createAlgorithm	Using Restarting Algorithm
+
+2020-01-29 11:16:13:117	INFO	CPAchecker.runAlgorithm	Starting analysis ...
+
+2020-01-29 11:16:13:126	INFO	RestartAlgorithm.run	Loading analysis 1 from file config/components/kInduction+Invariants/kInduction.properties ...
+
+2020-01-29 11:16:13:132	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:ResourceLimitChecker.fromConfiguration	Using the following resource limits: CPU-time limit of 900s
+
+2020-01-29 11:16:13:187	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:ResourceLimitChecker.fromConfiguration	Using the following resource limits: CPU-time limit of 900s
+
+2020-01-29 11:16:13:713	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:PredicateCPA:PredicateCPA.<init>	Using predicate analysis with MathSAT5 version 5.5.4 (bd863fede57e) (Feb 21 2019 15:05:40, gmp 6.1.0, gcc 4.8.5, 64-bit, reentrant).
+
+2020-01-29 11:16:14:156	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:InductionStepCase:PredicateCPA:PredicateCPA.<init>	Using predicate analysis with MathSAT5 version 5.5.4 (bd863fede57e) (Feb 21 2019 15:05:40, gmp 6.1.0, gcc 4.8.5, 64-bit, reentrant).
+
+2020-01-29 11:16:14:214	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ResourceLimitChecker.fromConfiguration	Using the following resource limits: CPU-time limit of 900s
+
+2020-01-29 11:16:14:270	INFO	RestartAlgorithm.run	Starting analysis 1 ...
+
+2020-01-29 11:16:14:349	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.run	Creating formula for program
+
+2020-01-29 11:16:14:744	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.boundedModelCheck	Starting satisfiability check...
+
+2020-01-29 11:16:14:757	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.checkBoundingAssertions	Starting assertions check...
+
+2020-01-29 11:16:14:986	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:KInductionProver.check	Running algorithm to create induction hypothesis
+
+2020-01-29 11:16:15:069	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:InvariantsCPA:InvariantsCPA$InterestingVariableLimitAdjuster.adjustConditions	Adjusting interestingVariableLimit to 1
+
+2020-01-29 11:16:15:069	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Adjusting precision for CPA org.sosy_lab.cpachecker.cpa.invariants.InvariantsCPA@7d1e858d
+
+2020-01-29 11:16:15:070	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Updating reached set provided to other analyses
+
+2020-01-29 11:16:15:574	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:InvariantsCPA:InvariantsCPA$InterestingVariableLimitAdjuster.adjustConditions	Adjusting interestingVariableLimit to 2
+
+2020-01-29 11:16:15:585	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Adjusting precision for CPA org.sosy_lab.cpachecker.cpa.invariants.InvariantsCPA@7d1e858d
+
+2020-01-29 11:16:15:585	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Updating reached set provided to other analyses
+
+2020-01-29 11:16:15:812	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:InvariantsCPA:InvariantsCPA$InterestingVariableLimitAdjuster.adjustConditions	Adjusting interestingVariableLimit to 4
+
+2020-01-29 11:16:15:812	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Adjusting precision for CPA org.sosy_lab.cpachecker.cpa.invariants.InvariantsCPA@7d1e858d
+
+2020-01-29 11:16:15:812	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Updating reached set provided to other analyses
+
+2020-01-29 11:16:15:905	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:KInductionProver.check	Starting induction check...
+
+2020-01-29 11:16:16:001	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:InvariantsCPA:InvariantsCPA$InterestingVariableLimitAdjuster.adjustConditions	Adjusting interestingVariableLimit to 8
+
+2020-01-29 11:16:16:001	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Adjusting precision for CPA org.sosy_lab.cpachecker.cpa.invariants.InvariantsCPA@7d1e858d
+
+2020-01-29 11:16:16:001	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Updating reached set provided to other analyses
+
+2020-01-29 11:16:16:141	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:LoopBoundCPA:LoopBoundPrecisionAdjustment.nextState	Adjusting maxLoopIterations to 2
+
+2020-01-29 11:16:16:146	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.run	Creating formula for program
+
+2020-01-29 11:16:16:207	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.boundedModelCheck	Starting satisfiability check...
+
+2020-01-29 11:16:16:208	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.checkBoundingAssertions	Starting assertions check...
+
+2020-01-29 11:16:16:315	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:KInductionProver.check	Running algorithm to create induction hypothesis
+
+2020-01-29 11:16:16:783	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:InvariantsCPA:InvariantsCPA$InterestingVariableLimitAdjuster.adjustConditions	Adjusting interestingVariableLimit to 10
+
+2020-01-29 11:16:16:783	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Adjusting precision for CPA org.sosy_lab.cpachecker.cpa.invariants.InvariantsCPA@7d1e858d
+
+2020-01-29 11:16:16:793	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Updating reached set provided to other analyses
+
+2020-01-29 11:16:16:905	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:KInductionProver.check	Starting induction check...
+
+2020-01-29 11:16:17:070	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:LoopBoundCPA:LoopBoundPrecisionAdjustment.nextState	Adjusting maxLoopIterations to 3
+
+2020-01-29 11:16:17:071	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.run	Creating formula for program
+
+2020-01-29 11:16:17:099	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.boundedModelCheck	Starting satisfiability check...
+
+2020-01-29 11:16:17:100	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.checkBoundingAssertions	Starting assertions check...
+
+2020-01-29 11:16:17:194	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:KInductionProver.check	Running algorithm to create induction hypothesis
+
+2020-01-29 11:16:17:333	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:InvariantsCPA:InvariantsCPA$FormulaDepthAdjuster.adjustConditions	Adjusting maximum formula depth to 3
+
+2020-01-29 11:16:17:333	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Adjusting precision for CPA org.sosy_lab.cpachecker.cpa.invariants.InvariantsCPA@7d1e858d
+
+2020-01-29 11:16:17:333	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Updating reached set provided to other analyses
+
+2020-01-29 11:16:17:799	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:InvariantsCPA:InvariantsCPA$InterestingVariableLimitAdjuster.adjustConditions	Adjusting interestingVariableLimit to 14
+
+2020-01-29 11:16:17:799	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Adjusting precision for CPA org.sosy_lab.cpachecker.cpa.invariants.InvariantsCPA@7d1e858d
+
+2020-01-29 11:16:17:799	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Updating reached set provided to other analyses
+
+2020-01-29 11:16:17:808	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:KInductionProver.check	Starting induction check...
+
+2020-01-29 11:16:18:121	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:LoopBoundCPA:LoopBoundPrecisionAdjustment.nextState	Adjusting maxLoopIterations to 4
+
+2020-01-29 11:16:18:122	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.run	Creating formula for program
+
+2020-01-29 11:16:18:143	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.boundedModelCheck	Starting satisfiability check...
+
+2020-01-29 11:16:18:144	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.checkBoundingAssertions	Starting assertions check...
+
+2020-01-29 11:16:18:211	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:KInductionProver.check	Running algorithm to create induction hypothesis
+
+2020-01-29 11:16:18:942	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:KInductionProver.check	Starting induction check...
+
+2020-01-29 11:16:19:184	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:LoopBoundCPA:LoopBoundPrecisionAdjustment.nextState	Adjusting maxLoopIterations to 5
+
+2020-01-29 11:16:19:184	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.run	Creating formula for program
+
+2020-01-29 11:16:19:207	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.boundedModelCheck	Starting satisfiability check...
+
+2020-01-29 11:16:19:297	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.checkBoundingAssertions	Starting assertions check...
+
+2020-01-29 11:16:19:371	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:KInductionProver.check	Running algorithm to create induction hypothesis
+
+2020-01-29 11:16:20:198	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:KInductionProver.check	Starting induction check...
+
+2020-01-29 11:16:20:472	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:LoopBoundCPA:LoopBoundPrecisionAdjustment.nextState	Adjusting maxLoopIterations to 6
+
+2020-01-29 11:16:20:473	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.run	Creating formula for program
+
+2020-01-29 11:16:20:506	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.boundedModelCheck	Starting satisfiability check...
+
+2020-01-29 11:16:20:665	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 1:AbstractBMCAlgorithm.checkBoundingAssertions	Starting assertions check...
+
+2020-01-29 11:16:20:749	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:ParallelAlgorithm.handleFutureResults	config/components/kInduction+Invariants/../kInduction/kInduction.properties finished successfully.
+
+2020-01-29 11:16:20:758	INFO	Analysis config/components/kInduction+Invariants/kInduction.properties:Parallel analysis 2:ParallelAlgorithm.runParallelAnalysis	Analysis was terminated
+
+2020-01-29 11:16:20:763	INFO	CPAchecker.runAlgorithm	Stopping analysis ...
+

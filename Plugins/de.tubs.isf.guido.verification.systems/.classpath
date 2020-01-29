@@ -9,74 +9,34 @@
 	<classpathentry kind="lib" path="libs/KeY/KeY.jar"/>
 	<classpathentry kind="lib" path="libs/KeY/libs/antlr.jar"/>
 	<classpathentry kind="lib" path="libs/KeY/libs/recoderKey.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.core"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/animal-sniffer-annotations.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/antlr4-runtime.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/apron.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/batik-awt-util.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/batik-constants.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/batik-dom.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/batik-ext.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/batik-i18n.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/batik-svggen.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/batik-util.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/batik-xml.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/byte-buddy.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/checker-qual.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/com.microsoft.z3.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/common.jar"/>
 	<classpathentry kind="lib" path="libs/CPAChecker/cpachecker.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/CVC4.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/diffutils.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/common.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/org.eclipse.cdt.core.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/org.eclipse.core.runtime.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/java-cup-runtime.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/org.eclipse.core.contenttype.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/org.eclipse.core.jobs.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/org.eclipse.core.resources.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/org.eclipse.equinox.common.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/org.eclipse.osgi.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/java-smt.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/javabdd.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/batik-svggen.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/batik-i18n.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/batik-ext.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/batik-dom.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/batik-constants.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/batik-awt-util.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/batik-util.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/batik-xml.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/antlr4-runtime.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/jhoafparser.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/icu4j.jar"/>
 	<classpathentry kind="lib" path="libs/CPAChecker/edu.cmu.sei.rtss.jldd.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/error_prone_annotations.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/failureaccess.jar"/>
 	<classpathentry kind="lib" path="libs/CPAChecker/gmp.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/guava-testlib.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/guava.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/hamcrest-core.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/icu4j.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/j2objc-annotations.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/java-cup-runtime.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/java-smt.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/javabdd.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/jhoafparser.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/jna.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/jpl.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/jsr305.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/jsylvan.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/junit.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/lasso-ranker.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/listenablefuture.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/llvm-j.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/meconsole010.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/mockito-core.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/objenesis.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/org.eclipse.cdt.core.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/org.eclipse.core.contenttype.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/org.eclipse.core.jobs.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/org.eclipse.core.resources.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/org.eclipse.core.runtime.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/org.eclipse.equinox.common.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/org.eclipse.equinox.preferences.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/org.eclipse.jdt.core.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/org.eclipse.osgi.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/pjbdd.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/princess_2.12.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/princess-parser_2.12.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/princess-smt-parser_2.12.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/scala-library.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/scala-parser-combinators_2.12.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/smtinterpol.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/spotbugs-annotations.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/truth-java8-extension.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/truth.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/ultimate-core-rcp.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/ultimate-core.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/ultimate-model-checker-utils.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/ultimate-model.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/ultimate-smt-solver-bridge.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/ultimate-util.jar"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/xml-apis-2.0.2.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/pjbdd.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.core"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/native"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/lib"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

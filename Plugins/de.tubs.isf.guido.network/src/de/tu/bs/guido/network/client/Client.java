@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 
 import de.tu.bs.guido.network.server.Server;
 import de.tubs.isf.guido.core.verifier.AVerificationSystemFactory;
+import de.tubs.isf.guido.verification.systems.cpachecker.CPACheckerFactory;
 import de.tubs.isf.guido.verification.systems.key.KeyFactory;
 
 public class Client {
@@ -13,6 +14,8 @@ public class Client {
 		AVerificationSystemFactory.setFactory(new KeyFactory());
 		if (args[0].equals("key")) {
 			AVerificationSystemFactory.setFactory(new KeyFactory());
+		}else if (args[0].equals("CPAChecker")) {
+			AVerificationSystemFactory.setFactory(new CPACheckerFactory());
 		}
 		String ip = "127.0.0.1";
 		if (args.length > 1) {

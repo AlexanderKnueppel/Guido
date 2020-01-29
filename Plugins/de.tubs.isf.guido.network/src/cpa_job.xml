@@ -1,0 +1,8 @@
+<job >
+	<Codeunit Source="/media/marlen/54AFF99F466B2AED/eclipse-workspace/pa-marlen-herter-bernier/jobfiles/byte_add_1-2.c" 
+	Binary="/media/marlen/54AFF99F466B2AED/eclipse-workspace/pa-marlen-herter-bernier/jobfiles/byte_add_1-2.i" 
+	Configuration="config/default.properties">
+	
+		<Problem Name="java.util.ArrayList" Method="" Parameters="" SPLSampleFile="/media/marlen/54AFF99F466B2AED/eclipse-workspace/Guido/Plugins/de.tubs.isf.guido.core/testData/products_samples/00000.config" />
+	</Codeunit>
+</job>
