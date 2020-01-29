@@ -22,7 +22,7 @@ import de.uka.ilkd.key.proof.io.ProblemLoaderException;
 import de.uka.ilkd.key.proof.mgt.SpecificationRepository;
 import de.uka.ilkd.key.speclang.Contract;
 import de.uka.ilkd.key.ui.AbstractMediatorUserInterfaceControl;
-
+@Deprecated
 public class GuiBasedKeyControl extends AbstractKeyControl {
 	
 	JavaSourceCodeAnalyzer jsca = null;

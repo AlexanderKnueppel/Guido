@@ -108,26 +108,26 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 		Integer noc = alreadyLoadedProofs.get(ksp);
 		int numberOfContracts;
 		if (noc == null) {
-			GetJobs gj = null;
 
-			gj = new KeyGetJobs();
-
-			numberOfContracts = gj.getNumbofJobs(source, classpath, className, methodName, parameters);
+			numberOfContracts = new ExampleBasedKeyControl().getNumberOfContracts(
+					source == null ? null : new File(source), classpath == null ? null : new File(classpath), className,
+					methodName, parameters);
 		} else {
 			numberOfContracts = noc;
 		}
-		List<SettingsObject> al =getSampleForFile(sampleFile, sampleType);
+		List<SettingsObject> al = getSampleForFile(sampleFile, sampleType);
 		for (int i = 0; i < al.size(); i++) {
 			KeySettingsObject ks = (KeySettingsObject) al.get(i);
 			for (int num = 0; num < numberOfContracts; num++) {
-			try {
-				result.add(new KeyJavaJob(code, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath),
-						className, methodName, parameters, ks.clone(), num));
-			} catch (CloneNotSupportedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				try {
+					result.add(new KeyJavaJob(code, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(classpath),
+							className, methodName, parameters, ks.clone(), num));
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-		}}
+		}
 //		getSampleForFile(sampleFile, sampleType).forEach( setting -> {
 //			KeySettingsObject ks = (KeySettingsObject) setting;
 //			

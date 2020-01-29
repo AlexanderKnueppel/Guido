@@ -25,7 +25,9 @@ public class KeySampleHelper extends SampleHelper {
 			throw new IllegalArgumentException("Pass four parameters: classpath, class, method and samples");
 		}
 		List<List<String>> results = new ArrayList<>();
-		GuiBasedKeyControl kc = new GuiBasedKeyControl();
+		
+		//GuiBasedKeyControl kc = new GuiBasedKeyControl();
+		ExampleBasedKeyControl kc = new ExampleBasedKeyControl();
 		File source = new File(args[0]);
 		String clazz = args[1];
 		String method = args[2];

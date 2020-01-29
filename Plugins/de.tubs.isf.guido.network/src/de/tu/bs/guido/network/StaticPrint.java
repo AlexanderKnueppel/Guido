@@ -1,7 +1,7 @@
 package de.tu.bs.guido.network;
 
 public class StaticPrint {
-	static Printer PrinterServer;
+	static Printer PrinterServer = new DefaultPrinter();
 	public static Printer getPrinterServer() {
 		return PrinterServer;
 	}
@@ -14,5 +14,5 @@ public class StaticPrint {
 	public static void setPrinterClient(Printer printerClient) {
 		PrinterClient = printerClient;
 	}
-	static Printer PrinterClient;
+	static Printer PrinterClient = new DefaultPrinter();
 }
