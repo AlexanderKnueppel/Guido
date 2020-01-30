@@ -18,39 +18,48 @@ import de.tubs.isf.guido.verification.systems.cpachecker.generators.FeatureIdeTr
 import de.tubs.isf.guido.verification.systems.key.GuiBasedKeyControl;
 import de.tubs.isf.guido.verification.systems.key.KeySettingsObject;
 
-public class CPACheckerSampleHelper extends SampleHelper{
+public class CPACheckerSampleHelper extends SampleHelper {
 	private static final int DEFAULT_MAX_STEPS = 1000;
-	
-	
-	
-	public List<SettingsObject> readSPLSamples(File samples) throws IOException {
-		if(!samples.exists()) {
-			System.out.println("SampleFile not found ");
-		}		
 
+	public List<SettingsObject> readSPLSamples(File samples) throws IOException {
+		if (!samples.exists()) {
+			System.out.println("SampleFile not found ");
+		}
+		List<File> files = new ArrayList<File>();
+		if (samples.isDirectory()) {
+			for (File f : samples.listFiles()) {
+				files.add(f);
+			}
+		} else {
+			files.add(samples);
+		}
 		List<SettingsObject> result = new ArrayList<>();
-		try (BufferedReader br = new BufferedReader(new FileReader(samples))) {
-			String line;
-			while ((line = br.readLine()) != null) {
-				if(!line.contains("_2_")) {
-					continue;
-				}
-				line = line.trim();
-				line = line.replace("_2_", ".");				
-				line = line.replace("_1__1_", "_");
-				String[] options = line.split("_");
-				CPASettingsObject so = new CPASettingsObject();
-				for (String option : options) {
-					option = option.trim();
-					String[] vals = option.split("::");
-					if (vals.length != 2)
+		for (File f : files) {
+
+			try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+				String line;
+				while ((line = br.readLine()) != null) {
+					if (!line.contains("_2_")) {
 						continue;
-					so.setParameter(vals[0], vals[1]);
+					}
+					line = line.trim();
+					line = line.replace("_2_", ".");
+					line = line.replace("_1__1_", "_");
+					String[] options = line.split("_");
+					CPASettingsObject so = new CPASettingsObject();
+					for (String option : options) {
+						option = option.trim();
+						String[] vals = option.split("::");
+						if (vals.length != 2)
+							continue;
+						so.setParameter(vals[0], vals[1]);
+					}
+					so.setMaxEffort(100000);
+					result.add(so);
 				}
-				so.setMaxEffort(100000);
-				result.add(so);
 			}
 		}
+		
 		return result;
 	}
 
@@ -70,7 +79,7 @@ public class CPACheckerSampleHelper extends SampleHelper{
 				String line;
 				CPASettingsObject so = new CPASettingsObject();
 				while ((line = br.readLine()) != null) {
-					String [] lineArray = FeatureIdeTranslator.decode(line);
+					String[] lineArray = FeatureIdeTranslator.decode(line);
 					if (lineArray.length != 2)
 						continue;
 					so.setParameter(lineArray[0], lineArray[1]);
@@ -160,5 +169,3 @@ public class CPACheckerSampleHelper extends SampleHelper{
 	}
 
 }
-
-

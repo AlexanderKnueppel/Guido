@@ -26,7 +26,6 @@ import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 
 public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
-	private static final String NAME_CONST = "Name";
 	private static final String CONFIG_FILE = "Configuration";
 	private static final String FEATURE_SAMPLE = "FeatureSample";
 	private static final String SPL_SAMPLE_FILE = "SPLSampleFile";
@@ -47,32 +46,28 @@ public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 		Element root = doc.getDocumentElement();
 		String rootSPLSampleFile = root.getAttribute(SPL_SAMPLE_FILE);
 		String rootFeatureSampleFile = root.getAttribute(FEATURE_SAMPLE);
-		String rootBinary = root.getAttribute(BINARY_CONST);
-
+		String nonSense = "";
 
 		NodeList codeunits = root.getElementsByTagName("Codeunit");
 		for (int i = 0; i < codeunits.getLength(); i++) {
-			Element codeunit = (Element) codeunits.item(i);
-			String source = codeunit.getAttribute("Source");
+			Element codeunit = (Element) codeunits.item(i);			
 			String configuration = codeunit.getAttribute(CONFIG_FILE);
-			String binary = rootBinary;
-			if (codeunit.hasAttribute(BINARY_CONST))
-				binary = codeunit.getAttribute(BINARY_CONST);
 			
 			NodeList problems = codeunit.getElementsByTagName("Problem");
 			for (int j = 0; j < problems.getLength(); j++) {
 				Element problem = (Element) problems.item(j);
-				String name = problem.getAttribute(NAME_CONST);
+				String source = problem.getAttribute("Source");
+				String binary = problem.getAttribute(BINARY_CONST);
+				
 				String splSampleFile = problem.getAttribute(SPL_SAMPLE_FILE);
 				String featureSampleFile = problem.getAttribute(FEATURE_SAMPLE);
 				String sampleType = cleanEmpty(featureSampleFile) == null ? SPL_SAMPLE_FILE : FEATURE_SAMPLE;
 				String sampleFile = sampleType == SPL_SAMPLE_FILE ? splSampleFile : featureSampleFile;
-				String methodName = problem.getAttribute("Method");
+				
 				boolean definesParameters = problem.hasAttribute(PARAMETERS_CONST);
 				String[] parameters = definesParameters ? getParameters(problem.getAttribute(PARAMETERS_CONST))
 						: null;
-				result.addAll(getJobsForMethod(binary, cleanEmpty(source), cleanEmpty(configuration), name,
-							methodName, parameters, sampleFile, sampleType));
+				result.addAll(getJobsForMethod(binary, cleanEmpty(source), cleanEmpty(configuration), nonSense, nonSense, parameters, sampleFile, sampleType));
 			}
 			
 		}
@@ -84,21 +79,21 @@ public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 		return parametersText.isEmpty() ? new String[0] : parametersText.split(",");
 	}
 
+	/**
+	 * Here are two variables called nonSense , which had to be implemented, because of the inheritance BatchXMLHelper
+	 */
 	@Override
-	protected List<IJob> getJobsForMethod(String binary, String source, String configurationPath, String problemName,
-			String methodName, String[] parameters, String sampleFile, String sampleType) throws IOException {
+	protected List<IJob> getJobsForMethod(String binary, String source, String configurationPath, String nonSense, String nonSense2, String[] parameters, String sampleFile, String sampleType) throws IOException {
 		List<IJob> result = new ArrayList<>();
-		SearchParameter ksp = new SearchParameter(source, problemName, methodName, parameters);
+		SearchParameter ksp = new SearchParameter(configurationPath, source, parameters);
 		Integer noc = alreadyLoadedProofs.get(ksp);
 
 			List<SettingsObject> al = getSampleForFile(sampleFile, sampleType);
 			for (int i = 0; i < al.size(); i++) {
 			CPASettingsObject ks = (CPASettingsObject) al.get(i);
 
-			result.add(new CPACJob(binary, ks.getDebugNumber(), cleanEmpty(source), cleanEmpty(configurationPath),
-					problemName, methodName, parameters, ks, 1));		}
-
-		
+			result.add(new CPACJob(cleanEmpty(configurationPath), binary, cleanEmpty(source), ks.getDebugNumber(), parameters, ks, 1));
+			}		
 		return result;
 	}
 
@@ -132,14 +127,12 @@ public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 
 		private final String codeunit;
 		private final String configuration;
-		private final String problem;
 		private final String[] parameter;
 
-		public SearchParameter(String codeunit, String configuration, String problem, String[] parameter) {
+		public SearchParameter(String codeunit, String configuration, String[] parameter) {
 			super();
 			this.codeunit = codeunit;
 			this.configuration = configuration;
-			this.problem = problem;
 			this.parameter = parameter;
 		}
 
@@ -149,7 +142,6 @@ public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 			int result = 1;
 			result = prime * result + ((configuration == null) ? 0 : configuration.hashCode());
 			result = prime * result + ((codeunit == null) ? 0 : codeunit.hashCode());
-			result = prime * result + ((problem == null) ? 0 : problem.hashCode());
 			result = prime * result + Arrays.hashCode(parameter);
 			return result;
 		}
@@ -172,11 +164,6 @@ public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 				if (other.codeunit != null)
 					return false;
 			} else if (!codeunit.equals(other.codeunit))
-				return false;
-			if (problem == null) {
-				if (other.problem != null)
-					return false;
-			} else if (!problem.equals(other.problem))
 				return false;
 			if (!Arrays.equals(parameter, other.parameter))
 				return false;

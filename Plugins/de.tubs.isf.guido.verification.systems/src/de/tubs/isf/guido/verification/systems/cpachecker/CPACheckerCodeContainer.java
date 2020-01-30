@@ -10,8 +10,6 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 	
 	private static final long serialVersionUID = 7057222153950841911L;
 	private String source;
-	private String clazz;
-	private String method;
 	private String[] parameter;
 	private String configFilePath;
 	private int contractNumber = -1;
@@ -24,16 +22,12 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 	 * @param source - C-File
 	 * @param configFilePath - Path of the configuration file
 	 * @param clazz
-	 * @param method
 	 * @param parameter - parameter that are changed
 	 * @param contractNumber
 	 */
-	public CPACheckerCodeContainer(String configFilePath, String binary, String source, int expNumb,   String clazz, String method,
-		String[] parameter, int contractNumber) {
+	public CPACheckerCodeContainer(String configFilePath, String binary, String source, int expNumb, String[] parameter, int contractNumber) {
 		super();
 		this.source = source;
-		this.clazz = clazz;
-		this.method = method;
 		this.binary = binary;
 		this.configFilePath = configFilePath;
 		this.contractNumber = contractNumber;
@@ -49,27 +43,12 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 		this.source = source;
 	}
 
-	public String getClazz() {
-		return clazz;
-	}
-
-	public void setClazz(String clazz) {
-		this.clazz = clazz;
-	}
 	public String getBinary() {
 		return binary;
 	}
 
 	public void setBinary(String code) {
 		this.binary = code;
-	}
-
-	public String getMethod() {
-		return method;
-	}
-
-	public void setMethod(String method) {
-		this.method = method;
 	}
 
 	public String[] getParameter() {
@@ -121,17 +100,7 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 				return false;
 		} else if (!configFilePath.equals(other.configFilePath))
 			return false;
-		if (clazz == null) {
-			if (other.clazz != null)
-				return false;
-		} else if (!clazz.equals(other.clazz))
-			return false;
 		if (contractNumber != other.contractNumber)
-			return false;
-		if (method == null) {
-			if (other.method != null)
-				return false;
-		} else if (!method.equals(other.method))
 			return false;
 		if (!Arrays.equals(parameter, other.parameter))
 			return false;

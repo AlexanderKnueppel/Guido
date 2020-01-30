@@ -82,9 +82,12 @@ public class MainClass {
 		String stats = "-stats";
 		String options = "";
 		**/
-		String[] cmd = { "-config",configFile, programFile, option,parameters};
-		
-		System.out.println(option);
+		String[] cmd = { "-config",configFile, programFile,"-nolog", option,"-setprop",parameters};
+
+		if(parameters.isEmpty()) {
+			cmd[5] = "";
+			cmd[6] = "";
+		}	
 		Configuration cpaConfig = null;
 		LoggingOptions logOptions = null;
 		LogManager logManager;
@@ -139,16 +142,6 @@ public class MainClass {
 		if (proofGenerator != null) {
 			proofGenerator.generateProof(result);
 		}
-
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try {
-			PrintStream ps = new PrintStream(baos, true, "UTF-8");
-			result.printStatistics(ps);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-
 		System.out.flush();
 		System.err.flush();
 		logManager.flush();
@@ -160,6 +153,7 @@ public class MainClass {
 	private static Config createConfiguration(String[] args) throws InvalidConfigurationException, IOException {
 		// if there are some command line arguments, process them
 		Map<String, String> cmdLineOptions = null;
+	
 		cmdLineOptions = CmdLineArguments.processArguments(args);
 
 		boolean secureMode = cmdLineOptions.remove("secureMode") != null;
@@ -210,11 +204,11 @@ public class MainClass {
 
 		// Switch to appropriate config depending on property (if necessary)
 		config = handlePropertyOptions(config, options, cmdLineOptions, properties);
-
+/*
 		if (options.printUsedOptions) {
 			config.dumpUsedOptionsTo(System.out);
 		}
-
+*/
 		return new Config(config, outputDirectory, properties);
 	}
 
@@ -420,7 +414,7 @@ public class MainClass {
 			configBuilder.setOption("language", frontendLanguage.name());
 			pConfig = configBuilder.build();
 			pOptions.language = frontendLanguage;
-			pLogManager.logf(Level.INFO, "Language %s detected and set for analysis", frontendLanguage);
+			//pLogManager.logf(Level.INFO, "Language %s detected and set for analysis", frontendLanguage);
 		}
 		Preconditions.checkNotNull(pOptions.language);
 		return pConfig;

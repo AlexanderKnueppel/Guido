@@ -7,14 +7,14 @@ import de.tubs.isf.guido.core.verifier.SettingsObject;
 
 public class CPACJob implements IJob, Serializable {
 
-	public CPACJob(String binary, int expNumb, String source, String configFilePath, String clazz, String method,
-			String[] parameter, SettingsObject so, int num) {
+	public CPACJob(String configFilePath, String binary, String source, int expNumb, String[] parameter,
+			SettingsObject so, int num) {
 		this.setSo(so);
-		so.setCc(new CPACheckerCodeContainer(configFilePath, binary, source, expNumb, clazz, method, parameter, num));
+		so.setCc(new CPACheckerCodeContainer(configFilePath, binary, source, expNumb, parameter, num));
 	}
-	public CPACJob(String code, int i, String source, String configFilePath, String clazz, String method,
-			String[] parameter, SettingsObject so) {
-		this(code, -1, source, configFilePath, clazz, method, parameter, so, -1);
+	public CPACJob(String configFilePath, String binary, String source, int i,String[] parameter,
+			SettingsObject so) {
+		this(configFilePath, binary, source, -1,  parameter, so, -1);
 	}
 	
 	public CPACJob(SettingsObject so) {

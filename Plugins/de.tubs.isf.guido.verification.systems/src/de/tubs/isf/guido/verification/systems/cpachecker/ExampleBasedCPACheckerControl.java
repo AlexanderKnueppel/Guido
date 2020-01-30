@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.sosy_lab.cpachecker.core.CPAcheckerResult;
 
 import de.tubs.isf.guido.core.analysis.CSourceCodeAnalyzer;
+import de.tubs.isf.guido.core.analysis.IAnalyzer.LanguageConstruct;
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
@@ -19,37 +20,34 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 	
 	CSourceCodeAnalyzer csca = null;
 	
+
 	@Override
-	List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, String methodName,
-			String[] parameters, int number, SettingsObject so) {
-		// TODO Auto-generated method stub
+	List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, String[] parameters,
+			int num, SettingsObject so) {
 		return null;
 	}
-	
-	@Override
-	public List<IDataBasisElement> getResultForProof(String configFile, File binary, File source, String methodName,
-			String[] parameters, SettingsObject so) {
+	public List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, String[] parameters,
+			SettingsObject so) {
 
 		File dir = source;
-		if (dir.isFile())
-			dir = source.getParentFile();
-
-		csca = new CSourceCodeAnalyzer(dir);
-
+		if (dir.isFile()) {
+			csca = new CSourceCodeAnalyzer(dir);
+		}else {
+			System.out.println("The given C-file is not a file.");
+		}
+		
 		CPASettingsObject so1 = (CPASettingsObject) so;
 
 		List<IDataBasisElement> res = new ArrayList<IDataBasisElement>();
-		res.add(getResult(configFile, binary,source,methodName, parameters, so1));
+		res.add(getResult(configFilePath, binary,source,parameters, so1));
 
 		return res;
 	}
 
-	private CPACheckerDataBasisElement getResult(String configFile,File binary, File source, String methodName, String[] parameters, CPASettingsObject so) {
+	private CPACheckerDataBasisElement getResult(String configFile,File binary, File source, String[] parameters, CPASettingsObject so) {
 		Map<String,String> settings = so.getSettingsMap();
 		String option = "";
 		for(Map.Entry<String,String> entry: settings.entrySet()) {
-			System.out.println("Es sollte was passieren");
-			System.out.println(entry.getKey() + "=" + entry.getValue());
 			option = option + " " + entry.getKey() + "=" + entry.getValue();
 		}
 		String parameter = "";
@@ -57,11 +55,10 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 		for(String param: parameters) {
 			parameter = parameter +" "+ param;
 		}
-		System.out.println("Starting CPAChecker "+ option);
 		CPAcheckerResult result = MainClass.main(configFile, binary.getAbsolutePath(), parameter, option);
-		System.out.println("Finished CPAChecker " + result.getResultString());
-		return createResult(methodName, result,	
-				csca.analyze().stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()),
+		List<LanguageConstruct> clc = csca.analyze();
+		return createResult(result,	
+				clc.stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()),
 				settings);
 	}
 
@@ -69,9 +66,8 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 	public void performProof(SettingsObject so) {
 		CPASettingsObject cso = (CPASettingsObject) so;
 		CPACheckerCodeContainer ccc = (CPACheckerCodeContainer) cso.getCc();
-
-		cdb.addAll(getResultForProof(ccc.getConfigFilePath(), new File(ccc.getBinary()),new File(ccc.getSource()), 
-				ccc.getMethod(), ccc.getParameter(),cso));
+		
+		cdb.addAll(getResultForProof(ccc.getConfigFilePath(), new File(ccc.getBinary()),new File(ccc.getSource()), ccc.getParameter(),cso));
 
 	}
 
@@ -89,7 +85,6 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 	public int getNumberOfJobs(String methodName) {
 		return 0;
 	}
-
 
 
 

@@ -25,17 +25,17 @@ public abstract class AbstractCPACheckerControl implements IProofControl{
 	private static final Map<String, String> BACKWARDS_PROPERTIES = new HashMap<>();
 	
 
-	public List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, String methodName,
+	public List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, 
 			 SettingsObject so) {
-		return getResultForProof(configFilePath, binary, source, methodName, null,  so);
+		return getResultForProof(configFilePath, binary, source, null,  so);
 	}
 
-	abstract List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, String methodName,
-			String[] parameters,int number, SettingsObject so);
+	abstract List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, 
+			String[] parameters,int num, SettingsObject so);
 
-	public List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, String methodName,
+	public List<IDataBasisElement> getResultForProof(String configFilePath, File binary, File source, 
 			String[] parameters, SettingsObject so) {
-		return getResultForProof(configFilePath, binary, source, methodName, parameters,  so);
+		return getResultForProof(configFilePath, binary, source, parameters,  so);
 	}
 	/**
 	 * Ermittelt die Namen der mitgegebenen Strategie-Option, aller Unterstrategien
@@ -138,7 +138,7 @@ public abstract class AbstractCPACheckerControl implements IProofControl{
 		return UNMOD_BACKWARDS_PROPERTIES;
 	}
 
-	protected CPACheckerDataBasisElement createResult( String name, CPAcheckerResult result, List<String> languageConstructs, Map<String,String> optionMap) {
+	protected CPACheckerDataBasisElement createResult( CPAcheckerResult result, List<String> languageConstructs, Map<String,String> optionMap) {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Long timeInMillis = 0L;
 		Long totalTime = 0L;
@@ -172,19 +172,20 @@ public abstract class AbstractCPACheckerControl implements IProofControl{
 				totalVirtMem = Long.valueOf(memString);
 			}
 		}
-		if(result.getStatistics().equals("TRUE")) {
+		
+		
+		if(result.getResultString().contains("TRUE")) {
+			System.out.println("CPAChecker finished with true");
 			bool = true;
 		}
-		return new CPACheckerDataBasisElement(name,bool, 
+		return new CPACheckerDataBasisElement("CPAChecker",bool, 
 				timeInMillis, CPUTime, totalTime,totalVirtMem,languageConstructs,optionMap);
 	}
 	private Long getTimeFromString (String s, String statistic) {
 		String timeInSec = s.replace(statistic, "").trim();
-		timeInSec.replace("s","");
-		Double time = Double.valueOf(timeInSec);
-		time=time*1000;		
-		return Long.valueOf(timeInSec);
-			
+		timeInSec = timeInSec.replace("s","");
+		timeInSec = timeInSec.replace(".","");
+		return Long.valueOf(timeInSec);			
 	}
 
 }

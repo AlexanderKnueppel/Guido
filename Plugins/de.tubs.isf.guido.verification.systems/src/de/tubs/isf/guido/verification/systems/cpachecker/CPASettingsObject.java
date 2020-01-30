@@ -21,7 +21,7 @@ public class CPASettingsObject extends SettingsObject implements Serializable{
 	
 
 	public CPASettingsObject() {
-		this.cc = new CPACheckerCodeContainer(null, null, null, 0,null, null,null, 0);
+		this.cc = new CPACheckerCodeContainer(null, null, null, 0,null, 0);
 	}
 	public void reinitialize() {}
 	
