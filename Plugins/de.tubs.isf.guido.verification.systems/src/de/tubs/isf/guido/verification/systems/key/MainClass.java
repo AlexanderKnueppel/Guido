@@ -119,9 +119,9 @@ public class MainClass {
 				WdChecksTaclet.OFF, MergeGenerateIsWeakeningGoalTaclet.OFF, MoreSeqRulesTaclet.ON };
 		Optionable[] defaultOpts = new Optionable[] {};
 
-		outPutProofResults(
-				proof("ElevatorSystem.Elevator", "timeShift", new String[] { "EmailSystem.Client", "EmailSystem.Mail" },
-						0, createDesiredSettingsObject(opts, 1000000)));
+//		outPutProofResults(
+//				proof("ElevatorSystem.Elevator", "timeShift", new String[] { "EmailSystem.Client", "EmailSystem.Mail" },
+//						0, createDesiredSettingsObject(opts, 1000000)));
 
 	}
 
@@ -142,18 +142,18 @@ public class MainClass {
 		return so;
 	}
 
-	private static List<IDataBasisElement> proof(String classname, String methodname, String[] methodparameter,
-			int contractNumber, SettingsObject so) {
-		kc.performProof(so);
-
-		return kc.getCurrentResults();
-	}
-
-	private static List<IDataBasisElement> proofWithOwnSourceFile(File source, String classname, String methodname,
-			String[] methodparameter, int contractNumber, SettingsObject so) {
-		kc.performProof(so);
-
-		return kc.getCurrentResults();
-	}
+//	private static List<IDataBasisElement> proof(String classname, String methodname, String[] methodparameter,
+//			int contractNumber, SettingsObject so) {
+//		kc.performProof(so);
+//
+//		return kc.getCurrentResults();
+//	}
+//
+//	private static List<IDataBasisElement> proofWithOwnSourceFile(File source, String classname, String methodname,
+//			String[] methodparameter, int contractNumber, SettingsObject so) {
+//		kc.performProof(so);
+//
+//		return kc.getCurrentResults();
+//	}
 
 }

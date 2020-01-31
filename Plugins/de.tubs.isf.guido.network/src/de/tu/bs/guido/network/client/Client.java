@@ -15,10 +15,12 @@ public class Client {
 
 	public static void main(String[] args) throws UnknownHostException, ClassNotFoundException, IOException {
 		AVerificationSystemFactory.setFactory(new KeyFactory());
+
 		if (opS != null) {
 			System.setOut(new PrintStream(opS));
 		}
 		if (args[0].equals(Mode.Key.toString())) {
+
 			AVerificationSystemFactory.setFactory(new KeyFactory());
 		}
 		String ip = "127.0.0.1";

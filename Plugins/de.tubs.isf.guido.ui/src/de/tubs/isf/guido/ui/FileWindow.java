@@ -155,7 +155,7 @@ public class FileWindow extends Dialog {
 
 			@Override
 			public void modifyText(ModifyEvent arg0) {
-				System.out.println("war");
+
 				ProjectSettings.pathJob = textServer.getText();
 
 			}

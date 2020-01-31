@@ -111,7 +111,7 @@ public class CServ {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				runServer(new String[] { text.getText(), Mode.values()[mode].name() });
-				System.out.println(text.getText());
+				
 
 			}
 

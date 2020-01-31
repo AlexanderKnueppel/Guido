@@ -17,7 +17,7 @@ public abstract class AExperiment {
 	    String toString();
 	}
 
-	static protected class DataPoint {
+	static public class DataPoint {
 		private Label label;
 		private Object value;
 		private Function<DataPoint,String> tostring;
