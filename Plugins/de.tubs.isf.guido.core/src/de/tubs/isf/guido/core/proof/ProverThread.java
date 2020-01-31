@@ -7,16 +7,20 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
-import de.tubs.isf.guido.core.verifier.SettingsObject;
+import de.tubs.isf.guido.core.verifier.IJob;
 
 public class ProverThread {
-	public static IProofControl startProof(IProofControl pc, SettingsObject so, long time) {
+	public static IDataBasisElement startProof(IProofControl pc, IJob job, long time) {
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-		Future<IProofControl> future = executor.submit(new ProverTask(pc, so));
+		Future<IDataBasisElement> future = executor.submit(new ProverTask(pc, job));
+		
+		IDataBasisElement result = null;
+		
 		try {
 			System.out.println("Started Proof");
-			pc = future.get(time, TimeUnit.MILLISECONDS);
+			result = future.get(time, TimeUnit.MILLISECONDS);
 			System.out.println("Finished Proof!");
 			// return pc;
 		} catch (TimeoutException e) {
@@ -33,6 +37,6 @@ public class ProverThread {
 			executor.shutdownNow();
 		}
 
-		return pc;
+		return result;
 	}
 }
