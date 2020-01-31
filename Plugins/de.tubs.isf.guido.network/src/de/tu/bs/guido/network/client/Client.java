@@ -11,7 +11,7 @@ public class Client {
 
 	public static void main(String[] args) throws UnknownHostException, ClassNotFoundException, IOException {
 		AVerificationSystemFactory.setFactory(new KeyFactory());
-		if (args[0].equals("key")) {
+		if (args.length > 0 && args[0].equals("key")) {
 			AVerificationSystemFactory.setFactory(new KeyFactory());
 		}
 		String ip = "127.0.0.1";
