@@ -19,6 +19,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Text;
 import org.xml.sax.SAXException;
@@ -33,6 +34,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 
 public class CServ {
 	int mode;
@@ -42,6 +47,9 @@ public class CServ {
 	private Text txtIp;
 	private Thread serverThread;
 	private Thread clientThread;
+	private Text text_1;
+	private Text text_2;
+	private Text text_3;
 
 	/**
 	 * Launch the application.
@@ -61,6 +69,7 @@ public class CServ {
 	 * Open the window.
 	 */
 	public void open() {
+		
 		Display display = Display.getDefault();
 		createContents();
 		shell.open();
@@ -70,12 +79,19 @@ public class CServ {
 				display.sleep();
 			}
 		}
+		shell.addListener(SWT.Close, new Listener() {
+			public void handleEvent(Event event) {
+				SettingsControl.setSettings(ProjectSettings.getSettings());
+			}
+		});
 	}
 
 	/**
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
+		
+		ProjectSettings.setSettings(SettingsControl.getSettings());
 		shell = new Shell();
 		shell.setMinimumSize(new Point(400, 400));
 		shell.setSize(400, 500);
@@ -84,6 +100,7 @@ public class CServ {
 
 			@Override
 			public void handleEvent(Event arg0) {
+				SettingsControl.setSettings(ProjectSettings.getSettings());
 				System.exit(0);
 			}
 			
@@ -215,6 +232,108 @@ public class CServ {
 
 		TabItem tbtmSettings = new TabItem(tabFolder, SWT.NONE);
 		tbtmSettings.setText("Settings");
+		
+		SashForm sashForm_2 = new SashForm(tabFolder, SWT.NONE);
+		tbtmSettings.setControl(sashForm_2);
+		
+		Composite composite_2 = new Composite(sashForm_2, SWT.NONE);
+		composite_2.setLayout(new GridLayout(1, false));
+		
+		Composite composite_3 = new Composite(composite_2, SWT.NONE);
+		composite_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		composite_3.setBounds(0, 0, 64, 64);
+		composite_3.setLayout(new GridLayout(3, false));
+		
+		Label lblNewLabel = new Label(composite_3, SWT.NONE);
+		lblNewLabel.setBounds(0, 0, 55, 15);
+		lblNewLabel.setText("Result Directory");
+		
+		text_1 = new Text(composite_3, SWT.BORDER);
+		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text_1.setBounds(0, 0, 76, 21);
+		
+		Button btnNewButton = new Button(composite_3, SWT.NONE);
+		btnNewButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				DirectoryDialog dialog = new DirectoryDialog(shell);
+			   
+			  text_1.setText(dialog.open());
+			}
+		});
+		btnNewButton.setText("Change!");
+		text_1.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+
+				ProjectSettings.outputPath = text_1.getText();
+
+			}
+		});
+		text_1.setText(ProjectSettings.outputPath);
+		Composite composite_4 = new Composite(composite_2, SWT.NONE);
+		composite_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		composite_4.setSize(182, 79);
+		composite_4.setLayout(new GridLayout(3, false));
+		
+		Label label = new Label(composite_4, SWT.NONE);
+		label.setText("Punishment Path");
+		
+		text_2 = new Text(composite_4, SWT.BORDER);
+		text_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text_2.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+
+				ProjectSettings.punishmentPath = text_2.getText();
+
+			}
+		});
+		text_2.setText(ProjectSettings.punishmentPath);
+		Button button = new Button(composite_4, SWT.NONE);
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				DirectoryDialog dialog = new DirectoryDialog(shell);
+			   
+			  text_2.setText(dialog.open());
+			}
+		});
+		button.setText("Change!");
+		
+		Composite composite_5 = new Composite(composite_2, SWT.NONE);
+		composite_5.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		composite_5.setBounds(0, 0, 64, 64);
+		composite_5.setLayout(new GridLayout(3, false));
+		
+		Label label_1 = new Label(composite_5, SWT.NONE);
+		label_1.setText("Library Path");
+		
+		text_3 = new Text(composite_5, SWT.BORDER);
+		text_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text_3.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+
+				ProjectSettings.libraryPath = text_3.getText();
+
+			}
+		});
+		text_3.setText(ProjectSettings.libraryPath);
+		Button button_1 = new Button(composite_5, SWT.NONE);
+		button_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				DirectoryDialog dialog = new DirectoryDialog(shell);
+			   
+			  text_3.setText(dialog.open());
+			}
+		});
+		button_1.setText("Change!");
+		sashForm_2.setWeights(new int[] {1});
 		Group grpMode2 = new Group(shell, SWT.NONE);
 		grpMode2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpMode2.setText("Console");
@@ -305,7 +424,4 @@ public class CServ {
 		}
 		
 	}
-
-
-
 }

@@ -9,8 +9,8 @@ public class ProjectSettings {
 	public static String pathJob;
 	public static final String DEFAULT_OUTPUT = "../Results";
 	public static String outputPath;
-	public static final String DEFAULT_LIBARY_PATH = "../Results";
-	public static String libaryPath;
+	public static final String DEFAULT_LIBARY_PATH = "../Library";
+	public static String libraryPath;
 	public static final String DEFAULT_PUNISHMENT_PATH = "../punishment";
 	public static String punishmentPath;
 
@@ -18,7 +18,7 @@ public class ProjectSettings {
 		HashMap<String, String> h = new HashMap<String, String>();
 		h.put("pathJob", pathJob);
 		h.put("outputPath", outputPath);
-		h.put("libaryPath", libaryPath);
+		h.put("libraryPath", libraryPath);
 		h.put("punishmentPath", punishmentPath);
 		return h;
 	}
@@ -27,7 +27,7 @@ public class ProjectSettings {
 		System.out.println(map.get("pathJob"));
 		pathJob = map.get("pathJob") == null ? DEFAULT_PATH_JOB : map.get("pathJob");
 		outputPath = map.get("outputPath") == null ? DEFAULT_OUTPUT : map.get("outputPath");
-		libaryPath = map.get("libaryPath") == null ? DEFAULT_LIBARY_PATH : map.get("libaryPath");
+		libraryPath = map.get("libaryPath") == null ? DEFAULT_LIBARY_PATH : map.get("libaryPath");
 		punishmentPath = map.get("punishmentPath") == null ? DEFAULT_PUNISHMENT_PATH : map.get("punishmentPath");
 
 	}
