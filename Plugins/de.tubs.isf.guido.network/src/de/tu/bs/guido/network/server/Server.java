@@ -139,8 +139,8 @@ public class Server implements Observer {
 			for (IJob j : jobs) {
 				if (AVerificationSystemFactory.getFactory() instanceof KeyFactory) {
 
-					whiteLists.add(((KeyCodeContainer) j.getSo().getCc()).getClasspath());
-					whiteLists.add(((KeyCodeContainer) j.getSo().getCc()).getClasspath());
+					whiteLists.add(((KeyCodeContainer) j.getCodeContainer()).getClasspath());
+					whiteLists.add(((KeyCodeContainer) j.getCodeContainer()).getClasspath());
 				}
 			}
 			File temp = new File(new File("Temp"), "Server");

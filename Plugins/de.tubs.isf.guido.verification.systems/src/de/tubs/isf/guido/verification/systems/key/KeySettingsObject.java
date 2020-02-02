@@ -20,12 +20,12 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 
 	private static final long serialVersionUID = -5974976146446740045L;
 	private int debugNumber;
-	protected KeyCodeContainer cc;
+
 
 	private Map<String, String> tacletMap = new HashMap<>();
 
 	public KeySettingsObject() {
-		this.cc = new KeyCodeContainer(null, 0, null, null, null, null, null, 0);
+	
 		for (KeyStrategyOptions option : KeyStrategyOptions.values()) {
 			setOption(option.getDefault());
 		}
@@ -165,12 +165,7 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		KeySettingsObject other = (KeySettingsObject) obj;
-		if (cc == null) {
-			if (other.cc != null)
-				return false;
-		}
-		if (!cc.equals(other.cc))
-			return false;
+		
 		if (maxEffort != other.maxEffort)
 			return false;
 		if (settingsMap == null) {
@@ -198,15 +193,8 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 		so.maxEffort = maxEffort;
 		so.settingsMap = new HashMap<>(settingsMap);
 		so.tacletMap = new HashMap<>(tacletMap);
-		int i =0;
-		if( this.cc.getExperiments()!=null) {
-			i= this.cc.getExperiments().get(this.cc.getCode());
-		}
-		String[] para = null;
-		if(this.cc.getParameter()!=null) {
-			 para = Arrays.copyOf(this.cc.getParameter(), this.cc.getParameter().length);
-		}
-		so.cc=new KeyCodeContainer(this.cc.getCode(),i, this.cc.getSource(), this.cc.getClasspath(), this.cc.getClazz(), this.cc.getMethod(), para, this.cc.getContractNumber());
+	
+
 		return so;
 	}
 
@@ -233,14 +221,5 @@ public class KeySettingsObject extends SettingsObject implements Serializable {
 		this.maxEffort = maxEffort;
 	}
 
-	@Override
-	public ACodeContainer getCc() {
-		// TODO Auto-generated method stub
-		return cc;
-	}
 
-	@Override
-	public void setCc(ACodeContainer cc) {
-		this.cc = (KeyCodeContainer) cc;
-	}
 }

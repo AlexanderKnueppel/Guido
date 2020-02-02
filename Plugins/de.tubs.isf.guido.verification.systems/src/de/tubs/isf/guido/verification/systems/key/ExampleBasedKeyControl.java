@@ -18,6 +18,7 @@ import de.tubs.isf.guido.core.analysis.JMLContractAnalyzer;
 import de.tubs.isf.guido.core.analysis.JavaSourceCodeAnalyzer;
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
+import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.uka.ilkd.key.control.KeYEnvironment;
 import de.uka.ilkd.key.java.abstraction.KeYJavaType;
@@ -380,24 +381,17 @@ public class ExampleBasedKeyControl implements IProofControl {
 	}
 
 	@Override
-	public void performProof(SettingsObject so) {
-		KeySettingsObject kso = (KeySettingsObject) so;
-		KeyCodeContainer kcc = (KeyCodeContainer) kso.getCc();
+	public IDataBasisElement performProof(IJob job) {
+		
+		KeyJavaJob keyjob = (KeyJavaJob) job;
+		KeyCodeContainer kcc = (KeyCodeContainer) job.getCodeContainer();
 
-		kdb.addAll(getResultForProof(new File(kcc.getSource()), new File(kcc.getClasspath()), kcc.getClazz(),
-				kcc.getMethod(), kso));
+		return getResultForProof(new File(kcc.getSource()), new File(kcc.getClasspath()), kcc.getClazz(),
+				kcc.getMethod(), job.getSo()).get(0);
 
 	}
 
-	@Override
-	public boolean isClosed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public List<IDataBasisElement> getCurrentResults() {
-		return kdb;
-	}
+
 
 }

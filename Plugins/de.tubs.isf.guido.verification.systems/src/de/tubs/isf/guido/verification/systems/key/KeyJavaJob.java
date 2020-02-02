@@ -1,6 +1,8 @@
 package de.tubs.isf.guido.verification.systems.key;
 
 import java.io.Serializable;
+
+import de.tubs.isf.guido.core.verifier.ACodeContainer;
 import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 
@@ -10,7 +12,7 @@ public class KeyJavaJob implements IJob, Serializable {
 			String[] parameter, SettingsObject so, int num) {
 
 		this.setSo(so);
-		so.setCc(new KeyCodeContainer(code, expNumb, source, classpath, clazz, method, parameter, num));
+		setCodeContainer(new KeyCodeContainer(code, expNumb, source, classpath, clazz, method, parameter, num));
 
 	}
 
@@ -27,6 +29,7 @@ public class KeyJavaJob implements IJob, Serializable {
 
 	static final long serialVersionUID = 778517411407136861L;
 	KeySettingsObject so;
+	KeyCodeContainer kcc;
 
 	public void reinitialize() {
 		so.reinitialize();
@@ -55,6 +58,11 @@ public class KeyJavaJob implements IJob, Serializable {
 				return false;
 		} else if (!so.equals(other.getSo()))
 			return false;
+		if (kcc == null) {
+			if (other.getCodeContainer() != null)
+				return false;
+		} else if (!kcc.equals(other.getCodeContainer()))
+			return false;
 
 		return true;
 	}
@@ -68,6 +76,18 @@ public class KeyJavaJob implements IJob, Serializable {
 		IJob newJob = (IJob) super.clone();
 		newJob.setSo(getSo().clone());
 		return newJob;
+	}
+
+	@Override
+	public void setCodeContainer(ACodeContainer cc) {
+		this.kcc = (KeyCodeContainer) cc;
+		
+	}
+
+	@Override
+	public ACodeContainer getCodeContainer() {
+		// TODO Auto-generated method stub
+		return kcc;
 	}
 
 }
