@@ -16,9 +16,7 @@ public abstract class SettingsObject implements Cloneable, Serializable {
 
 	protected Map<String, String> settingsMap = new HashMap<>();
 
-	public abstract ACodeContainer getCc();
 
-	public abstract void setCc(ACodeContainer cc);
 
 	public abstract void reinitialize();
 

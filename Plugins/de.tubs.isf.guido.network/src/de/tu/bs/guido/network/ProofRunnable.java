@@ -3,6 +3,7 @@ package de.tu.bs.guido.network;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.tu.bs.guido.network.client.FileClient;
@@ -45,10 +46,9 @@ public class ProofRunnable implements ResultRunnable, Serializable {
 			// File sourceFile = getFileForName(fc, source, localTemp);
 			// File classpathFile = getFileForName(fc, classpath, localTemp);
 
-			List<IDataBasisElement> intermediate;
-			kc.performProof(job.getSo());
+			List<IDataBasisElement> intermediate = new ArrayList<IDataBasisElement>();
+			intermediate.add(kc.performProof(job));
 
-			intermediate = kc.getCurrentResults();
 			for (IDataBasisElement result : intermediate) {
 				// result.setCode(job.getCode());
 				// result.setExperiments(job.getExperiments());
