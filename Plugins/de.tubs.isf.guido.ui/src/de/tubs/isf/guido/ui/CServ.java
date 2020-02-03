@@ -127,7 +127,7 @@ public class CServ {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				runServer(new String[] { text.getText(), Mode.values()[mode].name() });
+				runServer(new String[] { text.getText(), Mode.values()[mode].name(), text_1.getText(), text_2.getText(),text_3.getText() });
 				
 
 			}
@@ -309,7 +309,7 @@ public class CServ {
 		composite_5.setLayout(new GridLayout(3, false));
 		
 		Label label_1 = new Label(composite_5, SWT.NONE);
-		label_1.setText("Library Path");
+		label_1.setText("Result Path");
 		
 		text_3 = new Text(composite_5, SWT.BORDER);
 		text_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -318,11 +318,11 @@ public class CServ {
 			@Override
 			public void modifyText(ModifyEvent arg0) {
 
-				ProjectSettings.libraryPath = text_3.getText();
+				ProjectSettings.resultPath = text_3.getText();
 
 			}
 		});
-		text_3.setText(ProjectSettings.libraryPath);
+		text_3.setText(ProjectSettings.resultPath);
 		Button button_1 = new Button(composite_5, SWT.NONE);
 		button_1.addSelectionListener(new SelectionAdapter() {
 			@Override

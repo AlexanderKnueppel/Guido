@@ -41,9 +41,10 @@ public class Server implements Observer {
 	Observer o;
 
 	private static final int FILE_SERVER_PORT = PORT + 1;
-	private static final File DONE_FILE = new File("done.txt");
-	private static final File OPEN_FILE = new File("open.txt");
-	private static final File PUNISHMENT_FILE = new File("punishments.txt");
+	private static File DONE_FILE = new File("done.txt");
+	private static File OPEN_FILE = new File("open.txt");
+	private static File PUNISHMENT_FILE = new File("punishments.txt");
+	private static File result_file = new File("result.txt");
 
 	/**
 	 * @param args
@@ -57,6 +58,7 @@ public class Server implements Observer {
 		if (opS != null) {
 			System.setOut(new PrintStream(opS));
 		}
+
 		if (args[0].equals("key")) {
 			mode = Mode.Key;
 			AVerificationSystemFactory.setFactory(new KeyFactory());
@@ -87,11 +89,27 @@ public class Server implements Observer {
 			filterListForDuplicates(jobs);
 //			filterListForMe(jobs);
 			System.out.println("So many jobs read... " + jobs.size());
-		} else if (argsLength == 2) {
+		} else if (argsLength >= 2) {
 			if (!args[1].equals("key")) {
 				mode = Mode.Key;
 				AVerificationSystemFactory.setFactory(new KeyFactory());
 			}
+			if (argsLength > 2)
+				if (args[2] != null) {
+					OPEN_FILE = new File(args[2] + "open.txt");
+					DONE_FILE = new File(args[2] + "done.txt");
+
+				}
+			if (argsLength > 3)
+				if (args[3] != null) {
+					PUNISHMENT_FILE = new File(args[3] + "punishments.txt");
+
+				}
+			if (argsLength > 4)
+				if (args[4] != null) {
+					result_file = new File(args[4] + "result.txt");
+
+				}
 			System.out.println("Going to read jobs...");
 			String testArgsInput = args[0]; // "./../../VerificationData/VerificationData_AutomatedVerification/exampleJob.xml";
 			jobs = AVerificationSystemFactory.getFactory().createBatchXMLHelper()
@@ -209,8 +227,7 @@ public class Server implements Observer {
 	public Server() throws IOException {
 		nrn = new NewResultNotifier();
 		pool = new DistributedWorkingPool(PORT, nrn);
-		zo = new ResultObserver(new File("zwischenergebnisse.txt"), DONE_FILE, pool, FILE_SERVER_PORT,
-				new PunishmentTracker(PUNISHMENT_FILE));
+		zo = new ResultObserver(result_file, DONE_FILE, pool, FILE_SERVER_PORT, new PunishmentTracker(PUNISHMENT_FILE));
 		nrn.addObserver(zo);
 	}
 
