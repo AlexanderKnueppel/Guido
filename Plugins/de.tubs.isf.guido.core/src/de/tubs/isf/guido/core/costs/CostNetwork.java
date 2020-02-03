@@ -15,17 +15,38 @@ import de.tubs.isf.guido.core.analysis.IAnalyzer.LanguageConstruct;
 import de.tubs.isf.guido.core.costs.CostNetwork.WeightedDirectedEdge.Criterion;
 import de.tubs.isf.guido.core.costs.metrics.DefaultMetric;
 import de.tubs.isf.guido.core.costs.metrics.IMetric;
+import de.tubs.isf.guido.core.generator.GuidoConfigurationGenerator;
+import de.tubs.isf.guido.core.generator.GuidoConfigurationGenerator.Mechanism;
 import de.tubs.isf.guido.core.statistics.EvaluatedHypothesis;
 import de.tubs.isf.guido.core.statistics.Hypotheses;
 import de.tubs.isf.guido.core.statistics.Hypothesis;
 
 public class CostNetwork {
-
 	private Hypotheses accepted;
 	private List<LanguageConstruct> lcs;
 	private List<Parameter> parameters;
 	private IMetric metric;
 	private Set<WeightedDirectedEdge> edges;
+
+	public Hypotheses getAccepted() {
+		return accepted;
+	}
+
+	public List<LanguageConstruct> getLcs() {
+		return lcs;
+	}
+
+	public List<Parameter> getParameters() {
+		return parameters;
+	}
+
+	public IMetric getMetric() {
+		return metric;
+	}
+
+	public Set<WeightedDirectedEdge> getEdges() {
+		return edges;
+	}
 
 	static class WeightedDirectedEdge {
 		enum Criterion {
@@ -80,7 +101,7 @@ public class CostNetwork {
 		this.metric = metric;
 	}
 
-	List<Parameter> computeScores() {
+	public List<Parameter> computeScores() {
 		createEdges();
 
 		List<Parameter> result = new ArrayList<Parameter>();
@@ -156,7 +177,9 @@ public class CostNetwork {
 		result.add(new Parameter("Class axiom rule", new Option("Off"), new Option("Delayed"), new Option("Free")));
 		result.add(new Parameter("Dummy", new Option("Yes"), new Option("No"), new Option("Whatever")));
 
-		for (Parameter scoredParameter : new CostNetwork(accepted, lcs, result).computeScores()) {
+		CostNetwork network = new CostNetwork(accepted, lcs, result);
+		
+		for (Parameter scoredParameter : network.computeScores()) {
 			System.out.println("Parameter " + scoredParameter.getParameter() + ": ");
 			for (Entry<String, Option> option : scoredParameter.getOptions().entrySet()) {
 				double provability = ((ScoredOption) option.getValue()).getScoreForProvability();
@@ -164,5 +187,7 @@ public class CostNetwork {
 				System.out.println("    |-> " + option.getKey() + "[P: " + provability + ", VE: " + effort + "]");
 			}
 		}
+		
+		new GuidoConfigurationGenerator(network, Mechanism.ADJUST).computeNext();
 	}
 }
