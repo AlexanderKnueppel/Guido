@@ -1,6 +1,7 @@
 package de.tubs.isf.guido.core.statistics.tests;
 
 import java.util.List;
+import java.util.Optional;
 
 import de.tubs.isf.guido.core.experiments.AExperiment;
 import de.tubs.isf.guido.core.experiments.AExperiment.DataPoint;
@@ -9,15 +10,19 @@ import javanpst.data.structures.dataTable.DataTable;
 import javanpst.tests.oneSample.signTest.SignTest;
 import javanpst.tests.oneSample.wilcoxonTest.WilcoxonTest;
 
-public class PairedWilcoxonTest implements ISignificanceTest {
+public class PairedWilcoxon implements ISignificanceTest {
 
 	@Override
-	public double computeP(final AExperiment experiment) {
+	public Optional<Double> computeP(final AExperiment experiment) {
 
 		if (!(experiment instanceof PairExperiment))
 			throw new IllegalArgumentException("Paired wilcoxon test needs a paired experiment...");
 
 		PairExperiment pexp = (PairExperiment) experiment;
+		
+		if(pexp.getNumberOfRows() == 0) {
+			return Optional.empty();
+		}
 
 		double samples[][] = new double[pexp.getNumberOfRows()][2];
 
@@ -38,7 +43,7 @@ public class PairedWilcoxonTest implements ISignificanceTest {
 		WilcoxonTest test = new WilcoxonTest(data);
 		test.doTest();
 
-		return test.getDoublePValue();
+		return Optional.of(test.getDoublePValue());
 	}
 
 	public static void main(String args[]) {
