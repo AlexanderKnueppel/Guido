@@ -188,6 +188,6 @@ public class CostNetwork {
 			}
 		}
 		
-		new GuidoConfigurationGenerator(network, Mechanism.ADJUST).computeNext();
+		//new GuidoConfigurationGenerator(network, Mechanism.ADJUST).computeNext();
 	}
 }
