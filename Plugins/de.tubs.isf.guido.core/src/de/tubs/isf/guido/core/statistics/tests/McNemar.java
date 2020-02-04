@@ -34,21 +34,21 @@ public class McNemar implements ISignificanceTest {
 
 		for (int i = 0; i < pexp.getNumberOfRows(); ++i) {
 			List<DataPoint> row = pexp.getRow(i);
-			boolean effortA = (boolean) row.stream()
+			boolean closedA = (boolean) row.stream()
 					.filter(dp -> dp.getLabel().equals(PairExperiment.BaseLabel.EXPERIMENT_CLOSED_A)).findFirst().get()
 					.getValue();
-			boolean effortB = (boolean) row.stream()
+			boolean closedB = (boolean) row.stream()
 					.filter(dp -> dp.getLabel().equals(PairExperiment.BaseLabel.EXPERIMENT_CLOSED_B)).findFirst().get()
 					.getValue();
 
-			samples[i][0] = effortA ? 1 : 0;
-			samples[i][1] = effortB ? 1 : 0;
+			samples[i][0] = closedA ? 1 : 0;
+			samples[i][1] = closedB ? 1 : 0;
 
-			if (effortA && effortB) {
+			if (closedA && closedB) {
 				table[0][0]++;
-			} else if (effortA && !effortB) {
+			} else if (closedA && !closedB) {
 				table[0][1]++;
-			} else if (!effortA && effortB) {
+			} else if (!closedA && closedB) {
 				table[1][0]++;
 			} else {
 				table[1][1]++;
