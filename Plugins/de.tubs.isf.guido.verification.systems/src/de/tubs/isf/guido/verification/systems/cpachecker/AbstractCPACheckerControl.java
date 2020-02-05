@@ -173,6 +173,7 @@ public abstract class AbstractCPACheckerControl implements IProofControl{
 			}
 		}
 		
+		String str = result.getResultString();
 		
 		if(result.getResultString().contains("TRUE")) {
 			System.out.println("CPAChecker finished with true");

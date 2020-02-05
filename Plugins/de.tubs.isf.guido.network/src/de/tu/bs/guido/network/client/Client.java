@@ -24,8 +24,9 @@ public class Client {
 		if (args[0].equals(Mode.Key.toString())) {
 
 			AVerificationSystemFactory.setFactory(new KeyFactory());
-		}else if (args[0].equals("CPAChecker")) {
+		} else if (args[0].equals("CPAChecker")) {
 			AVerificationSystemFactory.setFactory(new CPACheckerFactory());
+
 		}
 		String ip = "127.0.0.1";
 		if (args.length > 1) {
@@ -41,7 +42,8 @@ public class Client {
 			String separator = System.getProperty("file.separator");
 			String classpath = System.getProperty("java.class.path");
 			String path = System.getProperty("java.home") + separator + "bin" + separator + "java";
-			ProcessBuilder processBuilder = new ProcessBuilder(path, "-cp", classpath, Client.class.getName(), ip);
+			ProcessBuilder processBuilder = new ProcessBuilder(path, "-cp", classpath, Client.class.getName(),
+					AVerificationSystemFactory.getFactory() instanceof CPACheckerFactory ? "CPAChecker" : "", ip);
 			processBuilder.start();
 
 		}

@@ -38,6 +38,7 @@ public class CPACheckerSampleHelper extends SampleHelper {
 
 			try (BufferedReader br = new BufferedReader(new FileReader(f))) {
 				String line;
+				CPASettingsObject so = new CPASettingsObject();
 				while ((line = br.readLine()) != null) {
 					if (!line.contains("_2_")) {
 						continue;
@@ -46,17 +47,19 @@ public class CPACheckerSampleHelper extends SampleHelper {
 					line = line.replace("_2_", ".");
 					line = line.replace("_1__1_", "_");
 					String[] options = line.split("_");
-					CPASettingsObject so = new CPASettingsObject();
-					for (String option : options) {
-						option = option.trim();
-						String[] vals = option.split("::");
-						if (vals.length != 2)
-							continue;
-						so.setParameter(vals[0], vals[1]);
-					}
+					
+//					for (String option : options) {
+//						option = option.trim();
+//						String[] vals = option.split("::");
+//						if (vals.length != 2)
+//							continue;
+//						so.setParameter(vals[0], vals[1]);
+//					}
+					so.setParameter(options[0], options[1]);
 					so.setMaxEffort(100000);
-					result.add(so);
+					
 				}
+				result.add(so);
 			}
 		}
 		

@@ -82,7 +82,7 @@ public class MainClass {
 		String stats = "-stats";
 		String options = "";
 		**/
-		String[] cmd = { "-config",configFile, programFile,"-nolog", option,"-setprop",parameters};
+		String[] cmd = { "-config",configFile, programFile,"-nolog", parameters,"-setprop",option};
 
 		if(parameters.isEmpty()) {
 			cmd[5] = "";
