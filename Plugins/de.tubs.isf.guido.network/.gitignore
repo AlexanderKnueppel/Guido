@@ -1,7 +1,15 @@
 /bin/
+
 /punishments.txt
+
 /done.txt
+
 /open.txt
+
 /zwischenergebnisse.txt
+
 /output/
+
 /Exampleproject/
+/libs/
+!/libs/readme.txt
