@@ -10,6 +10,9 @@ public interface IJob extends Cloneable, Serializable {
 	public SettingsObject getSo();
 
 	public void setSo(SettingsObject so);
+	public void setCodeContainer(ACodeContainer cc);
+	public ACodeContainer getCodeContainer();
+	
 
 	@Override
 	public boolean equals(Object obj);

@@ -52,7 +52,7 @@ public class ExperimentGenerator {
 				options.add(hyp.getOptionB());
 			}
 
-			options.addAll(hyp.getProperties());
+			options.addAll(hyp.getProperties() == null ? new ArrayList<String>() : hyp.getProperties());
 
 			Collections.sort(options);
 			String key = hyp.getParameter() + "." + options.stream().collect(Collectors.joining("."));
@@ -130,12 +130,22 @@ public class ExperimentGenerator {
 			List<DefaultDataBasisElement> entriesB = new ArrayList<DefaultDataBasisElement>();
 
 			for (DefaultDataBasisElement entry : db.getEntries()) {
-				if (!entry.getLanguageConstructs().containsAll(hyp.getProperties()))
+				if(entry.getLanguageConstructs() == null && hyp.getProperties() != null && !hyp.getProperties().isEmpty()) {
 					continue;
+				}
+				
+				if (entry.getLanguageConstructs() != null && hyp.getProperties() != null && !entry.getLanguageConstructs().containsAll(hyp.getProperties()))
+					continue;
+				
+				try {
 				if (entry.getOptions().get(hyp.getParameter()).equals(hyp.getOptionA()))
 					entriesA.add(entry);
 				else if (entry.getOptions().get(hyp.getParameter()).equals(hyp.getOptionB()))
 					entriesB.add(entry);
+				} catch(NullPointerException n) {
+					System.out.println(n);
+				}
+				
 			}
 
 			entriesA.sort(new MatchingComperator(hyp.getParameter()));

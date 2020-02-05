@@ -14,6 +14,10 @@ public class EvaluatedHypothesis extends Hypothesis {
 		this.pValue = new BigDecimal(pValue);
 	}
 
+	public EvaluatedHypothesis(Hypothesis hyp, String pValue) {
+		this(hyp.identifier, hyp.parameter, hyp.optionA, hyp.optionB, hyp.requirement, hyp.dependency, hyp.properties, pValue);
+	}
+	
 	public double getValueForOptionA() {
 		if (dependency.equals("<=")) {
 			return isAboutProvability() ? pValue.doubleValue() : 1 - pValue.doubleValue();

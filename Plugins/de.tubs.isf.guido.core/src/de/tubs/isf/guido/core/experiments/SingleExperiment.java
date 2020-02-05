@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class SingleExperiment extends AExperiment {
 
-	protected enum BaseLabel implements Label {
+	public enum BaseLabel implements Label {
 		EXPERIMENT_NUMBER("ExpNum", ""), EXPERIMENT_IDENTIFIER("Identifier", ""), EXPERIMENT_CLOSED("Closed - ", "A"),
 		EXPERIMENT_EFFORT("Effort - ", "A");
 
