@@ -12,6 +12,7 @@ import de.tubs.isf.guido.core.analysis.CSourceCodeAnalyzer;
 import de.tubs.isf.guido.core.analysis.IAnalyzer.LanguageConstruct;
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.proof.controller.IProofControl;
+import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 
 
@@ -63,23 +64,12 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 	}
 
 	@Override
-	public void performProof(SettingsObject so) {
-		CPASettingsObject cso = (CPASettingsObject) so;
-		CPACheckerCodeContainer ccc = (CPACheckerCodeContainer) cso.getCc();
+	public IDataBasisElement performProof(IJob job) {
+		CPASettingsObject cso = (CPASettingsObject) job.getSo();
+		CPACheckerCodeContainer ccc = (CPACheckerCodeContainer) job.getCodeContainer();
 		
-		cdb.addAll(getResultForProof(ccc.getConfigFilePath(), new File(ccc.getBinary()),new File(ccc.getSource()), ccc.getParameter(),cso));
+		return getResultForProof(ccc.getConfigFilePath(), new File(ccc.getBinary()),new File(ccc.getSource()), ccc.getParameter(),cso).get(0);
 
-	}
-
-	@Override
-	public boolean isClosed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<IDataBasisElement> getCurrentResults() {
-		return cdb;
 	}
 
 	public int getNumberOfJobs(String methodName) {

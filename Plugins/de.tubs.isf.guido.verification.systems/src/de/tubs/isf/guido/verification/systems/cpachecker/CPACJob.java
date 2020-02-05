@@ -2,6 +2,7 @@ package de.tubs.isf.guido.verification.systems.cpachecker;
 
 import java.io.Serializable;
 
+import de.tubs.isf.guido.core.verifier.ACodeContainer;
 import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 
@@ -10,7 +11,7 @@ public class CPACJob implements IJob, Serializable {
 	public CPACJob(String configFilePath, String binary, String source, int expNumb, String[] parameter,
 			SettingsObject so, int num) {
 		this.setSo(so);
-		so.setCc(new CPACheckerCodeContainer(configFilePath, binary, source, expNumb, parameter, num));
+		setCodeContainer(new CPACheckerCodeContainer(configFilePath, binary, source, expNumb, parameter, num));
 	}
 	public CPACJob(String configFilePath, String binary, String source, int i,String[] parameter,
 			SettingsObject so) {
@@ -22,6 +23,7 @@ public class CPACJob implements IJob, Serializable {
 	}
 	static final long serialVersionUID = 778517411407136861L;
 	CPASettingsObject so;
+	CPACheckerCodeContainer codeContainer;
 
 	public void reinitialize() {
 		so.reinitialize();
@@ -63,5 +65,17 @@ public class CPACJob implements IJob, Serializable {
 		IJob newJob = (IJob) super.clone();
 		newJob.setSo(getSo().clone());
 		return newJob;
+	}
+	
+	@Override
+	public void setCodeContainer(ACodeContainer cc) {
+		this.codeContainer = (CPACheckerCodeContainer) cc;
+		
+	}
+
+	@Override
+	public ACodeContainer getCodeContainer() {
+		// TODO Auto-generated method stub
+		return codeContainer;
 	}
 }

@@ -173,15 +173,4 @@ public class CPASettingsObject extends SettingsObject implements Serializable{
 		// TODO Auto-generated method stub
 		this.maxEffort = maxEffort;
 	}
-
-	@Override
-	public ACodeContainer getCc() {
-		// TODO Auto-generated method stub
-		return cc;
-	}
-
-	@Override
-	public void setCc(ACodeContainer cc) {
-		this.cc = (CPACheckerCodeContainer) cc;
-	}
 }

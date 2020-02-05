@@ -15,7 +15,7 @@ import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.verifier.SampleHelper;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
 import de.tubs.isf.guido.verification.systems.cpachecker.generators.FeatureIdeTranslator;
-import de.tubs.isf.guido.verification.systems.key.GuiBasedKeyControl;
+import de.tubs.isf.guido.verification.systems.key.ExampleBasedKeyControl;
 import de.tubs.isf.guido.verification.systems.key.KeySettingsObject;
 
 public class CPACheckerSampleHelper extends SampleHelper {
@@ -114,7 +114,8 @@ public class CPACheckerSampleHelper extends SampleHelper {
 			throw new IllegalArgumentException("Pass four parameters: classpath, class, method and samples");
 		}
 		List<List<String>> results = new ArrayList<>();
-		GuiBasedKeyControl kc = new GuiBasedKeyControl();
+		//GuiBasedKeyControl kc = new GuiBasedKeyControl();
+		ExampleBasedKeyControl kc = new ExampleBasedKeyControl();
 		File source = new File(args[0]);
 		String clazz = args[1];
 		String method = args[2];
