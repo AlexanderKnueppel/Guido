@@ -36,7 +36,5 @@
 	<classpathentry kind="lib" path="libs/CPAChecker/gmp.jar"/>
 	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/pjbdd.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.core"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/native"/>
-	<classpathentry kind="lib" path="libs/CPAChecker/java/lib"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

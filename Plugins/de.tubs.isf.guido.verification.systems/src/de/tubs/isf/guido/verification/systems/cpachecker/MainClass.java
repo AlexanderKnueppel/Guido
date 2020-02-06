@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -71,10 +72,27 @@ public class MainClass {
 
 	@SuppressWarnings("resource") // We don't close LogManager
 	public static void main(String[] args) {
-		main("config/default.properties","/media/marlen/54AFF99F466B2AED/eclipse-workspace/pa-marlen-herter-bernier/jobfiles/byte_add_1-2.i" ,"","");
+		Map<String,String> settings = new HashMap<String, String>();
+		settings.put("analysis.restartAfterUnknown", "true");
+		settings.put("cfa.useCFACloningForMultiThreadedPrograms", "false");
+		settings.put("cpa.smg.memoryErrors", "false");
+		settings.put("cpa.smg.enableMallocFail", "false");
+		settings.put("cpa.smg.unknownOnUndefined", "false");
+		settings.put("cpa.smg.runtimeCheck", "full");
+		settings.put("analysis.traversal.order", "rand");
+		settings.put("analysis.traversal.usePostorder", "true");
+		settings.put("analysis.traversal.summaryEdges", "false");
+		settings.put("cpa.callstack.skipRecursion", "true");
+		settings.put("cfa.simplifyCfa", "false");
+		settings.put("cfa.implifyConstExpressions", "false");
+		settings.put("cfa.findLiveVariables", "false");
+		settings.put("cpa.predicate.handleStringLiteralInitializers", "false");
+		settings.put("analysis.useParallelAnalyses", "false");
+		settings.put("cpa.invariants.abstractionStateFactory", "always");
+		getCPAcheckerResult("config/default.properties","/media/marlen/54AFF99F466B2AED/eclipse-workspace/pa-marlen-herter-bernier/jobfiles/byte_add_1-2.i" ,"",settings );
 	}
 
-	public static CPAcheckerResult main(String configFile,String programFile,String parameters,String option) {
+	public static CPAcheckerResult getCPAcheckerResult(String configFile,String programFile,String parameters,Map<String,String> settings) {
 		Locale.setDefault(Locale.US);
 
 		/**String configFile = "-predicateAnalysis";
@@ -82,12 +100,19 @@ public class MainClass {
 		String stats = "-stats";
 		String options = "";
 		**/
-		String[] cmd = { "-config",configFile, programFile,"-nolog", parameters,"-setprop",option};
+		String[] cmd = new String[5+settings.size()*2];
+		cmd[0] = "-config";
+		cmd[1] = configFile;
+		cmd[2] = programFile;
+		cmd[3] = "-nolog";
+		cmd[4] = parameters;
+		int i = 5;
+		for(Map.Entry<String,String> entry: settings.entrySet()) {
+			cmd[i] = "-setprop";
+			cmd[i+1] = entry.getKey() + "=" + entry.getValue();
+			i = i+2;
+		}
 
-		if(parameters.isEmpty()) {
-			cmd[5] = "";
-			cmd[6] = "";
-		}	
 		Configuration cpaConfig = null;
 		LoggingOptions logOptions = null;
 		LogManager logManager;

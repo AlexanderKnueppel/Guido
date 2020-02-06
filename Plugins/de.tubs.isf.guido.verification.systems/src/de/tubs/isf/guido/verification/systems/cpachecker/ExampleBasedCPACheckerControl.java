@@ -47,19 +47,13 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 
 	private CPACheckerDataBasisElement getResult(String configFile,File binary, File source, String[] parameters, CPASettingsObject so) {
 		Map<String,String> settings = so.getSettingsMap();
-		String option = "";
-		for(Map.Entry<String,String> entry: settings.entrySet()) {
-			option = option + " " + entry.getKey() + "=" + entry.getValue();
-		}
-		String parameter = "";
-		
+		String parameter = "";		
 		for(String param: parameters) {
 			parameter = parameter +" "+ param;
 		}
-		CPAcheckerResult result = MainClass.main(configFile, binary.getAbsolutePath(), parameter, option);
+		CPAcheckerResult result = MainClass.getCPAcheckerResult(configFile, binary.getAbsolutePath(), parameter, settings);
 		List<LanguageConstruct> clc = csca.analyze();
-		return createResult(result,	
-				clc.stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()),
+		return createResult(result, clc.stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()),
 				settings);
 	}
 
