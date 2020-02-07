@@ -1,6 +1,7 @@
 package de.tubs.isf.guido.core.statistics.tests;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import de.tubs.isf.guido.core.experiments.AExperiment;
@@ -13,15 +14,19 @@ import javanpst.tests.countData.contingencyCoefficient.ContingencyCoefficient;
 import javanpst.tests.oneSample.signTest.SignTest;
 import javanpst.tests.oneSample.wilcoxonTest.WilcoxonTest;
 
-public class SingleWilcoxonTest implements ISignificanceTest {
+public class SingleWilcoxon implements ISignificanceTest {
 
 	@Override
-	public double computeP(final AExperiment experiment) {
+	public Optional<Double> computeP(final AExperiment experiment) {
 
 		if (!(experiment instanceof SingleExperiment))
 			throw new IllegalArgumentException("Single wilcoxon test needs a single experiment...");
 
 		SingleExperiment exp = (SingleExperiment) experiment;
+		
+		if(exp.getNumberOfRows() == 0) {
+			return Optional.empty();
+		}
 
 		double samples[][] = new double[exp.getNumberOfRows()][1];
 
@@ -38,7 +43,7 @@ public class SingleWilcoxonTest implements ISignificanceTest {
 		WilcoxonTest test = new WilcoxonTest(data);
 		test.doTest();
 		
-		return test.getDoublePValue();
+		return Optional.of(test.getDoublePValue());
 	}
 	
 	public static void main(String args []){

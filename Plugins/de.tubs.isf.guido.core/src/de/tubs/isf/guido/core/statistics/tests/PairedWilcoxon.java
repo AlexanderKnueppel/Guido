@@ -1,6 +1,7 @@
 package de.tubs.isf.guido.core.statistics.tests;
 
 import java.util.List;
+import java.util.Optional;
 
 import de.tubs.isf.guido.core.experiments.AExperiment;
 import de.tubs.isf.guido.core.experiments.AExperiment.DataPoint;
@@ -9,15 +10,21 @@ import javanpst.data.structures.dataTable.DataTable;
 import javanpst.tests.oneSample.signTest.SignTest;
 import javanpst.tests.oneSample.wilcoxonTest.WilcoxonTest;
 
-public class PairedWilcoxonTest implements ISignificanceTest {
+public class PairedWilcoxon implements ISignificanceTest {
 
 	@Override
-	public double computeP(final AExperiment experiment) {
+	public Optional<Double> computeP(final AExperiment experiment) {
 
 		if (!(experiment instanceof PairExperiment))
 			throw new IllegalArgumentException("Paired wilcoxon test needs a paired experiment...");
 
 		PairExperiment pexp = (PairExperiment) experiment;
+		
+		if(pexp.getNumberOfRows() == 0) {
+			return Optional.empty();
+		}
+		
+		
 
 		double samples[][] = new double[pexp.getNumberOfRows()][2];
 
@@ -29,16 +36,31 @@ public class PairedWilcoxonTest implements ISignificanceTest {
 			double effortB = (double) row.stream()
 					.filter(dp -> dp.getLabel().equals(PairExperiment.BaseLabel.EXPERIMENT_EFFORT_B)).findFirst().get()
 					.getValue();
+			
+			boolean closedA = (boolean) row.stream()
+					.filter(dp -> dp.getLabel().equals(PairExperiment.BaseLabel.EXPERIMENT_CLOSED_A)).findFirst().get()
+					.getValue();
+			boolean closedB = (boolean) row.stream()
+					.filter(dp -> dp.getLabel().equals(PairExperiment.BaseLabel.EXPERIMENT_CLOSED_B)).findFirst().get()
+					.getValue();
 
-			samples[i][0] = effortA;
-			samples[i][1] = effortB;
+			if(closedA && closedB) {
+				samples[i][0] = effortA;
+				samples[i][1] = effortB;
+			} else {
+				samples[i][0] = 0;
+				samples[i][1] = 0;
+			}
+			
 		}
 
 		DataTable data = new DataTable(samples);
 		WilcoxonTest test = new WilcoxonTest(data);
 		test.doTest();
+		
+		System.out.println("Done");
 
-		return test.getDoublePValue();
+		return Optional.of(test.getDoublePValue());
 	}
 
 	public static void main(String args[]) {

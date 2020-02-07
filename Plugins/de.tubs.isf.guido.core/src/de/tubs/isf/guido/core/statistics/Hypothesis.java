@@ -1,6 +1,7 @@
 package de.tubs.isf.guido.core.statistics;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hypothesis implements Serializable {

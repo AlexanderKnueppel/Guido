@@ -23,6 +23,10 @@ import de.tubs.isf.guido.core.statistics.correction.SidakCorrection;
 public class Hypotheses {
 	private List<Hypothesis> hypotheses;
 	private boolean evaluated;
+	
+	public Hypotheses() {
+		this.evaluated = false;
+	}
 
 	public Hypotheses(File f) {
 		this.evaluated = false;
@@ -36,6 +40,14 @@ public class Hypotheses {
 
 	public boolean evaluated() {
 		return evaluated;
+	}
+	
+	public void addHypothesis(Hypothesis hyp) {
+		hypotheses.add(hyp);
+		
+		if(hyp instanceof EvaluatedHypothesis) {
+			evaluated = true;
+		}
 	}
 
 	// reads hypotheses.txt and write it to class variables
