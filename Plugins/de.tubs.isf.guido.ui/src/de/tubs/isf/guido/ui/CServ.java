@@ -257,8 +257,10 @@ public class CServ {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				DirectoryDialog dialog = new DirectoryDialog(shell);
-			   
-			  text_1.setText(dialog.open());
+				 String open = dialog.open();
+					if(open != null) {
+						 text_1.setText(open);
+				   }
 			}
 		});
 		btnNewButton.setText("Change!");
@@ -297,8 +299,11 @@ public class CServ {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				DirectoryDialog dialog = new DirectoryDialog(shell);
-			   
-			  text_2.setText(dialog.open());
+			   String open = dialog.open();
+				if(open != null) {
+					 text_2.setText(open);
+			   }
+			 
 			}
 		});
 		button.setText("Change!");
@@ -328,8 +333,10 @@ public class CServ {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				DirectoryDialog dialog = new DirectoryDialog(shell);
-			   
-			  text_3.setText(dialog.open());
+				 String open = dialog.open();
+					if(open != null) {
+						 text_3.setText(open);
+				   }
 			}
 		});
 		button_1.setText("Change!");
