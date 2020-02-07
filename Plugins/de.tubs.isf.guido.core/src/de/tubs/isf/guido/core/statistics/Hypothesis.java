@@ -6,6 +6,10 @@ import java.util.List;
 
 public class Hypothesis implements Serializable {
 	private static final long serialVersionUID = 4015855254309825043L;
+	
+	public enum Dependency {
+		LESS,GREATER,UNEQUAL,UNKNOWN;
+	}
 
 	protected final String identifier;
 	protected final String parameter;
@@ -57,6 +61,17 @@ public class Hypothesis implements Serializable {
 
 	public String getDependency() {
 		return dependency;
+	}
+	
+	public Dependency dependency() {
+		if(dependency.equals("<="))
+			return Dependency.LESS;
+		else if(dependency.equals(">="))
+			return Dependency.GREATER;
+		else if(dependency.equals("<>"))
+			return Dependency.UNEQUAL;
+		else
+			return Dependency.UNKNOWN;
 	}
 
 	public boolean hasProperty() {
