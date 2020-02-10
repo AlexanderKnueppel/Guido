@@ -46,7 +46,7 @@ public class CPACheckerSampleHelper extends SampleHelper {
 					line = line.trim();
 					line = line.replace("_2_", ".");
 					line = line.replace("_1__1_", "_");
-					String[] options = line.split("_");
+					String[] options = line.split("_", 2);
 					
 //					for (String option : options) {
 //						option = option.trim();
@@ -55,6 +55,7 @@ public class CPACheckerSampleHelper extends SampleHelper {
 //							continue;
 //						so.setParameter(vals[0], vals[1]);
 //					}
+					
 					so.setParameter(options[0], options[1]);
 					so.setMaxEffort(100000);
 					
