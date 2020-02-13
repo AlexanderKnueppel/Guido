@@ -19,7 +19,7 @@ public class SampleWriter {
 		String folderPath = "";
 		try {
 			// System.out.println("Creating Directory");
-			folderPath = basePath + "/products_" + name.replaceAll(".xml", "");
+			folderPath = basePath + "/" + name.replaceAll(".xml", "");
 			FileSystem.mkDir(Paths.get(folderPath));
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -240,6 +240,10 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 		}
 		return null;
 	}
+	
+	public String getCommentString() {
+		return getComment().toString();
+	}
 
 	public int getNumberOfArguments() {
 		return nArguments;

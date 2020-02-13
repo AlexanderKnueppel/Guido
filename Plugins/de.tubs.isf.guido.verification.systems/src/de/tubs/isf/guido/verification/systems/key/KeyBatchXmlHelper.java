@@ -115,6 +115,7 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 		} else {
 			numberOfContracts = noc;
 		}
+		
 		List<SettingsObject> al = getSampleForFile(sampleFile, sampleType);
 		for (int i = 0; i < al.size(); i++) {
 			KeySettingsObject ks = (KeySettingsObject) al.get(i);
@@ -150,6 +151,11 @@ public class KeyBatchXmlHelper extends BatchXMLHelper {
 	}
 
 	public List<SettingsObject> getSampleForFile(String sampleFile, String type) throws IOException {
+		
+		if(sampleFile.equals("")) {
+			return new ArrayList<SettingsObject>(Arrays.asList(new KeySettingsObject()));
+		}
+		
 		List<SettingsObject> result = parsedSamples.get(sampleFile);
 		if (result == null) {
 			if (type == SPL_SAMPLE_FILE) {
