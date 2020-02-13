@@ -52,6 +52,12 @@ public class CPACJob implements IJob, Serializable {
 				return false;
 		} else if (!so.equals(other.getSo()))
 			return false;
+		
+		if (codeContainer == null) {
+			if (other.getCodeContainer() != null)
+				return false;
+		} else if (!codeContainer.equals(other.getCodeContainer()))
+			return false;
 
 		return true;
 	}

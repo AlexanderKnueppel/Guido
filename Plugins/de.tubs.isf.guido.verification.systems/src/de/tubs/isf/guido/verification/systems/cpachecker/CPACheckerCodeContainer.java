@@ -110,6 +110,12 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 				return false;
 		} else if (!source.equals(other.source))
 			return false;
+		
+		if (binary == null) {
+			if (other.binary != null)
+				return false;
+		} else if (!binary.equals(other.binary))
+			return false;
 
 		return true;
 	}
