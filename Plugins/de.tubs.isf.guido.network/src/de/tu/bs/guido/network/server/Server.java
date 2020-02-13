@@ -112,7 +112,7 @@ public class Server implements Observer {
 			}			
 			jobs = AVerificationSystemFactory.getFactory().createBatchXMLHelper().generateJobFromXML(f);
 
-			filterListForDuplicates(jobs);
+			//filterListForDuplicates(jobs);
 //			filterListForMe(jobs);
 			System.out.println("So many jobs read... " + jobs.size());
 			
