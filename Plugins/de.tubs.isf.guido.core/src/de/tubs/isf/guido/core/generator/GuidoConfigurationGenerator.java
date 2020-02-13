@@ -32,7 +32,7 @@ public class GuidoConfigurationGenerator implements IConfigurationGenerator {
 	}
 
 	public enum Mechanism {
-		PENALTY(new Pair("k", 0.1)), ADJUST(new Pair("i", 0.1)), NEXT;
+		PENALTY(new Pair("k", 0.1)), ADJUST(new Pair("i", 0.1)), NEXT, NONE;
 
 		private Map<String, Double> attributes = new HashMap<String, Double>();
 
@@ -185,6 +185,8 @@ public class GuidoConfigurationGenerator implements IConfigurationGenerator {
 
 	@Override
 	public boolean hasNext() {
+		if(mechanism == Mechanism.NONE)
+			return false;
 		return hasNext;
 	}
 }

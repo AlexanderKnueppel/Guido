@@ -130,8 +130,8 @@ public class CostNetwork {
 								&& param.getParameter().equals(edge.parameter))
 						.mapToDouble(edge -> edge.getWeight()).reduce(0.0, Double::sum);
 
-				System.out.println(theta_p);
-				System.out.println(theta_ve);
+				//System.out.println(theta_p);
+				//System.out.println(theta_ve);
 
 				scoredParameter.setOption(new ScoredOption(entry.getKey(), theta_p, theta_ve));
 			}

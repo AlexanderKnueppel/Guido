@@ -25,6 +25,7 @@ public class Hypotheses {
 	private boolean evaluated;
 	
 	public Hypotheses() {
+		this.hypotheses = new ArrayList<>();
 		this.evaluated = false;
 	}
 
