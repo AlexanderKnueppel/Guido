@@ -123,7 +123,7 @@ public class RQ1 {
 			
 			double ratio = fastest / (double)(jobs.size());
 
-			content += (nr++) + "\t closed\t " + elem.getKey() + "\t " + (int) (ratio * 100) + "\t\n";
+			content += (nr++) + "\t step\t " + elem.getKey() + "\t " + (int) (ratio * 100) + "\t\n";
 		}
 	}
 }
