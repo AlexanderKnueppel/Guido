@@ -138,7 +138,7 @@ public abstract class AbstractCPACheckerControl implements IProofControl{
 		return UNMOD_BACKWARDS_PROPERTIES;
 	}
 
-	protected CPACheckerDataBasisElement createResult( CPAcheckerResult result, List<String> languageConstructs, Map<String,String> optionMap) {
+	protected CPACheckerDataBasisElement createResult(String name,  CPAcheckerResult result, List<String> languageConstructs, Map<String,String> optionMap) {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Long timeInMillis = 0L;
 		Long totalTime = 0L;
@@ -179,7 +179,7 @@ public abstract class AbstractCPACheckerControl implements IProofControl{
 			System.out.println("CPAChecker finished with true");
 			bool = true;
 		}
-		return new CPACheckerDataBasisElement("CPAChecker",bool, 
+		return new CPACheckerDataBasisElement(name,bool, 
 				timeInMillis, CPUTime, totalTime,totalVirtMem,languageConstructs,optionMap);
 	}
 	private Long getTimeFromString (String s, String statistic) {

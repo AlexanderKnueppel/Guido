@@ -53,7 +53,7 @@ public class ExampleBasedCPACheckerControl extends AbstractCPACheckerControl imp
 		}
 		CPAcheckerResult result = MainClass.getCPAcheckerResult(configFile, binary.getAbsolutePath(), parameter, settings);
 		List<LanguageConstruct> clc = csca.analyze();
-		return createResult(result, clc.stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()),
+		return createResult(binary.getName(), result, clc.stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()),
 				settings);
 	}
 
