@@ -15,16 +15,15 @@ public class CPACheckerCodeContainer extends ACodeContainer {
 	private int contractNumber = -1;
 	private String binary;
 	private Map<String, Integer> experiments = new HashMap<>();
-	/**
-	 * 
-	 * @param binary - binary of the C-file
-	 * @param expNumb
-	 * @param source - C-File
-	 * @param configFilePath - Path of the configuration file
-	 * @param clazz
-	 * @param parameter - parameter that are changed
-	 * @param contractNumber
-	 */
+/**
+ * 
+ * @param configFilePath
+ * @param binary
+ * @param source
+ * @param expNumb
+ * @param parameter
+ * @param contractNumber
+ */
 	public CPACheckerCodeContainer(String configFilePath, String binary, String source, int expNumb, String[] parameter, int contractNumber) {
 		super();
 		this.source = source;

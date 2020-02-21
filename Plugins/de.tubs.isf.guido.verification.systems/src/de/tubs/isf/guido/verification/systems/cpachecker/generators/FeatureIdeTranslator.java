@@ -56,7 +56,7 @@ public class FeatureIdeTranslator {
 				for (int i = 0; i < featureList.getLength(); i++) {
 					Element featureElement= (Element) featureList.item(i);
 					String name = featureElement.getAttribute("name");
-					name = name.substring(name.indexOf("_")+1);
+					name = name.substring(name.lastIndexOf("_1_")+3);
 					values.add(name);
 				}
 			}
