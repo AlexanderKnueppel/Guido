@@ -12,12 +12,12 @@ Type:
     Hypothesis | Parameter | System | Databases;
   
 Hypothesis:
-    'hypothesis' name=QualifiedName ('on' type=Parameter (',' types=Parameter)*) '{'
+    'Hypothesis' name=QualifiedName ('on' 'Parameter' types+=Parameter (',' types+=Parameter)*) '{'
         description=Description  definition=Definition constructs=Constructs
     '}';
  
 Parameter:
-    'parameter' name=ID ;
+    name=QualifiedName;
     
 Databases:
 	'Databases' ':' values=File;    
@@ -29,14 +29,20 @@ Description:
     'Description' ':' name=STRING ';';
     
 Definition:
-	'Definition' ':' optionA=ID 'is' (property=Property) 'than' optionB=ID  ';';
+	'Definition' ':' 
+		'{' parameterA+=[Parameter|QualifiedName]+ ':'(optionsA+=Option+)(','parameterA+=[Parameter|QualifiedName] ':' optionsA+=Option)* '}' 
+		'is' property=Property ('than' 
+		'{' parameterB+=[Parameter|QualifiedName] ':'optionsB+=Option (',' parameterB+=[Parameter|QualifiedName] ':'optionsB+=Option)* '}')?  ';';
 
 Property:
 	'more' 'efficient' | 'less' 'efficient' | 'more' 'effective' | 'less' 'effective'
 ;
 Constructs:
-	'Constructs' ':' '[' element=QualifiedName (',' elements=QualifiedName)*']' ';';
-
+	'Constructs' ':' '[' elements+=QualifiedName (',' elements+=QualifiedName)*']' ';';
+	
+Option:
+	name=ID;
+	
 File:
 	ID '.' ID;
     
@@ -48,5 +54,4 @@ QualifiedNameWithWildcard:
     
 QualifiedName:
     ID ('.' ID)*;
-    
-    
+        
