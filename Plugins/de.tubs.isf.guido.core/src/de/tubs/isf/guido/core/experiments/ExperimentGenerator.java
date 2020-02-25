@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import de.tubs.isf.guido.core.databasis.DataBasis;
 import de.tubs.isf.guido.core.databasis.DefaultDataBasisElement;
+import de.tubs.isf.guido.core.statistics.Hypotheses;
 import de.tubs.isf.guido.core.statistics.Hypothesis;
 
 public class ExperimentGenerator {
@@ -201,6 +202,13 @@ public class ExperimentGenerator {
 				new ArrayList<String>());
 		Hypothesis hyp3 = new Hypothesis("H3", "Proof splitting", "Off", "Free", "VE", "<=",
 				new ArrayList<String>());
+		
+		Hypotheses container = new Hypotheses();
+		container.addHypothesis(hyp);
+		container.addHypothesis(hyp2);
+		container.addHypothesis(hyp3);
+		
+		//container.writeToFile(new File("path/to/file.json"));
 		
 		List<Hypothesis> hypotheses = new ArrayList<Hypothesis>();
 		hypotheses.add(hyp);

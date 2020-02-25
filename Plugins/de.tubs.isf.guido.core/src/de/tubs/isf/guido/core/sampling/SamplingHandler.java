@@ -112,7 +112,7 @@ public class SamplingHandler implements Runnable {
 				"double_req_bl_0220a.c", "float_req_bl_1271a.c", "newton_1_1.c", "calendar.c", "hash_fun.c",
 				"test-0513_1.c", "test_locks_6.c", "c.03-alloca-2.c", "list_and_tree_cnstr-1.c", "merge_sort-1.c",
 				"tree-1.c", "cast_union_tight.c", "sqrt_Householder_pseudoconstant.c", "standard_palindrome_ground.c");
-		
+
 //		for(String name : filelist) {
 //			boolean found = false;
 //			for(File file : cpacheckersubjects.listFiles()) {
@@ -126,17 +126,16 @@ public class SamplingHandler implements Runnable {
 //				System.out.println(name  + " not found...");
 //		}
 
-		for (File samples : cpacheckersamples.listFiles()) {
+		for (String file : filelist) {
+			for (File samples : cpacheckersamples.listFiles()) {
 
-			for (String file : filelist) {
 				if (!file.endsWith(".c"))
 					continue;
 
 				content += System.lineSeparator();
 				content += "		<Problem Source=\"cpacheckerprojects/testFiles/" + file + "\" \r\n"
-						+ "				Binary=\"cpacheckerprojects/testFiles/"
-						+ file.substring(0, file.length() - 1) + "i\" \r\n"
-						+ "	 			Parameters=\"\"\r\n"
+						+ "				Binary=\"cpacheckerprojects/testFiles/" + file.substring(0, file.length() - 1)
+						+ "i\" \r\n" + "	 			Parameters=\"\"\r\n"
 						+ "	 			SPLSampleFile=\"cpacheckerprojects/cpachecker-samples/" + samples.getName()
 						+ "\" \r\n" + "	 	/>";
 			}
