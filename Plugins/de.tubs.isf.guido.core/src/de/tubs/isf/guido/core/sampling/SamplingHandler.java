@@ -103,24 +103,46 @@ public class SamplingHandler implements Runnable {
 		String content = "<job >\r\n" + "	<Codeunit Configuration=\"config/default.properties\">	";
 
 		File cpacheckersamples = new File("testData/cpachecker/cpachecker-samples");
-		File cpacheckersubjects = new File("testData/cpachecker/testFiles");
+		File cpacheckersubjects = new File("testData/cpachecker/testFiles2");
 
-		for(File samples :  cpacheckersamples.listFiles()) {
-			
-			for(File file : cpacheckersubjects.listFiles()) {
-				if(!file.getName().endsWith(".c"))
+		List<String> filelist = Arrays.asList("byte_add_1-2.c", "chunk1.c", "cstrcpy_malloc.c", "mapavg2.c",
+				"dancing.c", "rlim_invariant.c.p+cfa-reducer.c", "dll-01-2.c", "dll-simple-white-blue-1.c",
+				"filter1.c.v+nlh-reducer.c", "interpolation.c.p+cfa-reducer.c", "mergeSort.c",
+				"system-with-recursion.c", "s3_clnt.blast.01.i.cil-1.c", "bAnd1.c", "bor1.c", "array-realloc-1.c",
+				"double_req_bl_0220a.c", "float_req_bl_1271a.c", "newton_1_1.c", "calendar.c", "hash_fun.c",
+				"test-0513_1.c", "test_locks_6.c", "c.03-alloca-2.c", "list_and_tree_cnstr-1.c", "merge_sort-1.c",
+				"tree-1.c", "cast_union_tight.c", "sqrt_Householder_pseudoconstant.c", "standard_palindrome_ground.c");
+
+//		for(String name : filelist) {
+//			boolean found = false;
+//			for(File file : cpacheckersubjects.listFiles()) {
+//				if(file.getName().equals(name)) {
+//					found = true;
+//					break;
+//				}
+//			}
+//			
+//			if(!found)
+//				System.out.println(name  + " not found...");
+//		}
+
+		for (String file : filelist) {
+			for (File samples : cpacheckersamples.listFiles()) {
+
+				if (!file.endsWith(".c"))
 					continue;
-				
-				content += "		<Problem Source=\"cpacheckerprojects/testFiles/"+ file.getName() + "\" \r\n" + 
-						"				Binary=\"cpacheckerprojects/testFiles/"+file.getName().substring(0, file.getName().length()-1)+"i\" \r\n" + 
-						"	 			Parameters=\"\"\r\n" + 
-						"	 			SPLSampleFile=\"cpacheckerprojects/cpachecker-samples/"+samples.getName()+"\" \r\n" + 
-						"	 	/>";
+
+				content += System.lineSeparator();
+				content += "		<Problem Source=\"cpacheckerprojects/testFiles/" + file + "\" \r\n"
+						+ "				Binary=\"cpacheckerprojects/testFiles/" + file.substring(0, file.length() - 1)
+						+ "i\" \r\n" + "	 			Parameters=\"\"\r\n"
+						+ "	 			SPLSampleFile=\"cpacheckerprojects/cpachecker-samples/" + samples.getName()
+						+ "\" \r\n" + "	 	/>";
 			}
 		}
 
 		content += "	</Codeunit>\r\n" + "</job>";
-		
+
 		try {
 			Files.write(Paths.get("testData/cpachecker/cpa_job.xml"), content.getBytes());
 		} catch (IOException e) {
