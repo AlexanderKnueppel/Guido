@@ -23,6 +23,8 @@ public class Client {
 
 			AVerificationSystemFactory.setFactory(new KeyFactory());
 		}
+		
+		
 		String ip = "127.0.0.1";
 		if (args.length > 1) {
 			if (args[1] != null) {

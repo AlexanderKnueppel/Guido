@@ -30,5 +30,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/de.ovgu.featureide.lib.fm-v3.6.1.jar"/>
 	<classpathentry kind="lib" path="libs/KeY/KeY.jar"/>
+	<classpathentry kind="lib" path="libs/JRI/JRI.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
