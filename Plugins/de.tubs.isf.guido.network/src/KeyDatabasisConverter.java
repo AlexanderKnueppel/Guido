@@ -59,27 +59,16 @@ public class KeyDatabasisConverter {
 			String methodRes = null;
 			if (matcher.find()) {
 
-//			    System.out.println(matcher.group(2));
 				holder = matcher.group(2).split("::");
-
 				Pattern pattern2 = Pattern.compile("(.+)\\((.*)\\)");
 				Matcher matcher2 = pattern2.matcher(holder[1]);
 				if (matcher2.find()) {
 					methodRes = matcher2.group(1);
-					/*
-					 * para keine Ahnug wie der Gesplittet wird in der Job datei
-					 * 
-					 * 
-					 * 
-					 */
 					para = matcher2.group(2).split(",");
-
 				}
-
 			}
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
-
 			Document doc = db.parse(f);
 			Element root = doc.getDocumentElement();
 			root.getAttribute(SPL_SAMPLE_FILE);
@@ -110,10 +99,8 @@ public class KeyDatabasisConverter {
 					for (int k = 0; k < methods.getLength(); k++) {
 						Element method = (Element) methods.item(k);
 						String methodName = method.getAttribute(NAME_CONST);
-
 						if (method.hasAttribute(CODE_CONST))
 							classpathCode = method.getAttribute(CODE_CONST);
-
 						boolean definesParameters = method.hasAttribute(PARAMETERS_CONST);
 						String[] parameters = definesParameters ? getParameters(method.getAttribute(PARAMETERS_CONST))
 								: null;
