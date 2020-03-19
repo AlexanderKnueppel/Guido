@@ -154,10 +154,10 @@ public class CPASettingsObject extends SettingsObject implements Serializable{
 	@Override
 	public OptionableContainer[] getAllPossibleSettings() {
 		int aLen = CPACheckerKonfigurationOptions.values().length;
-		int bLen = CPACheckerSpecificationOptions.values().length;
+		int bLen = 0;//CPACheckerSpecificationOptions.values().length;
 		OptionableContainer[] result = new OptionableContainer[aLen + bLen];
 		System.arraycopy(CPACheckerKonfigurationOptions.values(), 0, result, 0, aLen);
-		System.arraycopy(CPACheckerSpecificationOptions.values(), 0, result, aLen, bLen);
+		//System.arraycopy(CPACheckerSpecificationOptions.values(), 0, result, aLen, bLen);
 		return result;
 
 	}

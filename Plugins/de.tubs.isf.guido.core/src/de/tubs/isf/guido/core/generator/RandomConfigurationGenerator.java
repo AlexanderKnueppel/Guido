@@ -1,5 +1,6 @@
 package de.tubs.isf.guido.core.generator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +18,7 @@ import scpsolver.problems.LPWizardConstraint;
 
 public class RandomConfigurationGenerator implements IConfigurationGenerator {
 
-	private List<SettingsObject> oldSettings = null; // history
+	private List<SettingsObject> oldSettings = new ArrayList<SettingsObject>(); // history
 
 	public int getIteration() {
 		return oldSettings.size();

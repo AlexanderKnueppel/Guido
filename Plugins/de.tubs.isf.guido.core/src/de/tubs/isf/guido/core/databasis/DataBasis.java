@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -21,10 +23,15 @@ public class DataBasis<T extends DefaultDataBasisElement> {
 
 	@SuppressWarnings("unchecked")
 	public DataBasis() {
+		this.clazz = (Class<T>) DefaultDataBasisElement.class;
 		this.entries = new ArrayList<>();
-		//this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        this.clazz = (Class<T>) DefaultDataBasisElement.class;
 	}
+	
+	public DataBasis(Class<T> clazz) {
+		this.clazz = clazz;
+		this.entries = new ArrayList<>();
+	}
+
 
 	public Class<T> clazz() {
 		return clazz;
@@ -49,7 +56,7 @@ public class DataBasis<T extends DefaultDataBasisElement> {
 	public void addEntry(T entry) {
 		this.entries.add(entry);
 	}
-	
+
 	public boolean removeEntry(T entry) {
 		return this.entries.remove(entry);
 	}
@@ -67,21 +74,25 @@ public class DataBasis<T extends DefaultDataBasisElement> {
 		return db;
 	}
 
-	public static<T extends DefaultDataBasisElement> void filter(DataBasis<T> db, Function<T, Boolean> keep) {
+	public static <T extends DefaultDataBasisElement> void filter(DataBasis<T> db, Function<T, Boolean> keep) {
 		List<T> toRemove = new ArrayList<T>();
-		
-		for(T elem : db.getEntries()) {
-			if(!keep.apply(elem))
+
+		for (T elem : db.getEntries()) {
+			if (!keep.apply(elem))
 				toRemove.add(elem);
 		}
 
-		for(T elem : toRemove) {
+		for (T elem : toRemove) {
 			db.removeEntry(elem);
 		}
 	}
-
+	@SuppressWarnings("unchecked")
 	public static <T extends DefaultDataBasisElement> DataBasis<T> readFromFile(File f) {
-		DataBasis<T> result = new DataBasis<T>();
+		return (DataBasis<T>) readFromFile(f, DefaultDataBasisElement.class);
+	}
+	
+	public static <T extends DefaultDataBasisElement> DataBasis<T> readFromFile(File f, Class<T> clazz) {
+		DataBasis<T> result = new DataBasis<T>(clazz);
 
 		f.getParentFile().mkdirs();
 		try {
@@ -94,7 +105,7 @@ public class DataBasis<T extends DefaultDataBasisElement> {
 			String line;
 			Gson gson = new GsonBuilder().create();
 			while ((line = br.readLine()) != null) {
-				result.addEntry(gson.fromJson(line, result.clazz));
+				result.addEntry((T) gson.fromJson(line, result.clazz()));
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -125,13 +136,13 @@ public class DataBasis<T extends DefaultDataBasisElement> {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public DataBasis<T> clone() {
-		DataBasis<T> db = new DataBasis<T>();
-		for(T entry : getEntries()) {
-			db.addEntry((T)entry.clone());
+		DataBasis<T> db = new DataBasis<T>(clazz);
+		for (T entry : getEntries()) {
+			db.addEntry((T) entry.clone());
 		}
 		return db;
 	}

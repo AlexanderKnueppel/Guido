@@ -24,6 +24,7 @@ import de.tubs.isf.guido.core.verifier.BatchXMLHelper;
 import de.tubs.isf.guido.core.verifier.GetJobs;
 import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.core.verifier.SettingsObject;
+import de.tubs.isf.guido.verification.systems.key.KeySettingsObject;
 
 public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 	private static final String CONFIG_FILE = "Configuration";
@@ -111,6 +112,11 @@ public class CPACheckerBatchXmlHelper extends BatchXMLHelper {
 	}
 
 	public List<SettingsObject> getSampleForFile(String sampleFile, String type) throws IOException {
+		
+		if(sampleFile.equals("")) {
+			return new ArrayList<SettingsObject>(Arrays.asList(new CPASettingsObject()));
+		}
+		
 		List<SettingsObject> result = parsedSamples.get(sampleFile);
 		if (result == null) {
 			if (type == SPL_SAMPLE_FILE) {

@@ -100,7 +100,7 @@ public class MainClass {
 		String stats = "-stats";
 		String options = "";
 		**/
-		String[] cmd = new String[5+settings.size()*2];
+		String[] cmd = new String[5+settings.size()*2 + 2];
 		cmd[0] = "-config";
 		cmd[1] = configFile;
 		cmd[2] = programFile;
@@ -112,6 +112,9 @@ public class MainClass {
 			cmd[i+1] = entry.getKey() + "=" + entry.getValue();
 			i = i+2;
 		}
+//		
+		cmd[i] = "-setprop";
+		cmd[i+1] = "solver.solver=z3";
 
 		Configuration cpaConfig = null;
 		LoggingOptions logOptions = null;

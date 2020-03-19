@@ -63,7 +63,7 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 //		ca.analyze();
 //		System.out.println(ca);
 //
-//		System.out.println(AnalysisCombinator.and(jsca, ca));
+		System.out.println(AnalysisCombinator.and(jsca, ca));
 	}
 
 	public JavaSourceCodeAnalyzer(File baseDir, String clazz, String method, String[] arguments) {
@@ -242,7 +242,7 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 	}
 	
 	public String getCommentString() {
-		return getComment().toString();
+		return (getComment() != null) ? getComment().toString() : "";
 	}
 
 	public int getNumberOfArguments() {
