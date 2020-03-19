@@ -47,7 +47,13 @@ public class CPACheckerSampleHelper extends SampleHelper {
 					line = line.replace("_2_", ".");
 					line = line.replace("_1__1_", "_");
 					String[] options = line.split("_", 2);
+					if(options[0].equals("analysis.restartAfterUnknown")){
+						options[1]= "true";
+					}
 					
+					if(options[0].equals("analysis.traversal.usePostorder")) {
+						options[1]="false";
+					}
 //					for (String option : options) {
 //						option = option.trim();
 //						String[] vals = option.split("::");

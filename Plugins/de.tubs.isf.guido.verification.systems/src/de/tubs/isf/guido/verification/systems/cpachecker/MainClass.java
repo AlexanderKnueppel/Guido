@@ -73,23 +73,31 @@ public class MainClass {
 	@SuppressWarnings("resource") // We don't close LogManager
 	public static void main(String[] args) {
 		Map<String,String> settings = new HashMap<String, String>();
-		settings.put("analysis.restartAfterUnknown", "true");
-		settings.put("cfa.useCFACloningForMultiThreadedPrograms", "false");
-		settings.put("cpa.smg.memoryErrors", "false");
-		settings.put("cpa.smg.enableMallocFail", "false");
-		settings.put("cpa.smg.unknownOnUndefined", "false");
-		settings.put("cpa.smg.runtimeCheck", "full");
-		settings.put("analysis.traversal.order", "rand");
-		settings.put("analysis.traversal.usePostorder", "true");
-		settings.put("analysis.traversal.summaryEdges", "false");
-		settings.put("cpa.callstack.skipRecursion", "true");
-		settings.put("cfa.simplifyCfa", "false");
-		settings.put("cfa.implifyConstExpressions", "false");
-		settings.put("cfa.findLiveVariables", "false");
-		settings.put("cpa.predicate.handleStringLiteralInitializers", "false");
-		settings.put("analysis.useParallelAnalyses", "false");
-		settings.put("cpa.invariants.abstractionStateFactory", "always");
-		getCPAcheckerResult("config/default.properties","/media/marlen/54AFF99F466B2AED/eclipse-workspace/pa-marlen-herter-bernier/jobfiles/byte_add_1-2.i" ,"",settings );
+		settings.put("analysis.traversal.order", "ROUND_ROBIN");
+		/*
+		// settings.put("analysis.restartAfterUnknown", "true");
+		// settings.put("analysis.traversal.usePostorder", "true");
+		 settings.put("cfa.useCFACloningForMultiThreadedPrograms", "true");		
+		 
+		 settings.put("analysis.summaryEdges", "true");		 
+		 settings.put("cfa.simplifyCfa", "false");		 
+		 settings.put("cfa.findLiveVariables", "false");		 
+		 settings.put("analysis.useParallelAnalyses", "false");	
+		  
+		 settings.put("cpa.smg.runtimeCheck", "full");
+		 settings.put("cpa.smg.memoryErrors", "true");	 	
+		 settings.put("cpa.smg.enableMallocFail", "true");
+		 settings.put("cpa.smg.unknownOnUndefined", "true");
+		 settings.put("cpa.smg.exportSMGWhen","interesting");
+		 settings.put("cpa.predicate.handleStringLiteralInitializers", "false");
+		 settings.put("cpa.callstack.skipRecursion", "false");
+		 settings.put("cfa.implifyConstExpressions", "false");
+		 settings.put("cpa.predicate.handleStringLiteralInitializers", "false");
+		 settings.put("cpa.invariants.abstractionStateFactory", "entering_edges");
+*/
+		System.out.println(getCPAcheckerResult("config/default.properties",
+				"../de.tubs.isf.guido.core/testData/testFiles/byte_add_1-2.i" ,"",settings ).getResultString());
+		
 	}
 
 	public static CPAcheckerResult getCPAcheckerResult(String configFile,String programFile,String parameters,Map<String,String> settings) {
@@ -104,7 +112,7 @@ public class MainClass {
 		cmd[0] = "-config";
 		cmd[1] = configFile;
 		cmd[2] = programFile;
-		cmd[3] = "-nolog";
+		cmd[3] = "";//"-nolog"; if you want to have no log, enter nolog 
 		cmd[4] = parameters;
 		int i = 5;
 		for(Map.Entry<String,String> entry: settings.entrySet()) {

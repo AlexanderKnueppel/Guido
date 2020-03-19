@@ -8,5 +8,23 @@ Bundle-SymbolicName: de.tubs.isf.guido.dsl; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.xbase,
- org.eclipse.equinox.common;bundle-version="3.5.0"
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.tubs.isf.guido.dsl.services,
+ de.tubs.isf.guido.dsl.validation,
+ de.tubs.isf.guido.dsl.generator,
+ de.tubs.isf.guido.dsl.dsl,
+ de.tubs.isf.guido.dsl.parser.antlr.internal,
+ de.tubs.isf.guido.dsl.parser.antlr,
+ de.tubs.isf.guido.dsl.scoping,
+ de.tubs.isf.guido.dsl.dsl.impl,
+ de.tubs.isf.guido.dsl.serializer,
+ de.tubs.isf.guido.dsl.dsl.util,
+ de.tubs.isf.guido.dsl
+Import-Package: org.apache.log4j

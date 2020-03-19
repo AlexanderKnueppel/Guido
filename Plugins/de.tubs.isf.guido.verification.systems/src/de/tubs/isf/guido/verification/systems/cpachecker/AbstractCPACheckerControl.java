@@ -148,11 +148,24 @@ public abstract class AbstractCPACheckerControl implements IProofControl{
 		try {
 			PrintStream ps = new PrintStream(baos, true, "UTF-8");
 			result.printStatistics(ps);
+			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		String data = new String(baos.toByteArray(), StandardCharsets.UTF_8);
-		data = data.substring(data.indexOf("CPAchecker general statistics"));
+		byte[] b = baos.toByteArray();
+		int splitIndex = 0;
+		for(int x = 0; x < b.length; x++) {
+			String tmp = Character.toString((char)b[x]);
+			if(tmp.contains("CPAchecker general statistics")) {
+				splitIndex=x;
+				break;
+			}
+		}
+		byte[] newB = new byte[b.length - splitIndex];
+		for(int x = splitIndex; x < b.length; x++) {
+			newB[x] = b[x];
+		}
+		String data = new String(newB, StandardCharsets.UTF_8);
 		String[] dataArray = data.split("\n");
 		for(String d : dataArray) {
 			if(d.startsWith("Time for Analysis:  ")) {
@@ -172,9 +185,7 @@ public abstract class AbstractCPACheckerControl implements IProofControl{
 				totalVirtMem = Long.valueOf(memString);
 			}
 		}
-		
-		String str = result.getResultString();
-		
+	
 		if(result.getResultString().contains("TRUE")) {
 			System.out.println("CPAChecker finished with true");
 			bool = true;
