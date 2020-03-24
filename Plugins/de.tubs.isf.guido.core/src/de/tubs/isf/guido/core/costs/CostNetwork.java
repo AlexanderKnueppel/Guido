@@ -53,17 +53,17 @@ public class CostNetwork {
 			PROVABILITY, EFFORT
 		};
 
-		private String parameter;
-		private String from;
-		private String to;
+		private List<de.tubs.isf.guido.core.statistics.Parameter> parameter;
+		private List<de.tubs.isf.guido.core.statistics.Parameter> from;
+		private List<de.tubs.isf.guido.core.statistics.Parameter> to;
 		private double weight = 0.0;
 		private Criterion criterion;
 
-		public String getFrom() {
+		public List<de.tubs.isf.guido.core.statistics.Parameter> getFrom() {
 			return from;
 		}
 
-		public String getTo() {
+		public List<de.tubs.isf.guido.core.statistics.Parameter> getTo() {
 			return to;
 		}
 
@@ -75,11 +75,13 @@ public class CostNetwork {
 			return criterion;
 		}
 
-		public WeightedDirectedEdge(String parameter, String from, String to, double weight, Criterion criterion) {
+		public WeightedDirectedEdge(List<de.tubs.isf.guido.core.statistics.Parameter> list,
+				List<de.tubs.isf.guido.core.statistics.Parameter> list2,
+				List<de.tubs.isf.guido.core.statistics.Parameter> list3, double weight, Criterion criterion) {
 			super();
-			this.parameter = parameter;
-			this.from = from;
-			this.to = to;
+			this.parameter = list;
+			this.from = list2;
+			this.to = list3;
 			this.weight = weight;
 			this.criterion = criterion;
 		}
@@ -130,8 +132,8 @@ public class CostNetwork {
 								&& param.getParameter().equals(edge.parameter))
 						.mapToDouble(edge -> edge.getWeight()).reduce(0.0, Double::sum);
 
-				//System.out.println(theta_p);
-				//System.out.println(theta_ve);
+				// System.out.println(theta_p);
+				// System.out.println(theta_ve);
 
 				scoredParameter.setOption(new ScoredOption(entry.getKey(), theta_p, theta_ve));
 			}
@@ -146,9 +148,9 @@ public class CostNetwork {
 		for (Hypothesis hypothesis : accepted.getHypotheses()) {
 			if (!hypothesis.hasProperty() || lcs.stream().map(l -> l.toString()).collect(Collectors.toList())
 					.containsAll(hypothesis.getProperties())) {
-				
+
 				double p = ((EvaluatedHypothesis) hypothesis).getPValue();
-				edges.add(new WeightedDirectedEdge(hypothesis.getParameter(), hypothesis.getBetterOption(),
+				edges.add(new WeightedDirectedEdge(hypothesis.getParameters(), hypothesis.getBetterOption(),
 						hypothesis.getWorseOption(), metric.compute(p),
 						hypothesis.isAboutProvability() ? Criterion.PROVABILITY : Criterion.EFFORT));
 			}
@@ -178,7 +180,7 @@ public class CostNetwork {
 		result.add(new Parameter("Dummy", new Option("Yes"), new Option("No"), new Option("Whatever")));
 
 		CostNetwork network = new CostNetwork(accepted, lcs, result);
-		
+
 		for (Parameter scoredParameter : network.computeScores()) {
 			System.out.println("Parameter " + scoredParameter.getParameter() + ": ");
 			for (Entry<String, Option> option : scoredParameter.getOptions().entrySet()) {
@@ -187,7 +189,7 @@ public class CostNetwork {
 				System.out.println("    |-> " + option.getKey() + "[P: " + provability + ", VE: " + effort + "]");
 			}
 		}
-		
-		//new GuidoConfigurationGenerator(network, Mechanism.ADJUST).computeNext();
+
+		// new GuidoConfigurationGenerator(network, Mechanism.ADJUST).computeNext();
 	}
 }

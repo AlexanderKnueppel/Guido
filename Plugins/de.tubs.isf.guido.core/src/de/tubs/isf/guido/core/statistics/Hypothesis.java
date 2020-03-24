@@ -6,26 +6,40 @@ import java.util.List;
 
 public class Hypothesis implements Serializable {
 	private static final long serialVersionUID = 4015855254309825043L;
-	
+
 	public enum Dependency {
-		LESS,GREATER,UNEQUAL,UNKNOWN;
+		LESS, GREATER, UNEQUAL, UNKNOWN;
 	}
 
 	protected final String identifier;
-	protected final String parameter;
-	protected final String optionA;
-	protected final String optionB;
+	protected final List<Parameter> parametersA;
+
+	public List<Parameter> getParametersA() {
+		return parametersA;
+	}
+	public List<Parameter> getParameters() {
+		List<Parameter> par = new ArrayList<Parameter>();
+		par.addAll(parametersA);
+		par.addAll(parametersB);
+		return par ;
+	}
+
+	public List<Parameter> getParametersB() {
+		return parametersB;
+	}
+
+	protected final List<Parameter> parametersB;
+
 	protected final String requirement;
 	protected final String dependency;
 	protected final List<String> properties;
 
-	public Hypothesis(String identifier, String parameter, String optionA, String optionB, String requirement,
+	public Hypothesis(String identifier, List<Parameter> parametersA, List<Parameter> parametersB, String requirement,
 			String dependency, List<String> properties) {
 		super();
 		this.identifier = identifier;
-		this.parameter = parameter;
-		this.optionA = optionA;
-		this.optionB = optionB;
+		this.parametersA = parametersA;
+		this.parametersB = parametersB;
 		this.requirement = requirement;
 		this.dependency = dependency;
 		this.properties = properties;
@@ -43,18 +57,6 @@ public class Hypothesis implements Serializable {
 		return requirement;
 	}
 
-	public String getParameter() {
-		return parameter;
-	}
-
-	public String getOptionA() {
-		return optionA;
-	}
-
-	public String getOptionB() {
-		return optionB;
-	}
-
 	public String getIdentifier() {
 		return identifier;
 	}
@@ -62,13 +64,13 @@ public class Hypothesis implements Serializable {
 	public String getDependency() {
 		return dependency;
 	}
-	
+
 	public Dependency dependency() {
-		if(dependency.equals("<="))
+		if (dependency.equals("<="))
 			return Dependency.LESS;
-		else if(dependency.equals(">="))
+		else if (dependency.equals(">="))
 			return Dependency.GREATER;
-		else if(dependency.equals("<>"))
+		else if (dependency.equals("<>"))
 			return Dependency.UNEQUAL;
 		else
 			return Dependency.UNKNOWN;
@@ -86,26 +88,26 @@ public class Hypothesis implements Serializable {
 		return properties.contains(property);
 	}
 
-	public String getBetterOption() {
+	public List<Parameter> getBetterOption() {
 		if (dependency.equals("<=")) {
-			return isAboutProvability() ? getOptionB() : getOptionB();
+			return isAboutProvability() ? getParametersB() : getParametersB();
 		} else if (dependency.equals(">=")) {
-			return isAboutProvability() ? getOptionA() : getOptionA();
+			return isAboutProvability() ? getParametersA() : getParametersA();
 		} else if (dependency.equals("<>")) {
-			return getOptionA();
+			return getParametersA();
 		}
-		return getOptionA();
+		return getParametersA();
 	}
 
-	public String getWorseOption() {
+	public List<Parameter> getWorseOption() {
 		if (dependency.equals("<=")) {
-			return isAboutProvability() ? getOptionA() : getOptionA();
+			return isAboutProvability() ? getParametersA() : getParametersA();
 		} else if (dependency.equals(">=")) {
-			return isAboutProvability() ? getOptionB() : getOptionB();
+			return isAboutProvability() ? getParametersB() : getParametersB();
 		} else if (dependency.equals("<>")) {
-			return getOptionB();
+			return getParametersB();
 		}
-		return getOptionB();
+		return getParametersB();
 	}
 
 	@Override
@@ -119,8 +121,18 @@ public class Hypothesis implements Serializable {
 		}
 
 		Hypothesis h = (Hypothesis) o;
-
-		return optionA.equals(h.getOptionA()) && optionB.equals(h.getOptionB()) && dependency.equals(h.getDependency())
+		for (int i = 0; i < parametersA.size(); i++) {
+			if (!parametersA.get(i).equals(h.getParametersA().get(i))) {
+				return false;
+			}
+			
+		}
+		for (int i = 0; i < parametersB.size(); i++) {
+			if (!parametersB.get(i).equals(h.getParametersB().get(i))) {
+				return false;
+			}
+		}
+		return  dependency.equals(h.getDependency())
 				&& identifier.equals(h.getIdentifier()) && requirement.equals(h.getRequirement())
 				&& (!hasProperty() || (h.hasProperty() && properties.equals(h.getProperties())));
 	}
@@ -128,7 +140,15 @@ public class Hypothesis implements Serializable {
 	@Override
 	public String toString() {
 		String properties = hasProperty() ? "; properties: " + this.properties : "";
-		return "parameter: " + parameter + "; optionA: " + optionA + "; optionB: " + optionB + "; requirement: "
-				+ requirement + "; dependency: " + dependency + properties;
+		String ret = "parameterA:{";
+		for (Parameter parameterA : parametersA) {
+			ret += "parameter: " + parameterA.getParameter() + "; optionA: " + parameterA.getOption() + ";";
+		}
+		ret += "}parameterB:{";
+		for (Parameter parameterB : parametersB) {
+			ret += "parameter: " + parameterB.getParameter() + "; optionB: " + parameterB.getOption() + ";";
+		}
+		ret += "}";
+		return ret + "; requirement: " + requirement + "; dependency: " + dependency + properties;
 	}
 }

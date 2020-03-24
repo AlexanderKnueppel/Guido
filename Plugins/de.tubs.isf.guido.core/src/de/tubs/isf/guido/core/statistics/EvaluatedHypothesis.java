@@ -8,16 +8,16 @@ public class EvaluatedHypothesis extends Hypothesis {
 	private static final long serialVersionUID = 1L;
 	private final BigDecimal pValue;
 
-	public EvaluatedHypothesis(String identifier, String parameter, String optionA, String optionB, String requirement, String dependency,
-			List<String> properties, String pValue) {
-		super(identifier, parameter, optionA, optionB, requirement, dependency, properties);
+	public EvaluatedHypothesis(String identifier, List<Parameter> parametersA, List<Parameter> parametersB,
+			String requirement, String dependency, List<String> properties, String pValue) {
+		super(identifier, parametersA, parametersB, requirement, dependency, properties);
 		this.pValue = new BigDecimal(pValue);
 	}
 
 	public EvaluatedHypothesis(Hypothesis hyp, String pValue) {
-		this(hyp.identifier, hyp.parameter, hyp.optionA, hyp.optionB, hyp.requirement, hyp.dependency, hyp.properties, pValue);
+		this(hyp.identifier, hyp.parametersA, hyp.parametersA, hyp.requirement, hyp.dependency, hyp.properties, pValue);
 	}
-	
+
 	public double getValueForOptionA() {
 		if (dependency.equals("<=")) {
 			return isAboutProvability() ? pValue.doubleValue() : 1 - pValue.doubleValue();
@@ -43,11 +43,21 @@ public class EvaluatedHypothesis extends Hypothesis {
 	public double getPValue() {
 		return pValue.doubleValue();
 	}
-	
+
 	@Override
 	public String toString() {
 		String properties = hasProperty() ? "; properties: " + this.properties : "";
-		return "parameter: " + parameter + "; optionA: " + optionA + "; optionB: " + optionB + "; requirement: "
-				+ requirement + "; dependency: " + dependency + properties + "; p-value: " + getPValue();
+		String ret = "parameterA:{";
+		for (Parameter parameterA : parametersA) {
+			ret += "parameter: " + parameterA.getParameter() + "; optionA: " + parameterA.getOption() + ";";
+		}
+		ret += "}parameterB:{";
+		for (Parameter parameterB : parametersB) {
+			ret += "parameter: " + parameterB.getParameter() + "; optionB: " + parameterB.getOption() + ";";
+		}
+		ret += "}";
+		return ret + "; requirement: " + requirement + "; dependency: " + dependency + properties + "; p-value: "
+				+ getPValue();
+
 	}
 }

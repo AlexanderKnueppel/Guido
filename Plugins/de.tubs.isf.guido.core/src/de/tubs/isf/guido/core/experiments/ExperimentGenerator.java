@@ -15,6 +15,7 @@ import de.tubs.isf.guido.core.databasis.DataBasis;
 import de.tubs.isf.guido.core.databasis.DefaultDataBasisElement;
 import de.tubs.isf.guido.core.statistics.Hypotheses;
 import de.tubs.isf.guido.core.statistics.Hypothesis;
+import de.tubs.isf.guido.core.statistics.Parameter;
 
 public class ExperimentGenerator {
 
@@ -47,16 +48,15 @@ public class ExperimentGenerator {
 
 		for (Hypothesis hyp : hypotheses) {
 			List<String> options = new ArrayList<String>();
-			options.add(hyp.getOptionA());
-
-			if (hyp.getOptionB() != null) {
-				options.add(hyp.getOptionB());
+			for (Parameter p : hyp.getParameters()) {
+				options.add(p.getOption());
 			}
 
 			options.addAll(hyp.getProperties() == null ? new ArrayList<String>() : hyp.getProperties());
 
 			Collections.sort(options);
-			String key = hyp.getParameter() + "." + options.stream().collect(Collectors.joining("."));
+			String key = hyp.getParameters().stream().toString() + "."
+					+ options.stream().collect(Collectors.joining("."));
 
 			if (!grouped.containsKey(key)) {
 				grouped.put(key, new ArrayList<Hypothesis>());
@@ -93,7 +93,7 @@ public class ExperimentGenerator {
 
 		final AExperiment ae;
 
-		if (hyp.getOptionA() == null || hyp.getOptionB() == null) {
+		if (hyp.getParametersA().get(0).getOption() == null || hyp.getParametersB().get(0).getOption() == null) {
 			ae = new SingleExperiment(name);
 		} else {
 			ae = new PairExperiment(name);
@@ -131,26 +131,46 @@ public class ExperimentGenerator {
 			List<DefaultDataBasisElement> entriesB = new ArrayList<DefaultDataBasisElement>();
 
 			for (DefaultDataBasisElement entry : db.getEntries()) {
-				if(entry.getLanguageConstructs() == null && hyp.getProperties() != null && !hyp.getProperties().isEmpty()) {
+				if (entry.getLanguageConstructs() == null && hyp.getProperties() != null
+						&& !hyp.getProperties().isEmpty()) {
 					continue;
 				}
-				
-				if (entry.getLanguageConstructs() != null && hyp.getProperties() != null && !entry.getLanguageConstructs().containsAll(hyp.getProperties()))
+
+				if (entry.getLanguageConstructs() != null && hyp.getProperties() != null
+						&& !entry.getLanguageConstructs().containsAll(hyp.getProperties()))
 					continue;
-				
+
 				try {
-				if (entry.getOptions().get(hyp.getParameter()).equals(hyp.getOptionA()))
-					entriesA.add(entry);
-				else if (entry.getOptions().get(hyp.getParameter()).equals(hyp.getOptionB()))
-					entriesB.add(entry);
-				} catch(NullPointerException n) {
+					boolean comp1 = true;
+					for (int i = 0; i < hyp.getParametersA().size(); i++) {
+						if (!entry.getOptions().get(hyp.getParametersA().get(i))
+								.equals((hyp.getParametersA().get(i).getOption())))
+							comp1 = false;
+					}
+					if (comp1) {
+						entriesA.add(entry);
+					}
+
+					else {
+						boolean comp2 = true;
+						for (int i = 0; i < hyp.getParametersB().size(); i++) {
+							if (entry.getOptions().get(hyp.getParametersB().get(i))
+									.equals(hyp.getParametersB().get(i).getOption()))
+								comp2 = false;
+
+						}
+						if (comp2) {
+							entriesB.add(entry);
+						}
+					}
+				} catch (NullPointerException n) {
 					System.out.println(n);
 				}
-				
+
 			}
 
-			entriesA.sort(new MatchingComperator(hyp.getParameter()));
-			entriesB.sort(new MatchingComperator(hyp.getParameter()));
+			entriesA.sort(new MatchingComperator(hyp.getParametersA().get(0).getParameter()));
+			entriesB.sort(new MatchingComperator(hyp.getParametersB().get(0).getParameter()));
 
 			int idx = 0;
 			List<String> duplicates = new ArrayList<String>();
@@ -158,8 +178,8 @@ public class ExperimentGenerator {
 			for (DefaultDataBasisElement entryA : entriesA) {
 				for (int i = idx; i < entriesB.size(); ++i) {
 
-					int compare = new MatchingComperator(hyp.getParameter()).compare(entryA, entriesB.get(i));
-					String match = MatchingComperator.representation(hyp.getParameter(), entryA);
+					int compare = new MatchingComperator(hyp.getParameters().get(0).getParameter()).compare(entryA, entriesB.get(i));
+					String match = MatchingComperator.representation(hyp.getParameters().get(0).getParameter(), entryA);
 
 					if (compare == 0) {
 						if (duplicates.contains(match))
@@ -196,44 +216,44 @@ public class ExperimentGenerator {
 		DataBasis<DefaultDataBasisElement> db = DataBasis.readFromFile(new File("./testData/zwischenergebnisse.txt"));
 		// "Proof
 		// splitting","optionA":"Delayed","optionB":"Free","requirement":"VE","dependency":"<="
-		Hypothesis hyp = new Hypothesis("H1", "Proof splitting", "Delayed", "Free", "VE", "<=",
-				new ArrayList<String>());
-		Hypothesis hyp2 = new Hypothesis("H2", "Proof splitting", "Delayed", "Free", "VE", "<=",
-				new ArrayList<String>());
-		Hypothesis hyp3 = new Hypothesis("H3", "Proof splitting", "Off", "Free", "VE", "<=",
-				new ArrayList<String>());
-		
-		Hypotheses container = new Hypotheses();
-		container.addHypothesis(hyp);
-		container.addHypothesis(hyp2);
-		container.addHypothesis(hyp3);
-		
-		//container.writeToFile(new File("path/to/file.json"));
-		
-		List<Hypothesis> hypotheses = new ArrayList<Hypothesis>();
-		hypotheses.add(hyp);
-		hypotheses.add(hyp2);
-		hypotheses.add(hyp3);
-		
-		System.out.println(db.size());
-
-		AExperiment ae = ExperimentGenerator.generate("MyFirstExp", db, hyp);
-		try {
-			ae.writeToFile(new File("./testData/experiments/" + ae.getName() + ".txt"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		BatchExperimentResult result = ExperimentGenerator.generateBatch(db, hypotheses);
-		result.getExperiments().stream().forEach(a -> {
-			try {
-				a.writeToFile(new File("./testData/experiments/" + a.getName() + ".txt"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
+////		Hypothesis hyp = new Hypothesis("H1", "Proof splitting", "Delayed", "Free", "VE", "<=",
+////				new ArrayList<String>());
+////		Hypothesis hyp2 = new Hypothesis("H2", "Proof splitting", "Delayed", "Free", "VE", "<=",
+////				new ArrayList<String>());
+////		Hypothesis hyp3 = new Hypothesis("H3", "Proof splitting", "Off", "Free", "VE", "<=",
+////				new ArrayList<String>());
+//		
+//		Hypotheses container = new Hypotheses();
+//		container.addHypothesis(hyp);
+//		container.addHypothesis(hyp2);
+//		container.addHypothesis(hyp3);
+//		
+//		//container.writeToFile(new File("path/to/file.json"));
+//		
+//		List<Hypothesis> hypotheses = new ArrayList<Hypothesis>();
+//		hypotheses.add(hyp);
+//		hypotheses.add(hyp2);
+//		hypotheses.add(hyp3);
+//		
+//		System.out.println(db.size());
+//
+//		AExperiment ae = ExperimentGenerator.generate("MyFirstExp", db, hyp);
+//		try {
+//			ae.writeToFile(new File("./testData/experiments/" + ae.getName() + ".txt"));
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
+//		BatchExperimentResult result = ExperimentGenerator.generateBatch(db, hypotheses);
+//		result.getExperiments().stream().forEach(a -> {
+//			try {
+//				a.writeToFile(new File("./testData/experiments/" + a.getName() + ".txt"));
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		});
 
 //		System.out.println(ae.getHeader().stream().collect(Collectors.joining("|")));
 //		ae.getRows().stream().forEach(row -> {
