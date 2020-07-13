@@ -14,9 +14,9 @@
 	<classpathentry kind="lib" path="libs/KeY/libs/antlr.jar"/>
 	<classpathentry kind="lib" path="libs/KeY/libs/recoderKey.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.core"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CPAchecker"/>
 	<classpathentry kind="lib" path="libs/checker-qual.jar"/>
 	<classpathentry kind="lib" path="libs/annotations.jar"/>
 	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/java-smt.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/cpachecker.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

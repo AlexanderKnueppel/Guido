@@ -5,31 +5,6 @@
 	<classpathentry kind="src" path="xtend-gen"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.equinox.common_3.10.600.v20191004-1420.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/com.ibm.icu_64.2.0.v20190507-1337.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.apache.log4j_1.2.15.v201012070815.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.apache.commons.logging_1.2.0.v20180409-1502.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.objectweb.asm_7.2.0.v20191010-1910.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.emf.mwe2.language_2.11.1.v20191121-1148.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.emf.mwe2.launch_2.11.1.v20191121-1148.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.emf.mwe2.lib_2.11.1.v20191121-1148.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.emf.codegen.ecore_2.20.0.v20191012-0918.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.xtend.lib.macro_2.20.0.v20191202-0907.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.xtext.xbase.lib_2.20.0.v20191202-0907.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.xtend.lib_2.20.0.v20191202-0907.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/com.google.guava_27.1.0.v20190517-1946.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.xtext.common.types_2.20.0.v20191202-0933.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.xtext.util_2.20.0.v20191202-0915.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.emf.mwe.utils_1.5.1.v20191121-1148.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.emf.mwe2.runtime_2.11.1.v20191121-1148.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.apache.commons.cli_1.2.0.v201404270220.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.emf.mwe.core_1.5.1.v20191121-1148.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.emf.common_2.17.0.v20190920-0401.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.emf.ecore.xmi_2.16.0.v20190528-0725.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.emf.ecore_2.20.0.v20190920-0401.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.eclipse.xtext_2.20.0.v20191202-0915.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/org.antlr.runtime_3.2.0.v201101311130.jar"/>
-	<classpathentry kind="lib" path="/home/marlen/.p2/pool/plugins/com.google.inject_3.0.0.v201605172100.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.core"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
