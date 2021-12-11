@@ -346,7 +346,8 @@ public class ExampleBasedKeyControl implements IProofControl {
 			proof = env.createProof(contract.createProofObl(env.getInitConfig(), contract));
 			applySettings(proof, so);
 			env.getUi().getProofControl().startAndWaitForAutoMode(proof);
-			jsca.analyze().stream();
+			if (jsca.analyze() == null)
+				return createResult(contract, proof, new ArrayList<String>());
 			return createResult(contract, proof,
 					jsca.analyze().stream().map(l -> l.getLanguageConstruct()).collect(Collectors.toList()));
 		} catch (ProofInputException e) {
@@ -382,7 +383,7 @@ public class ExampleBasedKeyControl implements IProofControl {
 
 	@Override
 	public IDataBasisElement performProof(IJob job) {
-		
+
 		KeyJavaJob keyjob = (KeyJavaJob) job;
 		KeyCodeContainer kcc = (KeyCodeContainer) job.getCodeContainer();
 
@@ -390,8 +391,5 @@ public class ExampleBasedKeyControl implements IProofControl {
 				kcc.getMethod(), job.getSo()).get(0);
 
 	}
-
-
-
 
 }

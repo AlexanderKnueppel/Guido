@@ -76,7 +76,7 @@ public class RQ1 {
 
 		AVerificationSystemFactory.setFactory(new KeyFactory());
 
-		Hypotheses accepted = new Hypotheses(new File("testData/keyproject/acceptedHypotheses.txt"), true);
+		Hypotheses accepted = new Hypotheses(new File("testData/keyproject/R/acceptedHypotheses.txt"), true);
 
 		Map<Double, Map<IJob, IDataBasisElement>> results = new HashMap<Double, Map<IJob, IDataBasisElement>>();
 

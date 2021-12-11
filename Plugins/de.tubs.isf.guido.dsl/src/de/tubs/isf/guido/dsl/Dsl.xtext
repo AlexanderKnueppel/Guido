@@ -1,0 +1,57 @@
+grammar de.tubs.isf.guido.dsl.Dsl with org.eclipse.xtext.common.Terminals
+
+generate dsl "http://www.tubs.de/isf/guido/dsl/Dsl"
+
+Dsl: 
+	(elements+=AbstractElement)*;
+	
+AbstractElement:
+    Type | Import ;
+    
+Type:
+    Hypothesis | Parameter | System | Databases;
+  
+Hypothesis:
+    'Hypothesis' name=QualifiedName ('on' 'Parameter' types+=Parameter (',' types+=Parameter)*) '{'
+        description=Description  definition=Definition constructs=Constructs
+    '}';
+ 
+Parameter:
+    name=QualifiedName;
+    
+Databases:
+	'Databases' ':' values=File;    
+ 	
+System:
+	'System'  ':' name=ID;
+	
+Description:
+    'Description' ':' name=STRING ';';
+    
+Definition:
+	'Definition' ':' 
+		'{' parameterA+=[Parameter|QualifiedName]+ ':'(optionsA+=Option+)(','parameterA+=[Parameter|QualifiedName] ':' optionsA+=Option)* '}' 
+		'is' property=Property ('than' 
+		'{' parameterB+=[Parameter|QualifiedName] ':'optionsB+=Option (',' parameterB+=[Parameter|QualifiedName] ':'optionsB+=Option)* '}')?  ';';
+
+Property:
+	'more' 'efficient' | 'less' 'efficient' | 'more' 'effective' | 'less' 'effective'
+;
+Constructs:
+	'Constructs' ':' '[' elements+=QualifiedName (',' elements+=QualifiedName)*']' ';';
+	
+Option:
+	name=ID;
+	
+File:
+	ID '.' ID;
+    
+Import:
+    'Import' importedNamespace=QualifiedNameWithWildcard;
+    
+QualifiedNameWithWildcard:
+    QualifiedName '.*'?;
+    
+QualifiedName:
+    ID ('.' ID)*;
+        

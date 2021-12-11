@@ -31,6 +31,8 @@ import de.tubs.isf.guido.core.statistics.correction.NoCorrection;
 import de.tubs.isf.guido.core.statistics.tests.McNemar;
 import de.tubs.isf.guido.core.statistics.tests.PairedWilcoxon;
 import de.tubs.isf.guido.core.statistics.tests.SingleWilcoxon;
+import de.tubs.isf.guido.verification.systems.cpachecker.CPACheckerDataBasisElement;
+import de.tubs.isf.guido.verification.systems.key.KeyDataBasisElement;
 
 public class HypothesesTesting {
 
@@ -214,13 +216,23 @@ public class HypothesesTesting {
 	}
 
 	public static void main(String[] args) {
-		File dir = new File("./testData/R");
+		String RBaseDir = "./testData/cpachecker/R";
+		String pathToHypotheses = "./testData/cpachecker/allCPAcheckerHypotheses.txt";
+		String pathToDataBasis = "./testData/cpachecker/CPAcheckerDatabasis.txt";
+//		String RBaseDir = "./testData/keyproject/R";
+//		String pathToHypotheses = "./testData/keyproject/hypotheses_all.txt";
+//		String pathToDataBasis = "./testData/keyproject/results.txt";		
+		
+		File dir = new File(RBaseDir);
+		
+//		if(!dir.exists())
+//			dir.mkdirs();
 
 		// #### 1. Create experiments and R scripts...
-		Hypotheses hypotheses = new Hypotheses(new File("./testData/hypotheses.txt"));
+		Hypotheses hypotheses = new Hypotheses(new File(pathToHypotheses));
 		hypotheses.getHypotheses().stream().forEach(System.out::println);
 
-		DataBasis<DefaultDataBasisElement> db = DataBasis.readFromFile(new File("./testData/zwischenergebnisse.txt"));
+		DataBasis<CPACheckerDataBasisElement> db = DataBasis.readFromFile(new File(pathToDataBasis), CPACheckerDataBasisElement.class);
 
 		new HypothesesTesting().createRTestSuite(hypotheses, db, dir);
 
@@ -268,13 +280,15 @@ public class HypothesesTesting {
 		}
 
 		// #### 3. Evaluate hypotheses
-		File pvalues = new File("./testData/R/pValues.txt");
+		File pvalues = new File(RBaseDir + "/pValues.txt");
 		Hypotheses evaluated = new Hypotheses();
 		Hypotheses accepted = new Hypotheses();
 
 		try (Stream<String> lines = Files.lines(Paths.get(pvalues.getAbsolutePath()), StandardCharsets.UTF_8)) {
 			int i = 0;
 			for (String line : (Iterable<String>) lines::iterator) {
+				if(line.equals("NaN"))
+					line = "1";
 				evaluated.addHypothesis(new EvaluatedHypothesis(hypotheses.getHypotheses().get(i++), line));
 			}
 		} catch (IOException e) {
@@ -294,8 +308,8 @@ public class HypothesesTesting {
 			}
 		}
 
-		evaluated.writeToFile(new File("./testData/R/evaluatedHypotheses.txt"));
-		accepted.writeToFile(new File("./testData/R/acceptedHypotheses.txt"));
+		evaluated.writeToFile(new File(RBaseDir + "/evaluatedHypotheses.txt"));
+		accepted.writeToFile(new File(RBaseDir + "/acceptedHypotheses.txt"));
 	}
 
 //	public static void main(String[] args) {

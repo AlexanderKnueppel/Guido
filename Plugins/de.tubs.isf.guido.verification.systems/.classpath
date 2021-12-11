@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/z3"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="libs/GLPKSolverPack.jar"/>
 	<classpathentry kind="lib" path="libs/gson-2.8.1.jar"/>
@@ -10,6 +14,9 @@
 	<classpathentry kind="lib" path="libs/KeY/libs/antlr.jar"/>
 	<classpathentry kind="lib" path="libs/KeY/libs/recoderKey.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.core"/>
-
+	<classpathentry kind="lib" path="libs/checker-qual.jar"/>
+	<classpathentry kind="lib" path="libs/annotations.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/java/runtime/java-smt.jar"/>
+	<classpathentry kind="lib" path="libs/CPAChecker/cpachecker.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
