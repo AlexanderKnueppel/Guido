@@ -1,0 +1,8 @@
+<verifier>
+	<name>CPAChecker</name>
+	<description>CPAChecker desc.</description>
+	<handle>cpachecker</handle>
+	<interface id="de.tubs.isf.guido.core.verifier.AVerificationSystemFactory">
+		<class>de.tubs.isf.guido.verification.systems.cpachecker.CPACheckerFactory</class>
+	</interface>
+</verifier>

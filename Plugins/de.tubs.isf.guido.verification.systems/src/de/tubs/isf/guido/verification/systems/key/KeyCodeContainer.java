@@ -139,4 +139,10 @@ public class KeyCodeContainer extends ACodeContainer {
 
 		return true;
 	}
+
+	@Override
+	public String getFilePath() {
+		// TODO Auto-generated method stub
+		return getClasspath();
+	}
 }

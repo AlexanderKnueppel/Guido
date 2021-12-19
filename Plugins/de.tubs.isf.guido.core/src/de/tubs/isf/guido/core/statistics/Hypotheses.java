@@ -8,7 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,7 +26,7 @@ import de.tubs.isf.guido.core.statistics.correction.SidakCorrection;
 public class Hypotheses {
 	private List<Hypothesis> hypotheses;
 	private boolean evaluated;
-	
+
 	public Hypotheses() {
 		this.hypotheses = new ArrayList<>();
 		this.evaluated = false;
@@ -42,11 +45,11 @@ public class Hypotheses {
 	public boolean evaluated() {
 		return evaluated;
 	}
-	
+
 	public void addHypothesis(Hypothesis hyp) {
 		hypotheses.add(hyp);
-		
-		if(hyp instanceof EvaluatedHypothesis) {
+
+		if (hyp instanceof EvaluatedHypothesis) {
 			evaluated = true;
 		}
 	}
@@ -104,27 +107,42 @@ public class Hypotheses {
 		return hypotheses;
 	}
 
+	public List<Hypothesis> getHypothesesSorted() {
+		List<Hypothesis> result = getHypotheses(); // deep copy?
+		if (evaluated) {
+			result.stream().map(h -> (EvaluatedHypothesis) h).collect(Collectors.toList())
+					.sort(Comparator.comparing(EvaluatedHypothesis::getPValue));
+		}
+		return result;
+	}
+	
+	public void sort() {
+		if (evaluated) {
+			hypotheses = getHypothesesSorted();
+		}
+	}
+
 	public static void main(String[] args) {
-		//Hypotheses normal = new Hypotheses(new File("./testData/hypotheses.txt"));
-		//normal.getHypotheses().stream().forEach(System.out::println);
-		//normal.writeToFile(new File("./testData/normal.txt"));
-		
+		// Hypotheses normal = new Hypotheses(new File("./testData/hypotheses.txt"));
+		// normal.getHypotheses().stream().forEach(System.out::println);
+		// normal.writeToFile(new File("./testData/normal.txt"));
+
 		Hypotheses accepted = new Hypotheses(new File("./testData/accepted.txt"), true);
 		accepted.getHypotheses().stream().forEach(System.out::println);
-		
+
 		double uncompensatedAlpha = 0.05;
 		IAlphaCorrection corr = new NoCorrection();
 		System.out.println("No correction: " + corr.apply(accepted, uncompensatedAlpha));
-		
+
 		corr = new BonferroniCorrection();
 		System.out.println("Bonferroni: " + corr.apply(accepted, uncompensatedAlpha));
-		
+
 		corr = new HolmCorrection();
 		System.out.println("Holm-Bonferroni: " + corr.apply(accepted, uncompensatedAlpha));
-		
+
 		corr = new SidakCorrection();
 		System.out.println("Sidak: " + corr.apply(accepted, uncompensatedAlpha));
-		//accepted.writeToFile(new File("./testData/accepted.txt"));
+		// accepted.writeToFile(new File("./testData/accepted.txt"));
 	}
 
 //	public Map<String, Parameter> analyze(Map<String, Parameter> parameter){

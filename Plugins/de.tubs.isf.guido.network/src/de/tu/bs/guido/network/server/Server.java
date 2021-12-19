@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -26,24 +27,19 @@ import com.google.gson.Gson;
 
 import de.tu.bs.guido.network.ProofRunnable;
 import de.tu.bs.guido.network.file.server.FileServer;
+import de.tubs.isf.guido.core.util.CommandArguments;
 import de.tubs.isf.guido.core.verifier.AVerificationSystemFactory;
 import de.tubs.isf.guido.core.verifier.IJob;
+import de.tubs.isf.guido.core.verifier.loader.VerifierDescription;
+import de.tubs.isf.guido.core.verifier.loader.VerifierLoader;
 import de.tubs.isf.guido.key.pooling.WorkingPool;
 import de.tubs.isf.guido.key.pooling.distributed.DistributedWorkingPool;
 import de.tubs.isf.guido.key.pooling.distributed.NewResultNotifier;
-import de.tubs.isf.guido.verification.systems.cpachecker.CPACheckerCodeContainer;
-import de.tubs.isf.guido.verification.systems.cpachecker.CPACheckerFactory;
-import de.tubs.isf.guido.verification.systems.key.KeyCodeContainer;
-import de.tubs.isf.guido.verification.systems.key.KeyFactory;
 
 public class Server implements Observer {
 	public static OutputStream opS;
 	public static final int PORT = 24508;
-	public static Mode mode = Mode.Key;
 
-	public enum Mode {
-		Key, ModelChecker, Unknown, CPAChecker
-	};
 	Observer o;
 
 	private static final int FILE_SERVER_PORT = PORT + 1;
@@ -59,19 +55,46 @@ public class Server implements Observer {
 	 */
 	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
 		ArrayList<IJob> jobs;
-		int argsLength = args.length;
 		if (opS != null) {
 			System.setOut(new PrintStream(opS));
 		}
-		if (args[0].equals("key")) {
-			mode = Mode.Key;
-			AVerificationSystemFactory.setFactory(new KeyFactory());
-		} else if (args.length == 2) {
-			if (args[1].equals("key")) {
-				mode = Mode.Key;
-				AVerificationSystemFactory.setFactory(new KeyFactory());
-			}
+
+		List<VerifierDescription<AVerificationSystemFactory>> systems = VerifierLoader
+				.load(AVerificationSystemFactory.class);
+
+		if (systems.isEmpty()) {
+			System.err.println("No verification systems found! Add plug-ins to the classpath!");
+			return;
 		}
+
+		CommandArguments parser = new CommandArguments(args);
+
+		VerifierDescription<AVerificationSystemFactory> description;
+		if (parser.hasOption("--verifier")) {
+			String verifier = parser.valueOf("--verifier");
+			Optional<VerifierDescription<AVerificationSystemFactory>> system = systems.stream()
+					.filter(desc -> desc.getHandle().equals(verifier)).findFirst();
+
+			if (system.isPresent()) {
+				description = system.get();
+			} else {
+				System.err.println("Verifier '" + parser.valueOf("--verifier") + "' not found! Wrong spelling?");
+				System.err.println("The following verifiers are available: ");
+				for (VerifierDescription<AVerificationSystemFactory> s : systems) {
+					System.err.println("  -- " + s.getName() + " (command: " + s.getHandle() + ")");
+				}
+				return;
+			}
+		} else {
+			System.out.println("No verification systems specified!");
+			description = systems.get(0);
+			System.out.println("Using " + description.getName() + "...");
+		}
+
+		// set verifier
+		AVerificationSystemFactory.setFactory(description.getVerifier());
+
+
 		/*
 		 * if (argsLength == 4) { // NOT USABLE SINCE EXCPETION IS THROWN! (no reason is
 		 * mentioned for it) String source = args[0]; String clazz = args[1]; String
@@ -84,40 +107,27 @@ public class Server implements Observer {
 		 * sos.forEach(so -> jobs.add(new KeyJavaJob("", -1, source, null, clazz,
 		 * method, null, so))); throw new
 		 * IllegalArgumentException("not yet updated..."); } else
-		 */ if (argsLength == 1) {
+		 */
 
-			System.out.println("Going to read jobs...");
-			String testArgsInput = args[0]; // "./../../VerificationData/VerificationData_AutomatedVerification/exampleJob.xml";
-
-			jobs = AVerificationSystemFactory.getFactory().createBatchXMLHelper().generateJobFromXML(new File(testArgsInput));
-			filterListForDuplicates(jobs);
-//			filterListForMe(jobs);
-			System.out.println("So many jobs read... " + jobs.size());
-		} else if (argsLength == 2) {
-			if (args[1].equals("CPAChecker")) {
-				mode = Mode.CPAChecker;
-				AVerificationSystemFactory.setFactory(new CPACheckerFactory());		
-			}else if (!args[1].equals("key")) {
-				mode = Mode.Key;
-				AVerificationSystemFactory.setFactory(new KeyFactory());
-			}
+		if (parser.hasOption("--jobs")) {
 			System.out.println("Going to read jobs...");
 
-			String testArgsInput = args[0]; // "./../../VerificationData/VerificationData_AutomatedVerification/exampleJob.xml";
+			String testArgsInput = parser.valueOf("--jobs"); // "./../../VerificationData/VerificationData_AutomatedVerification/exampleJob.xml";
 
 			Path p = Paths.get(testArgsInput);
 			File f = new File(p.toString());
-			if(!f.exists() || f.isDirectory()) { 
+			if (!f.exists() || f.isDirectory()) {
 				System.out.println(testArgsInput + " does not exist !");
-			}			
+			}
 			jobs = AVerificationSystemFactory.getFactory().createBatchXMLHelper().generateJobFromXML(f);
 
-			//filterListForDuplicates(jobs);
+			// filterListForDuplicates(jobs);
 //			filterListForMe(jobs);
 			System.out.println("So many jobs read... " + jobs.size());
-			
+
 		} else {
-			throw new IllegalArgumentException("Please pass for parameters: classpath, class, method and samples");
+			throw new IllegalArgumentException(
+					"Please use '--jobs' to specify the xml file (relative path) comprising all jobs to process!");
 		}
 
 		PunishmentTracker pt = new PunishmentTracker(PUNISHMENT_FILE);
@@ -153,14 +163,7 @@ public class Server implements Observer {
 			System.out.println("Open file writen");
 			Set<String> whiteLists = new HashSet<String>();
 			for (IJob j : jobs) {
-				if (AVerificationSystemFactory.getFactory() instanceof KeyFactory) {
-
-					whiteLists.add(((KeyCodeContainer) j.getCodeContainer()).getClasspath());
-					whiteLists.add(((KeyCodeContainer) j.getCodeContainer()).getClasspath());
-				}
-				if (AVerificationSystemFactory.getFactory() instanceof CPACheckerFactory) {
-					whiteLists.add(((CPACheckerCodeContainer) j.getCodeContainer()).getConfigFilePath());
-				}
+				whiteLists.add((j.getCodeContainer()).getFilePath());
 			}
 			File temp = new File(new File("Temp"), "Server");
 			temp.mkdirs();
@@ -228,7 +231,7 @@ public class Server implements Observer {
 	public Server() throws IOException {
 		nrn = new NewResultNotifier();
 		pool = new DistributedWorkingPool(PORT, nrn);
-		zo = new ResultObserver(new File("zwischenergebnisse.txt"), DONE_FILE, pool, FILE_SERVER_PORT,
+		zo = new ResultObserver(new File("results.txt"), DONE_FILE, pool, FILE_SERVER_PORT,
 				new PunishmentTracker(PUNISHMENT_FILE));
 		nrn.addObserver(zo);
 	}

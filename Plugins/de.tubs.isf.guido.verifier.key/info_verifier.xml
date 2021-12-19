@@ -1,0 +1,8 @@
+<verifier>
+	<name>KeY Project</name>
+	<description>KeY Project</description>
+	<handle>key</handle>
+	<interface id="de.tubs.isf.guido.core.verifier.AVerificationSystemFactory">
+		<class>de.tubs.isf.guido.verification.systems.key.KeyFactory</class>
+	</interface>
+</verifier>

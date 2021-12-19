@@ -15,11 +15,10 @@ import de.tu.bs.guido.network.ResultCommunication;
 import de.tubs.isf.guido.core.databasis.IDataBasisElement;
 import de.tubs.isf.guido.core.verifier.IJob;
 import de.tubs.isf.guido.key.pooling.WorkingPool;
-import de.tubs.isf.guido.verification.systems.key.KeyJavaJob;
 
 public class ResultObserver implements Observer {
 
-	private BufferedWriter ergebnisse;
+	private BufferedWriter results;
 	private BufferedWriter doneJob;
 	private Gson gson = new GsonBuilder().create();
 	private final WorkingPool pool;
@@ -27,7 +26,7 @@ public class ResultObserver implements Observer {
 	private PunishmentTracker pt;
 
 	public ResultObserver(File result, File done, WorkingPool pool, int port, PunishmentTracker pt) throws IOException {
-		ergebnisse = new BufferedWriter(new FileWriter(result, true));
+		results = new BufferedWriter(new FileWriter(result, true));
 		doneJob = new BufferedWriter(new FileWriter(done, true));
 		this.pool = pool;
 		this.port = port;
@@ -35,7 +34,7 @@ public class ResultObserver implements Observer {
 	}
 
 	public void close() throws IOException {
-		ergebnisse.close();
+		results.close();
 	}
 
 	@Override
@@ -52,17 +51,17 @@ public class ResultObserver implements Observer {
 			ProofRunnable kpr = new ProofRunnable(j, port);
 			pool.addJob(kpr);
 		} else {
-			synchronized (ergebnisse) {
+			synchronized (results) {
 				try {
 					for (IDataBasisElement res : resCom.getResults()) {
-						ergebnisse.write(gson.toJson(res));
-						ergebnisse.newLine();
+						results.write(gson.toJson(res));
+						results.newLine();
 					}
 
 					doneJob.write(gson.toJson(resCom.getJob()));
 					doneJob.newLine();
 
-					ergebnisse.flush();
+					results.flush();
 					doneJob.flush();
 				} catch (IOException e) {
 					e.printStackTrace();

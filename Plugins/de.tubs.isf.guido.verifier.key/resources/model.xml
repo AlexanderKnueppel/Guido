@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<properties/>
+		<struct>
+			<and abstract="true" mandatory="true" name="Config">
+				<and abstract="true" mandatory="true" name="Taclet">
+					<alt abstract="true" mandatory="true" name="Assertions">
+						<feature mandatory="true" name="assertions_1__1_assertions_1_on"/>
+						<feature mandatory="true" name="assertions_1__1_assertions_1_off"/>
+						<feature mandatory="true" name="assertions_1__1_assertions_1_safe"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="Initialisation">
+						<feature mandatory="true" name="initialisation_1__1_initialisation_1_disableStaticInitialisation"/>
+						<feature mandatory="true" name="initialisation_1__1_initialisation_1_enableStaticInitialisation"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="IntRules">
+						<feature mandatory="true" name="intRules_1__1_intRules_1_arithmeticSemanticsIgnoringOF"/>
+						<feature mandatory="true" name="intRules_1__1_intRules_1_arithmeticSemanticsCheckingOF"/>
+						<feature mandatory="true" name="intRules_1__1_intRules_1_javaSemantics"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="ProgramRules">
+						<feature mandatory="true" name="programRules_1__1_programRules_1_Java"/>
+						<feature mandatory="true" name="programRules_1__1_programRules_1_None"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="RuntimeExceptions">
+						<feature mandatory="true" name="runtimeExceptions_1__1_runtimeExceptions_1_ban"/>
+						<feature mandatory="true" name="runtimeExceptions_1__1_runtimeExceptions_1_allow"/>
+						<feature mandatory="true" name="runtimeExceptions_1__1_runtimeExceptions_1_ignore"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="JavaCard">
+						<feature mandatory="true" name="JavaCard_1__1_JavaCard_1_on"/>
+						<feature mandatory="true" name="JavaCard_1__1_JavaCard_1_off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="Strings">
+						<feature mandatory="true" name="Strings_1__1_Strings_1_on"/>
+						<feature mandatory="true" name="Strings_1__1_Strings_1_off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="ModelFields">
+						<feature mandatory="true" name="modelFields_1__1_modelFields_1_treatAsAxiom"/>
+						<feature mandatory="true" name="modelFields_1__1_modelFields_1_showSatisfiability"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="Bigint">
+						<feature mandatory="true" name="bigint_1__1_bigint_1_on"/>
+						<feature mandatory="true" name="bigint_1__1_bigint_1_off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="Sequences">
+						<feature mandatory="true" name="sequences_1__1_sequences_1_on"/>
+						<feature mandatory="true" name="sequences_1__1_sequences_1_off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="MoreSeqRules">
+						<feature mandatory="true" name="moreSeqRules_1__1_moreSeqRules_1_on"/>
+						<feature mandatory="true" name="moreSeqRules_1__1_moreSeqRules_1_off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="Reach">
+						<feature mandatory="true" name="reach_1__1_reach_1_on"/>
+						<feature mandatory="true" name="reach_1__1_reach_1_off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="IntegerSimplificationRules">
+						<feature mandatory="true" name="integerSimplificationRules_1__1_integerSimplificationRules_1_full"/>
+						<feature mandatory="true" name="integerSimplificationRules_1__1_integerSimplificationRules_1_minimal"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="Permissions">
+						<feature mandatory="true" name="permissions_1__1_permissions_1_on"/>
+						<feature mandatory="true" name="permissions_1__1_permissions_1_off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="WdOperator">
+						<feature mandatory="true" name="wdOperator_1__1_wdOperator_1_L"/>
+						<feature mandatory="true" name="wdOperator_1__1_wdOperator_1_Y"/>
+						<feature mandatory="true" name="wdOperator_1__1_wdOperator_1_D"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="WdChecks">
+						<feature mandatory="true" name="wdChecks_1__1_wdChecks_1_on"/>
+						<feature mandatory="true" name="wdChecks_1__1_wdChecks_1_off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="MergeGenerateIsWeakeningGoal">
+						<feature mandatory="true" name="mergeGenerateIsWeakeningGoal_1__1_mergeGenerateIsWeakeningGoal_1_on"/>
+						<feature mandatory="true" name="mergeGenerateIsWeakeningGoal_1__1_mergeGenerateIsWeakeningGoal_1_off"/>
+					</alt>
+				</and>
+				<and abstract="true" mandatory="true" name="SearchStrategy">
+					<alt abstract="true" mandatory="true" name="StopAt">
+						<feature mandatory="true" name="Stop_2_at_1__1_Default"/>
+						<feature mandatory="true" name="Stop_2_at_1__1_Unclosable"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="ProofSplitting">
+						<feature mandatory="true" name="Proof_2_splitting_1__1_Free"/>
+						<feature mandatory="true" name="Proof_2_splitting_1__1_Delayed"/>
+						<feature mandatory="true" name="Proof_2_splitting_1__1_Off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="LoopTreatment">
+						<feature mandatory="true" name="Loop_2_treatment_1__1_Invariant"/>
+						<feature mandatory="true" name="Loop_2_treatment_1__1_Expand"/>
+						<feature mandatory="true" name="Loop_2_treatment_1__1_None"/>
+						<feature mandatory="true" name="Loop_2_treatment_1__1_Loop_2_Scope_2_Invariant"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="BlockTreatment">
+						<feature mandatory="true" name="Block_2_treatment_1__1_Contract"/>
+						<feature mandatory="true" name="Block_2_treatment_1__1_Expand"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="MethodTreatment">
+						<feature mandatory="true" name="Method_2_treatment_1__1_Contract"/>
+						<feature mandatory="true" name="Method_2_treatment_1__1_Expand"/>
+						<feature mandatory="true" name="Method_2_treatment_1__1_None"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="DependencyContracts">
+						<feature mandatory="true" name="Dependency_2_contracts_1__1_On"/>
+						<feature mandatory="true" name="Dependency_2_contracts_1__1_Off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="QueryTreatment">
+						<feature mandatory="true" name="Query_2_treatment_1__1_On"/>
+						<feature mandatory="true" name="Query_2_treatment_1__1_Restricted"/>
+						<feature mandatory="true" name="Query_2_treatment_1__1_Off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="ExpandLocalQueries">
+						<feature mandatory="true" name="Expand_2_local_2_queries_1__1_On"/>
+						<feature mandatory="true" name="Expand_2_local_2_queries_1__1_Off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="ArithmeticTreatment">
+						<feature mandatory="true" name="Arithmetic_2_treatment_1__1_Basic"/>
+						<feature mandatory="true" name="Arithmetic_2_treatment_1__1_DefOps"/>
+						<feature mandatory="true" name="Arithmetic_2_treatment_1__1_Model_2_Search"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="QuantifierTreatment">
+						<feature mandatory="true" name="Quantifier_2_treatment_1__1_None"/>
+						<feature mandatory="true" name="Quantifier_2_treatment_1__1_No_2_Splits"/>
+						<feature mandatory="true" name="Quantifier_2_treatment_1__1_No_2_Splits_2_with_2_Progs"/>
+						<feature mandatory="true" name="Quantifier_2_treatment_1__1_Free"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="ClassAxiomRule">
+						<feature mandatory="true" name="Class_2_axiom_2_rule_1__1_Free"/>
+						<feature mandatory="true" name="Class_2_axiom_2_rule_1__1_Delayed"/>
+						<feature mandatory="true" name="Class_2_axiom_2_rule_1__1_Off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="AutoInduction">
+						<feature mandatory="true" name="Auto_2_Induction_1__1_On"/>
+						<feature mandatory="true" name="Auto_2_Induction_1__1_Restricted"/>
+						<feature mandatory="true" name="Auto_2_Induction_1__1_Off"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="OneStepSimplification">
+						<feature mandatory="true" name="One_2_Step_2_Simplification_1__1_Enabled"/>
+						<feature mandatory="true" name="One_2_Step_2_Simplification_1__1_Disabled"/>
+					</alt>
+				</and>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>intRules_1__1_intRules_1_javaSemantics</var>
+					<var>integerSimplificationRules_1__1_integerSimplificationRules_1_full</var>
+				</imp>
+			</rule>
+			<rule>
+				<var>Method_2_treatment_1__1_Contract</var>
+			</rule>
+			<rule>
+				<var>Block_2_treatment_1__1_Contract</var>
+			</rule>
+			<rule>
+				<disj>
+					<var>Loop_2_treatment_1__1_Invariant</var>
+					<var>Loop_2_treatment_1__1_Loop_2_Scope_2_Invariant</var>
+				</disj>
+			</rule>
+			<rule>
+				<var>Auto_2_Induction_1__1_Off</var>
+			</rule>
+			<rule>
+				<var>JavaCard_1__1_JavaCard_1_off</var>
+			</rule>
+			<rule>
+				<var>assertions_1__1_assertions_1_safe</var>
+			</rule>
+			<rule>
+				<var>initialisation_1__1_initialisation_1_disableStaticInitialisation</var>
+			</rule>
+			<rule>
+				<var>mergeGenerateIsWeakeningGoal_1__1_mergeGenerateIsWeakeningGoal_1_off</var>
+			</rule>
+			<rule>
+				<var>modelFields_1__1_modelFields_1_treatAsAxiom</var>
+			</rule>
+			<rule>
+				<var>permissions_1__1_permissions_1_off</var>
+			</rule>
+			<rule>
+				<var>programRules_1__1_programRules_1_Java</var>
+			</rule>
+			<rule>
+				<var>runtimeExceptions_1__1_runtimeExceptions_1_ban</var>
+			</rule>
+			<rule>
+				<var>wdChecks_1__1_wdChecks_1_off</var>
+			</rule>
+			<rule>
+				<var>wdOperator_1__1_wdOperator_1_L</var>
+			</rule>
+			<rule>
+				<var>intRules_1__1_intRules_1_javaSemantics</var>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

@@ -386,9 +386,12 @@ public class ExampleBasedKeyControl implements IProofControl {
 
 		KeyJavaJob keyjob = (KeyJavaJob) job;
 		KeyCodeContainer kcc = (KeyCodeContainer) job.getCodeContainer();
-
 		return getResultForProof(new File(kcc.getSource()), new File(kcc.getClasspath()), kcc.getClazz(),
-				kcc.getMethod(), job.getSo()).get(0);
+		kcc.getMethod(), kcc.getParameter(), kcc.getContractNumber(),job.getSo()).get(0);
+
+
+//		return getResultForProof(new File(kcc.getSource()), new File(kcc.getClasspath()), kcc.getClazz(),
+//				kcc.getMethod(), job.getSo()).get(0);
 
 	}
 

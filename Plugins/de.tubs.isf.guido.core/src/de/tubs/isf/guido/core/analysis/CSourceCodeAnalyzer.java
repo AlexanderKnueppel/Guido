@@ -127,6 +127,9 @@ public class CSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 					lcs.add(SourceCodeConstruct.BRANCHING_TRUE);
 				} else if (expression instanceof IASTFunctionCallExpression) {
 					lcs.add(SourceCodeConstruct.METHOD_CALLS_TRUE);
+					
+//					IASTFunctionCallExpression call = (IASTFunctionCallExpression)expression;
+//					call.
 				}
 
 				return 3;

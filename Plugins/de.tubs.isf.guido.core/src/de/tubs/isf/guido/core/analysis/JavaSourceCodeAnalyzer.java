@@ -3,7 +3,9 @@ package de.tubs.isf.guido.core.analysis;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.ast.CompilationUnit;
@@ -12,6 +14,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.expr.MethodReferenceExpr;
 import com.github.javaparser.ast.stmt.ForEachStmt;
 import com.github.javaparser.ast.stmt.ForStmt;
 import com.github.javaparser.ast.stmt.IfStmt;
@@ -19,7 +22,15 @@ import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.stmt.SwitchStmt;
 import com.github.javaparser.ast.stmt.WhileStmt;
+import com.github.javaparser.resolution.UnsolvedSymbolException;
+import com.github.javaparser.resolution.declarations.ResolvedMethodDeclaration;
+import com.github.javaparser.resolution.declarations.ResolvedParameterDeclaration;
+import com.github.javaparser.resolution.declarations.ResolvedTypeParameterDeclaration;
+import com.github.javaparser.resolution.types.ResolvedType;
 import com.github.javaparser.symbolsolver.JavaSymbolSolver;
+import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
+
+import com.github.javaparser.symbolsolver.model.resolution.SymbolReference;
 import com.github.javaparser.symbolsolver.model.resolution.TypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.ReflectionTypeSolver;
@@ -32,11 +43,13 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 	private String clazz;
 	private String pack;
 	private String method;
+	private String signature;
 	private String[] arguments;
 	private BodyDeclaration<?> methodBody;
 	private CompilationUnit cu;
 	private List<CompilationUnit> cus;
 	private SourceRoot sourceRoot;
+	private TypeSolver typeSolver;
 	private AContractAnalyzer ca;
 
 	// Java specific (OOP)
@@ -56,6 +69,13 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 
 		jsca = new JavaSourceCodeAnalyzer(new File("./testData/Examples_from_Chapter_16"),
 				"Examples_from_Chapter_16.Sort", "sort", new String[] {});
+		jsca.setContractAnalyzer(new JMLContractAnalyzer());
+		jsca.analyze();
+		System.out.println(jsca);
+
+		jsca = new JavaSourceCodeAnalyzer(new File("./testData/Examples_from_Chapter_16"),
+				"Examples_from_Chapter_16.Sort", "m4", new String[] { "String[]", "int", "float" });
+		jsca.setContractAnalyzer(new JMLContractAnalyzer());
 		jsca.analyze();
 		System.out.println(jsca);
 //
@@ -77,6 +97,17 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 		// this.cu = generateCompilationUnit(sourceFile);
 		this.cus = generateCompilationUnits(sourceFile);
 		this.methodBody = cu != null ? getMethod(cu.getClassByName(this.clazz).get()) : null;
+
+		if(this.methodBody != null) {
+			try {
+				if(this.methodBody.isConstructorDeclaration())
+					this.signature = this.methodBody.asConstructorDeclaration().resolve().getSignature().toString();
+				else
+					this.signature = this.methodBody.asMethodDeclaration().resolve().getSignature().toString();
+			}  catch(UnsolvedSymbolException exp) {
+					System.out.println("Unable to resolve symbol: \n" + exp.getMessage());
+			}
+		}
 
 		currentConstructs = new ArrayList<LanguageConstruct>();
 	}
@@ -105,10 +136,37 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 			calledMethodHasContract(lcs);
 			hasArguments(lcs);
 			hasLoopInvariants(lcs);
+			isRecursive(lcs);
 
 			currentConstructs = lcs;
 		}
 		return lcs;
+	}
+
+	private void isRecursive(List<LanguageConstruct> lcs) {
+		for (MethodCallExpr expr : methodBody.findAll(MethodCallExpr.class)) {
+			ResolvedMethodDeclaration mdecl = null;
+			try {
+				SymbolReference<ResolvedMethodDeclaration> mre = JavaParserFacade.get(typeSolver).solve(expr);
+				mdecl = mre.getCorrespondingDeclaration();
+			} catch(UnsolvedSymbolException exp) {
+				return;
+			}
+
+			String mstr = mdecl.getPackageName() + "." + mdecl.getClassName() + "." + mdecl.getSignature();
+
+			String qualifiedName = getQualifiedName();
+
+			if (qualifiedName.equals(mstr)) {
+				lcs.add(SourceCodeConstruct.RECURSIVE);
+				return;
+			}
+		}
+	}
+
+	private String getQualifiedName() {
+		// String signature = "(" + (String.join(",", Arrays.asList(arguments))) + ")";
+		return this.pack + "." + this.clazz + "." + this.signature;
 	}
 
 	public void setContractAnalyzer(AContractAnalyzer ca) {
@@ -192,13 +250,24 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 
 			// for (CompilationUnit cu : cus) {}
 
-			// TODO: not implemented,... resolving method calls fails in Javaparser... could
-			// be a problem with settings
-			// Needs to be resolved asap, as this is a very important characteristic
-			if (expr.getComment() == null)
-				break;
+			ResolvedMethodDeclaration mdecl = null;
+			try {
+				SymbolReference<ResolvedMethodDeclaration> mre = JavaParserFacade.get(typeSolver).solve(expr);
+				mdecl = mre.getCorrespondingDeclaration();
+			} catch(UnsolvedSymbolException exp) {
+				return;
+			}
 
-			ca.setContract(expr.getComment().toString());
+			String contract = "";
+
+			if (mdecl.toAst().isPresent()) {
+				MethodDeclaration md = mdecl.toAst().get();
+				if (md.getComment().isPresent()) {
+					contract = md.getComment().get().toString();
+				}
+			}
+
+			ca.setContract(contract);
 
 			if (ca.valid()) {
 				lcs.add(SourceCodeConstruct.METHOD_CALLS_SPEC_TRUE);
@@ -207,7 +276,6 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 		}
 
 		lcs.add(SourceCodeConstruct.METHOD_CALLS_SPEC_FALSE);
-		// Currently result is always SourceCodeConstruct.METHOD_CALLS_SPEC_FALSE...
 	}
 
 	@Override
@@ -240,7 +308,7 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 		}
 		return null;
 	}
-	
+
 	public String getCommentString() {
 		return (getComment() != null) ? getComment().toString() : "";
 	}
@@ -280,8 +348,8 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 			methodList = classDeclaration.getMethodsByName(method);
 			for (MethodDeclaration m : methodList) {
 				if (m.getNameAsString().equals(method) && methodList.size() == 1) {
-					System.out
-							.println("Arguments are wrong, but only one method exists with this name - we'll take it");
+//					System.out
+//							.println("Arguments are wrong, ("+  +") but only one method exists with this name - we'll take it");
 					return m;
 				}
 			}
@@ -300,8 +368,9 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 	private List<CompilationUnit> generateCompilationUnits(File code) {
 		SourceRoot sourceRoot = null;
 		try {
+			typeSolver = getTypeSolver(code);
 			sourceRoot = new SourceRoot(code.toPath(),
-					new ParserConfiguration().setSymbolResolver(new JavaSymbolSolver(getTypeSolver(code))));
+					new ParserConfiguration().setSymbolResolver(new JavaSymbolSolver(typeSolver)));
 			sourceRoot.tryToParse();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -313,9 +382,11 @@ public class JavaSourceCodeAnalyzer extends ASourceCodeAnalyzer {
 			if (hasCorrectPackage(cu) && hasCorrectClass(cu)) {
 				this.cu = cu;
 				return sourceRoot.getCompilationUnits();
-			}
+			} 
 		}
-		System.out.println("Desired class or package not found");
+		System.out.println("Desired class or package not found : " + pack + " and " + clazz);
+		
+		
 		return null;
 	}
 }

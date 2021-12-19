@@ -28,7 +28,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/de.ovgu.featureide.lib.fm-v3.6.2.jar"/>
 	<classpathentry kind="lib" path="libs/KeY/KeY.jar"/>
-	<classpathentry kind="lib" path="libs/cdt/org.eclipse.cdt.core.jar"/>
-	<classpathentry kind="lib" path="libs/cdt/org.eclipse.equinox.common.jar"/>
+	<classpathentry kind="lib" path="libs/cdt/cdt.core-5.6.0.201402142303.jar"/>
+	<classpathentry kind="lib" path="libs/cdt/equinox.common-3.6.200.v20130402-1505.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
