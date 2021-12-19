@@ -11,7 +11,7 @@ public abstract class AContractAnalyzer implements IAnalyzer {
 	protected int linesOfContract = -1;
 	protected String contract;
 
-	protected enum ContractConstruct implements LanguageConstruct {
+	public enum ContractConstruct implements LanguageConstruct {
 		QUANTIFIERS_TRUE("quantifiers_true"), QUANTIFIERS_FALSE("quantifiers_false"),
 		GEQ_LOS("geq_linesOfSpec", new Integer(4)), LT_LOS("lt_linesOfSpec", new Integer(3)),
 		IMPLICATION_TRUE("implication_true"), IMPLICATION_FALSE("implication_false"),

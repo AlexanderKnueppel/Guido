@@ -88,9 +88,9 @@ public class Hypothesis implements Serializable {
 
 	public String getBetterOption() {
 		if (dependency.equals("<=")) {
-			return isAboutProvability() ? getOptionB() : getOptionB();
+			return isAboutProvability() ? getOptionB() : getOptionA();
 		} else if (dependency.equals(">=")) {
-			return isAboutProvability() ? getOptionA() : getOptionA();
+			return isAboutProvability() ? getOptionA() : getOptionB();
 		} else if (dependency.equals("<>")) {
 			return getOptionA();
 		}
@@ -99,9 +99,9 @@ public class Hypothesis implements Serializable {
 
 	public String getWorseOption() {
 		if (dependency.equals("<=")) {
-			return isAboutProvability() ? getOptionA() : getOptionA();
+			return isAboutProvability() ? getOptionA() : getOptionB();
 		} else if (dependency.equals(">=")) {
-			return isAboutProvability() ? getOptionB() : getOptionB();
+			return isAboutProvability() ? getOptionB() : getOptionA();
 		} else if (dependency.equals("<>")) {
 			return getOptionB();
 		}

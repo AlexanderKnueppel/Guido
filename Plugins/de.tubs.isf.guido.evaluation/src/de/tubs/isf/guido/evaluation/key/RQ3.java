@@ -47,6 +47,9 @@ public class RQ3 {
 	private static List<String> notClosedGuido = new ArrayList<String>();
 	private static List<String> notClosedDefault = new ArrayList<String>();
 	private static List<String> notClosedRandom = new ArrayList<String>();
+	
+	private static String projectPath = "testData/keyproject";
+	//private static String projectPath = "testData/keyproject";
 
 	private static void guido(IJob job, Hypotheses accepted) {
 		IProofControl verifier = AVerificationSystemFactory.getFactory().createProofControl();
@@ -67,7 +70,7 @@ public class RQ3 {
 				new CostNetwork(accepted, lcs, parameters), Mechanism.NONE, 0.5);
 
 		SettingsObject so = generator.computeNext();
-		so.setMaxEffort(10000);
+		so.setMaxEffort(100000);
 		job.setSo(so);
 
 		KeyDataBasisElement result = (KeyDataBasisElement) verifier.performProof(job);
@@ -88,7 +91,7 @@ public class RQ3 {
 		RandomConfigurationGenerator generator = new RandomConfigurationGenerator();
 
 		SettingsObject so = generator.computeNext();
-		so.setMaxEffort(10000);
+		so.setMaxEffort(100000);
 		job.setSo(so);
 
 		KeyDataBasisElement result = (KeyDataBasisElement) verifier.performProof(job);
@@ -109,7 +112,7 @@ public class RQ3 {
 		DefaultConfigurationGenerator generator = new DefaultConfigurationGenerator();
 
 		SettingsObject so = generator.computeNext();
-		so.setMaxEffort(10000);
+		so.setMaxEffort(100000);
 		job.setSo(so);
 
 		KeyDataBasisElement result = (KeyDataBasisElement) verifier.performProof(job);
@@ -125,13 +128,13 @@ public class RQ3 {
 	}
 
 	public static void main(String[] args) {
-		String testArgsInput = "testData/keyproject/job2.xml";// args[0];
+		String testArgsInput = projectPath + "/job2.xml";// args[0];
 
 		List<IJob> jobs = null;
 
 		AVerificationSystemFactory.setFactory(new KeyFactory());
 
-		Hypotheses accepted = new Hypotheses(new File("./testData/keyproject/R/acceptedHypotheses.txt"), true);
+		Hypotheses accepted = new Hypotheses(new File(projectPath + "/R/acceptedHypotheses.txt"), true);
 
 		try {
 			jobs = AVerificationSystemFactory.getFactory().createBatchXMLHelper()
@@ -185,7 +188,7 @@ public class RQ3 {
 			}
 
 			try {
-				Files.write(Paths.get("./testData/keyproject/RQ2-data.txt"), content.getBytes());
+				Files.write(Paths.get(projectPath + "/RQ2-data.txt"), content.getBytes());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -200,7 +203,7 @@ public class RQ3 {
 					full += entry.getValue() + "\n";
 				}
 				
-				Files.write(Paths.get("./testData/keyproject/RQ2-full-data.txt"), full.getBytes());
+				Files.write(Paths.get(projectPath + "/RQ2-full-data.txt"), full.getBytes());
 				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block

@@ -6,6 +6,5 @@
 	<classpathentry kind="lib" path="libs/javaparser-core-3.6.3.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.workingPools"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/de.tubs.isf.guido.verification.systems"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

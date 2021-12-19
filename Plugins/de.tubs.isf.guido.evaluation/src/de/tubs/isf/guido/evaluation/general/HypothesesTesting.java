@@ -77,6 +77,7 @@ public class HypothesesTesting {
 
 		try {
 			String base = "base <- \"" + expDir.getAbsolutePath().replace("\\", "/") + "/\"" + System.lineSeparator();
+			base += "pvector = c()" + System.lineSeparator();
 			Files.write(rfile, base.getBytes());
 			Files.write(ctables, base.getBytes());
 		} catch (IOException e) {
@@ -94,14 +95,16 @@ public class HypothesesTesting {
 
 				try (Stream<String> lines = Files.lines(Paths
 						.get(expDir.getAbsolutePath() + File.separator + result.getExperiment(h).getName() + ".txt"))) {
-					if (lines.count() <= 1) {
-						content += "### EMPTY experiment!!!! So, this hypothesis will be skipped"
+					if (lines.count() <= 2) {
+						content += "### EMPTY experiment (or too few elements)!!!! So, this hypothesis will be skipped"
 								+ System.lineSeparator();
 
 						if (h.equals(theList.get(0))) {
 							content += "pvector = c(1.0)" + System.lineSeparator();
+							content += "efvector = c(0.5)" + System.lineSeparator();
 						} else {
 							content += "pvector = c(pvector, 1.0)" + System.lineSeparator();
+							content += "efvector = c(efvecotr, 0.5)" + System.lineSeparator();
 						}
 
 						Files.write(rfile, content.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
@@ -113,9 +116,38 @@ public class HypothesesTesting {
 				String tablecontent = content;
 
 				if (h.isAboutProvability()) {
+					content += "results$Closed...A <- ordered(results$Closed...A, levels = c(\"\", \"X\"))"
+							+ System.lineSeparator();
+					content += "results$Closed...B <- ordered(results$Closed...B, levels = c(\"\", \"X\"))"
+							+ System.lineSeparator();
 					content += "dataAC <- as.numeric(results$Closed...A)" + System.lineSeparator();
 					content += "dataBC <- as.numeric(results$Closed...B)" + System.lineSeparator();
-					content += "testresult <- mcnemar.test(dataAC,dataBC)" + System.lineSeparator();
+					content += "dataAC[is.na(dataAC)] <- 1" + System.lineSeparator();
+					content += "dataBC[is.na(dataAC)] <- 1" + System.lineSeparator();
+					content += "dataAC <- c(dataAC, 1)" + System.lineSeparator();
+					content += "dataBC <- c(dataBC, 1)" + System.lineSeparator();
+					content += "dataAC <- c(dataAC, 2)" + System.lineSeparator();
+					content += "dataBC <- c(dataBC, 2)" + System.lineSeparator();
+					content += "if(identical(dataAC,dataBC)) {" + System.lineSeparator();
+					if (h.equals(theList.get(0))) {
+						content += "pvector = c(1.0)" + System.lineSeparator();
+						content += "efvector = c(0.5)" + System.lineSeparator();
+					} else {
+						content += "pvector = c(pvector, 1.0)" + System.lineSeparator();
+						content += "efvector = c(efvecotr, 0.5)" + System.lineSeparator();
+					}
+					content += "} else {" + System.lineSeparator();
+					content += "	testresult <- mcnemar.test(dataAC,dataBC)" + System.lineSeparator();
+					content += "	testresult" + System.lineSeparator();
+					if (h.equals(theList.get(0))) {
+						content += "	pvector = c(testresult$p.value)" + System.lineSeparator();
+						content += "    efvector = c(effsize::VD.A(dataAN, dataBN)$estimate)" + System.lineSeparator();
+					} else {
+						content += "	pvector = c(pvector, testresult$p.value)" + System.lineSeparator();
+						content += "    efvector = c(efvector, effsize::VD.A(dataAN, dataBN)$estimate)" + System.lineSeparator();
+					}
+					content += "}" + System.lineSeparator();
+
 				} else if (h.getOptionB() == null || h.getOptionB().isEmpty()) { // Single
 					content += "dataFilter <- subset(results, Closed...A == Closed...B & Closed...A ==\"X\")"
 							+ System.lineSeparator();
@@ -125,8 +157,9 @@ public class HypothesesTesting {
 				} else { // Paired
 					content += "dataFilter <- subset(results, Closed...A == Closed...B & Closed...A ==\"X\")"
 							+ System.lineSeparator();
-					content += "dataAN <- as.numeric(dataFilter$Effort...A)" + System.lineSeparator();
-					content += "dataBN <- as.numeric(dataFilter$Effort...B)" + System.lineSeparator();
+					content += "if(nrow(dataFilter) > 0)  {" + System.lineSeparator();
+					content += "	dataAN <- as.numeric(dataFilter$Effort...A)" + System.lineSeparator();
+					content += "	dataBN <- as.numeric(dataFilter$Effort...B)" + System.lineSeparator();
 
 					String alternative = "less";
 
@@ -136,23 +169,33 @@ public class HypothesesTesting {
 						alternative = "two.sided";
 					}
 
-					content += "testresult <- wilcox.test(dataAN, dataBN, paired=TRUE, alternative = \"" + alternative
-							+ "\")" + System.lineSeparator();
-				}
+					content += "	testresult <- wilcox.test(dataAN, dataBN, paired=TRUE, alternative = \""
+							+ alternative + "\")" + System.lineSeparator();
+					content += "	testresult" + System.lineSeparator();
+					if (h.equals(theList.get(0))) {
+						content += "	pvector = c(testresult$p.value)" + System.lineSeparator();
+						content += "    efvector = c(effsize::VD.A(dataAN, dataBN)$estimate)" + System.lineSeparator();
+					} else {
+						content += "	pvector = c(pvector, testresult$p.value)" + System.lineSeparator();
+						content += "    efvector = c(efvector, effsize::VD.A(dataAN, dataBN)$estimate)" + System.lineSeparator();
+					}
 
-				content += "testresult" + System.lineSeparator();
+					content += "} else {" + System.lineSeparator();
+					if (h.equals(theList.get(0))) {
+						content += "pvector = c(1.0)" + System.lineSeparator();
+						content += "efvector = c(0.5)" + System.lineSeparator();
+					} else {
+						content += "pvector = c(pvector, 1.0)" + System.lineSeparator();
+						content += "efvector = c(efvecotr, 0.5)" + System.lineSeparator();
+					}
+					content += "}" + System.lineSeparator();
+				}
 
 				if (h.isAboutProvability()) {
 					tablecontent += "tabl <- with(results , table(results$Closed...A, results$Closed...B))"
 							+ System.lineSeparator();
 					tablecontent += "addmargins(tabl)" + System.lineSeparator();
 					Files.write(ctables, tablecontent.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-				}
-
-				if (h.equals(theList.get(0))) {
-					content += "pvector = c(testresult$p.value)" + System.lineSeparator();
-				} else {
-					content += "pvector = c(pvector, testresult$p.value)" + System.lineSeparator();
 				}
 
 				Files.write(rfile, content.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
@@ -172,8 +215,28 @@ public class HypothesesTesting {
 							System.lineSeparator() + "pvaluef <- file(\"" + pvalueFile + "\")" + System.lineSeparator())
 									.getBytes(),
 					StandardOpenOption.APPEND);
-			Files.write(rfile, new String("write(pvector, file = pvaluef, sep = \"\\n\")" + System.lineSeparator()
-					+ "unlink(pvaluef) # tidy up" + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+			Files.write(rfile,
+					new String("write(pvector, file = pvaluef, sep = \"\\n\")" + System.lineSeparator()
+							+ "unlink(pvaluef) # tidy up" + System.lineSeparator()).getBytes(),
+					StandardOpenOption.APPEND);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			String effectSizeFile = dir.getAbsolutePath() + File.separator + "effectSizes.txt";
+			effectSizeFile = effectSizeFile.replace("\\", "/");
+
+			Files.write(rfile,
+					new String(
+							System.lineSeparator() + "effectsizesf <- file(\"" + effectSizeFile + "\")" + System.lineSeparator())
+									.getBytes(),
+					StandardOpenOption.APPEND);
+			Files.write(rfile,
+					new String("write(effvector, file = effectsizesf, sep = \"\\n\")" + System.lineSeparator()
+							+ "unlink(effectsizesf) # tidy up" + System.lineSeparator()).getBytes(),
+					StandardOpenOption.APPEND);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -216,15 +279,18 @@ public class HypothesesTesting {
 	}
 
 	public static void main(String[] args) {
-		String RBaseDir = "./testData/cpachecker/R";
-		String pathToHypotheses = "./testData/cpachecker/allCPAcheckerHypotheses.txt";
-		String pathToDataBasis = "./testData/cpachecker/CPAcheckerDatabasis.txt";
-//		String RBaseDir = "./testData/keyproject/R";
-//		String pathToHypotheses = "./testData/keyproject/hypotheses_all.txt";
-//		String pathToDataBasis = "./testData/keyproject/results.txt";		
-		
+//		String RBaseDir = "./testData/cpachecker/R";
+//		String pathToHypotheses = "./testData/cpachecker/allCPAcheckerHypotheses.txt";
+//		String pathToDataBasis = "./testData/cpachecker/CPAcheckerDatabasis.txt";
+		String RBaseDir = "./testData/keyproject/R";
+		String pathToHypotheses = "./testData/keyproject/hypotheses_all.txt";
+		String pathToDataBasis = "./testData/keyproject/keyresults.txt";		
+//		String RBaseDir = "./testData/keyproject2/R";
+//		String pathToHypotheses = "./testData/keyproject2/allKeyHypotheses.txt";
+//		String pathToDataBasis = "./testData/keyproject2/keyresults.txt";
+
 		File dir = new File(RBaseDir);
-		
+
 //		if(!dir.exists())
 //			dir.mkdirs();
 
@@ -232,7 +298,8 @@ public class HypothesesTesting {
 		Hypotheses hypotheses = new Hypotheses(new File(pathToHypotheses));
 		hypotheses.getHypotheses().stream().forEach(System.out::println);
 
-		DataBasis<CPACheckerDataBasisElement> db = DataBasis.readFromFile(new File(pathToDataBasis), CPACheckerDataBasisElement.class);
+		DataBasis<KeyDataBasisElement> db = DataBasis.readFromFile(new File(pathToDataBasis),
+				KeyDataBasisElement.class);
 
 		new HypothesesTesting().createRTestSuite(hypotheses, db, dir);
 
@@ -242,7 +309,7 @@ public class HypothesesTesting {
 		try {
 			String command = "#!/bin/bash" + System.lineSeparator() + "RScript " + dir.getAbsolutePath()
 					+ File.separator + "experiments.r > " + dir.getAbsolutePath() + File.separator + "expOutput.txt";
-			
+
 //			String command = "#!/bin/bash" + System.lineSeparator() + "RScript " + dir.getAbsolutePath()
 //			+ File.separator + "experiments.r";
 
@@ -268,7 +335,7 @@ public class HypothesesTesting {
 			Executors.newSingleThreadExecutor().submit(streamGobbler);
 			int exitCode = process.waitFor();
 //
-    		process.destroyForcibly();
+			process.destroyForcibly();
 			process.destroy();
 
 		} catch (IOException e) {
@@ -287,7 +354,7 @@ public class HypothesesTesting {
 		try (Stream<String> lines = Files.lines(Paths.get(pvalues.getAbsolutePath()), StandardCharsets.UTF_8)) {
 			int i = 0;
 			for (String line : (Iterable<String>) lines::iterator) {
-				if(line.equals("NaN"))
+				if (line.equals("NaN"))
 					line = "1";
 				evaluated.addHypothesis(new EvaluatedHypothesis(hypotheses.getHypotheses().get(i++), line));
 			}
@@ -309,7 +376,22 @@ public class HypothesesTesting {
 		}
 
 		evaluated.writeToFile(new File(RBaseDir + "/evaluatedHypotheses.txt"));
+
+		accepted.sort();
 		accepted.writeToFile(new File(RBaseDir + "/acceptedHypotheses.txt"));
+//
+//		for (Hypothesis hs : accepted.getHypotheses()) {
+//			if (hs.getProperties().size() > 0) {
+//				if (accepted.getHypotheses().stream()
+//						.filter(h -> h.getParameter().equals(hs.getParameter())
+//								&& h.getOptionA().equals(hs.getOptionA()) && h.getOptionB().equals(hs.getOptionB())
+//								&& h.getRequirement().equals(hs.getRequirement())
+//								&& h.getDependency().equals(hs.getDependency()) && h.getProperties().isEmpty())
+//						.count() == 0) {
+//					System.out.println("Special: " + hs);
+//				}
+//			}
+//		}
 	}
 
 //	public static void main(String[] args) {

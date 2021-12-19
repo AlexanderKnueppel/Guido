@@ -73,6 +73,7 @@ public class ExperimentGenerator {
 			String name = entry.getValue().stream().map(h -> h.getIdentifier()).collect(Collectors.joining("__"));
 
 			AExperiment ae = generate(name, db, entry.getValue().get(0), false);
+			System.out.println("Generated " + name);
 
 			aelist.add(ae);
 			mapping.put(ae, entry.getValue());
@@ -131,22 +132,25 @@ public class ExperimentGenerator {
 			List<DefaultDataBasisElement> entriesB = new ArrayList<DefaultDataBasisElement>();
 
 			for (DefaultDataBasisElement entry : db.getEntries()) {
-				if(entry.getLanguageConstructs() == null && hyp.getProperties() != null && !hyp.getProperties().isEmpty()) {
+				if (entry.getLanguageConstructs() == null && hyp.getProperties() != null
+						&& !hyp.getProperties().isEmpty()) {
 					continue;
 				}
-				
-				if (entry.getLanguageConstructs() != null && hyp.getProperties() != null && !entry.getLanguageConstructs().containsAll(hyp.getProperties()))
+
+				if (entry.getLanguageConstructs() != null && hyp.getProperties() != null
+						&& !entry.getLanguageConstructs().containsAll(hyp.getProperties()))
 					continue;
-				
+
 				try {
-				if (entry.getOptions().get(hyp.getParameter()).equals(hyp.getOptionA()))
-					entriesA.add(entry);
-				else if (entry.getOptions().get(hyp.getParameter()).equals(hyp.getOptionB()))
-					entriesB.add(entry);
-				} catch(NullPointerException n) {
-					System.out.println(n);
+					if (entry.getOptions().get(hyp.getParameter()).equals(hyp.getOptionA()))
+						entriesA.add(entry);
+					else if (entry.getOptions().get(hyp.getParameter()).equals(hyp.getOptionB()))
+						entriesB.add(entry);
+				} catch (NullPointerException n) {
+					continue;
+					//System.out.println(n); // no data on that particular parameter?
 				}
-				
+
 			}
 
 			entriesA.sort(new MatchingComperator(hyp.getParameter()));
@@ -200,21 +204,20 @@ public class ExperimentGenerator {
 				new ArrayList<String>());
 		Hypothesis hyp2 = new Hypothesis("H2", "Proof splitting", "Delayed", "Free", "VE", "<=",
 				new ArrayList<String>());
-		Hypothesis hyp3 = new Hypothesis("H3", "Proof splitting", "Off", "Free", "VE", "<=",
-				new ArrayList<String>());
-		
+		Hypothesis hyp3 = new Hypothesis("H3", "Proof splitting", "Off", "Free", "VE", "<=", new ArrayList<String>());
+
 		Hypotheses container = new Hypotheses();
 		container.addHypothesis(hyp);
 		container.addHypothesis(hyp2);
 		container.addHypothesis(hyp3);
-		
-		//container.writeToFile(new File("path/to/file.json"));
-		
+
+		// container.writeToFile(new File("path/to/file.json"));
+
 		List<Hypothesis> hypotheses = new ArrayList<Hypothesis>();
 		hypotheses.add(hyp);
 		hypotheses.add(hyp2);
 		hypotheses.add(hyp3);
-		
+
 		System.out.println(db.size());
 
 		AExperiment ae = ExperimentGenerator.generate("MyFirstExp", db, hyp);
@@ -224,7 +227,7 @@ public class ExperimentGenerator {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		BatchExperimentResult result = ExperimentGenerator.generateBatch(db, hypotheses);
 		result.getExperiments().stream().forEach(a -> {
 			try {

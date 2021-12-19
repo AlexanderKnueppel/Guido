@@ -130,8 +130,10 @@ public class JMLContractAnalyzer extends AContractAnalyzer {
 
 	@Override
 	public boolean valid() {
-		if (this.contract != null && (this.contract.startsWith("/*@") || this.contract.startsWith("//@"))) {
-			return true;
+		if (this.contract != null && (this.contract.trim().startsWith("/*@") || this.contract.startsWith("//@"))) {
+			if (contract.contains("ensures ")) { // more specific; at least a postcondition has to be provided
+				return true;
+			}
 		}
 		return false;
 	}
